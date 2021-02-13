@@ -60,7 +60,7 @@ const Admin = () => {
         'eyJlbWFpbCI6ImNhcmxvcy5zY2hlbGxlbmJlcmdlckBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTYxMjEyNDEzNywiZXhwIjoxNjEyMjEwNTM3fQ.1_N2thTPSQ1u4jURk7aRsC8wFa1UmrB3w-MAG2jV_EA'
 
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      const res = await axios.get('https://cryptic-falls-65427.herokuapp.com/api/v1/users/', {}, config)
+      const res = await axios.get('https://api-pesquisajus.com/api/v1/users/', {}, config)
 
       console.log('Res depois do axios', res.data.users)
       // setUserInfo({})

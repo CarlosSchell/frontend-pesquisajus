@@ -25,7 +25,8 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_REQUEST,
 } from '../constants/userConstants'
-import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
+
+//import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 // import { ChevronCompactLeft } from 'react-bootstrap-icons'
 
 export const login = (email, password) => async (dispatch) => {
@@ -42,7 +43,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post('https://cryptic-falls-65427.herokuapp.com/api/v1/users/login', { email, password }, config)
+    const { data } = await axios.post('https://www.api-pesquisajus.com.br/api/v1/users/login', { email, password }, config)
 
     const payloadData =  data.user
     // console.log('Passou do Axios Entrou no Dispatch : ', payloadData)
@@ -70,7 +71,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('paymentMethod')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: USER_DETAILS_RESET })
-  dispatch({ type: ORDER_LIST_MY_RESET })
+  // dispatch({ type: ORDER_LIST_MY_RESET })
   dispatch({ type: USER_LIST_RESET })
   document.location.href = '/login'
   console.log('Usuario Logged Out ')

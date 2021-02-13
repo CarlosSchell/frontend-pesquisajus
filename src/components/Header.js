@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import * as Icon from 'react-bootstrap-icons'
 import { ReactComponent as Logo } from './method-draw-image.svg'
 import { useDispatch, useSelector } from 'react-redux'
+import HeaderShowUserImage from './components.header/HeaderShowUserImage'
 import { logout } from '../actions/userActions'
 
 const Header = () => {
@@ -20,43 +20,54 @@ const Header = () => {
     dispatch(logout())
   }
 
-  return (
-    <header >
-      <Navbar bg="primary" variant="dark" className="py-4 aquaGradient" expand="md" collapseOnSelect
-        style={{ background: 'linear-gradient(-90deg, #84cf6a, #16c0b0)' }}>
+  // style={{ background: 'linear-gradient(-90deg, #84cf6a, #16c0b0)', color: 'darkblue' }}>
 
+  return (
+    <>
+      <Navbar bg="primary" variant="dark" className="py-4 align-items-center" expand="md" collapseOnSelect style={{ minHeight: '100px', color: 'darkblue' }}>
         <Link className="logo-container" to="/">
           <Logo className="logo" />
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="h5 ml-auto nav-items-custom" style={{ color: 'darkblue' }}>
-            <Nav.Link href="/pesquisa" style={{ color: 'darkblue' }}>Meus Processos</Nav.Link>
-            <Nav.Link href="/contato" style={{ color: 'darkblue' }}>Contato</Nav.Link>
-            <Nav.Link href="/admin" style={{ color: 'darkblue' }}>Admin</Nav.Link>
-            <Nav.Link href="/about" style={{ color: 'darkblue' }}>About</Nav.Link>
+          <Nav className="h4 ml-auto">
+            <Nav.Link href="/pesquisa" style={{ color: 'darkblue' }}>
+              Meus Processos
+            </Nav.Link>
+            <Nav.Link href="/contato" style={{ color: 'darkblue' }}>
+              Contato
+            </Nav.Link>
+            <Nav.Link href="/admin" style={{ color: 'darkblue' }}>
+              Admin
+            </Nav.Link>
+            <Nav.Link href="/about" style={{ color: 'darkblue' }}>
+              About
+            </Nav.Link>
+
+            <HeaderShowUserImage value={userDisplayName} />
 
             {userInfo ? (
-              <NavDropdown title={userInfo.name} id="username">
-                <LinkContainer to="/profile">
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
-              </NavDropdown>
+              <div style={{ color: 'darkblue' }}>
+                <NavDropdown title={userInfo.name} id="username" className="mx-4" style={{ color: 'darkblue' }}>
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
+                </NavDropdown>
+              </div>
             ) : (
-              <LinkContainer to="/login" className="h5" >
-                <Nav.Link>
-                  <Icon.Person /> Entrar
-                </Nav.Link>
-              </LinkContainer>
+              <>
+                <LinkContainer to="/login" className="h5 mx-4">
+                  <Nav.Link>
+                    <strong style={{ color: 'darkblue' }}>Entrar</strong>
+                  </Nav.Link>
+                </LinkContainer>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
-
       </Navbar>
-      <div>{userDisplayName} </div>
-
-    </header>
+    </>
   )
 }
 

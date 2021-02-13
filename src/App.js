@@ -17,6 +17,9 @@ import Admin from './components/Admin'
 import Footer from './components/Footer'
 // import { verifyUserJWT } from './jwt/verifyUserJWT'
 
+// Base URL
+// const baseUrl = process.env.HOST_API_URL || "https//:localhost:21115"
+
 export const App = () => {
 
   // const [userInfo, setUserInfo] = useState({})

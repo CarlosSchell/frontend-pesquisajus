@@ -38,7 +38,7 @@ const RegisterScreen = ({ location, history }) => {
       // const config = { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token } }
       const config = { headers: { 'Content-Type': 'application/json' } }
       const res = await axios.post(
-        'https://cryptic-falls-65427.herokuapp.com/api/v1/users/register',
+        'https://www.api-pesquisajus.com.br/api/v1/users/register',
         { name, email, password, passwordConfirm },
         config
       )

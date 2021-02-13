@@ -1,3 +1,4 @@
+// programa auxiliar - fala do refresh token
 
 require('dotenv').config()
 const express = require('express')
@@ -8,6 +9,8 @@ const jwt = require('jsonwebtoken')
 app.use(express.json())
 
 let refreshTokens = []
+//refreshTokens.push(refreshToken)
+//refreshTokens = refreshToken.filter(token => token !== req.body.token)
 
 app.post('/logout', (req, res) => {
     // Authenticate the user
