@@ -1,88 +1,104 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
 import axios from 'axios'
+
+import { Link } from 'react-router-dom'
+
 import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
+import Loader from '../components/Loader.jsx'
 
 const RegisterScreen = ({ location, history }) => {
+
+  console.log('Passou pelo Register Screen')
+
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [completed, setCompleted] = useState('')
+  const [problem, setProblem] = useState('')
 
-  const redirect = location.search ? location.search.split('=')[1] : '/register'
-  // const redirect = '/'
+  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
+  const baseUrl = 'http://localhost:21115/v1'
 
-  useEffect(() => {
-    // if (userInfo) {
-    //   history.push(redirect)
-    // }
-    const messageTimer = setTimeout(() => {
-      setError(false)
-    }, 2500)
-    return () => clearTimeout(messageTimer)
-  }, [error, history, redirect])
+  // let messageTimer = () => {}
+
+  // useEffect(() => {
+  //   console.log('UseEffect !')
+  //   return () => {
+  //     clearTimeout(messageTimer)
+  //   }
+  // }, [])
 
   // Page Actions
   const validateForm = () => {
-    return email.length > 0 && password.length > 5 && password.length <= 20 && (password===passwordConfirm)
+    return email.length > 0 && password.length > 5 && password.length <= 20 && password === passwordConfirm
   }
 
-  const registerUser = async (name, email, password, passwordConfirm) => {
+  const registerUserScreen = async (name, email, password, passwordConfirm) => {
     try {
-      console.log('Entrou no try - Antes do axios register')
+      console.log('Entrou no Register user !')
       setLoading(true)
       // const config = { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token } }
       const config = { headers: { 'Content-Type': 'application/json' } }
-      const res = await axios.post(
-        'https://www.api-pesquisajus.com.br/api/v1/users/register',
-        { name, email, password, passwordConfirm },
-        config
-      )
+
+      const url = baseUrl + '/users/register'
+      const res = await axios.post(url, { name, email, password, passwordConfirm }, config)
+
       console.log('Depois do axios register: ', res)
-      // setUserInfo({res})
-      setLoading(false)
-      setError(false)
-      // Grava o Token em um cookie local storage (http Only - Usar Set Cookies !!!)
-      const tokenTemp = JSON.stringify(res.data.token)
-      console.log('Token', tokenTemp)
-      localStorage.setItem('jwt-pj', tokenTemp)
-    } catch (error) {
-      console.log('Entrou no catch')
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log('Entrou no catch - Caso 1 : error.response out of 200 range')
-        console.log(error.response.data.message)
-        console.log(error.response.status)
-        setLoading(false)
-        setError(error.response.data.message)
-      } else if (error.request) {
-        console.log('Entrou no catch - Caso 2 : The request was made but no response was received')
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(error.request)
-      } else {
-        console.log('Entrou no catch - Caso 3 : Something happened in setting up the request')
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message)
+
+      const completedStatus = res.data.status ?? ''
+      const completedMessage = res.data.message ?? ''
+
+      if (completedStatus === 'success') {
+        setCompleted(completedMessage)
       }
+      setLoading(false)
+    } catch (error) {
+      console.log('Entrou no catch register error')
+
+      console.log('Resposta : ', error.response)
+
+      const errorStatus = error.response.data.status
+      const errorMessage = error.response.data.message
+
+      console.log('Erro.response.status : ', errorStatus) //401
+      console.log('Erro.response.message : ', errorMessage)
+      // console.log('Erro.response.data.error : ', error.response.data.error)
+
+      if (errorStatus === 'fail') {
+        setProblem(errorMessage)
+      }
+      setLoading(false)
+
+      // if (error.response) {
+      //   // The request was made and the server responded with a status code
+      //   // that falls out of the range of 2xx
+      //   console.log('Entrou no catch - Caso 1 : error.response out of 200 range')
+      //   console.log(error.response.data.message)
+      //   console.log(error.response.status)
+      //   setLoading(false)
+      //   setError(error.response.data.message)
+      // } else if (error.request) {
+      //   console.log('Entrou no catch - Caso 2 : The request was made but no response was received')
+      //   // The request was made but no response was received
+      //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      //   // http.ClientRequest in node.js
+      //   console.log(error.request)
+      // } else {
+      //   console.log('Entrou no catch - Caso 3 : Something happened in setting up the request')
+      //   // Something happened in setting up the request that triggered an Error
+      //   console.log('Error', error.message)
+      // }
     }
   }
 
-  const handleSubmit = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault()
-    // Make the database request
-    console.log(email, password, passwordConfirm)
-    const name='default'
-    registerUser(name, email, password, passwordConfirm)
-    setEmail('')
-    setPassword('')
-    setPasswordConfirm('')
+    // console.log(name, email, password, passwordConfirm)
+    registerUserScreen(name, email, password, passwordConfirm)
   }
 
   return (
@@ -95,13 +111,36 @@ const RegisterScreen = ({ location, history }) => {
         marginTop: '6%',
       }}
     >
-      <h2 className="mb-3" style={{textShadow: '2px 2px 2px lightgrey',}} >
+      <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
         Crie sua conta
       </h2>
-      {error && <Message variant="danger">{error}</Message>}
+      {completed && <Message>{completed}</Message>}
+      {problem && <Message variant="danger">{problem}</Message>}
       {loading && <Loader />}
 
-      <Form onSubmit={handleSubmit} className="mb-4 mx-auto">
+      <Form onSubmit={submitHandler} className="mb-4 mx-auto">
+        <InputGroup className="my-4" controlid="email">
+          <InputGroup.Prepend>
+            <InputGroup.Text>
+              <Icon.Person />
+            </InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            autoFocus={true}
+            className="form-control"
+            id="name"
+            name="name"
+            type="text"
+            value={name}
+            placeholder="Digite seu nome de usuário com 20 letras"
+            maxLength="25"
+            size="25"
+            inputMode="text"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </InputGroup>
+
         <InputGroup className="my-4" controlid="email">
           <InputGroup.Prepend>
             <InputGroup.Text>
@@ -109,13 +148,13 @@ const RegisterScreen = ({ location, history }) => {
             </InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl
-            autoFocus={true}
             className="form-control"
             id="email"
             name="email"
             type="email"
             value={email}
             placeholder="Digite seu endereço de email"
+            maxLength="60"
             size="60"
             inputMode="email"
             required
@@ -144,7 +183,6 @@ const RegisterScreen = ({ location, history }) => {
           />
         </InputGroup>
 
-        
         <InputGroup className="my-4" controlid="passwordConfirm">
           <InputGroup.Prepend>
             <InputGroup.Text>
@@ -178,18 +216,20 @@ const RegisterScreen = ({ location, history }) => {
         </Button>
       </Form>
 
+      <div style={{ color: 'white', marginTop: '15vh' }}>
+        <div className="my-4 text-center btn btn-info">
+          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+            Voltar à página principal
+          </Link>
+        </div>
+      </div>
+
       <div>
-        <div className="my-2">
-          <div>
-            <ul style={{ listStyle: 'none' }} className="mb-4">
-              <li>
-                <Link to="https://heroku.com/policy/tos">Termos de Uso</Link>
-              </li>
-              <li>
-                <Link to="https://www.salesforce.com/company/privacy">Privacidade dos Dados</Link>
-              </li>
-            </ul>
-          </div>
+        <div className="text-center my-2">
+          <Link to="">Termos de Uso</Link>
+        </div>
+        <div className="my-2 text-center">
+          <Link to="">Privacidade dos Dados</Link>
         </div>
       </div>
     </Container>

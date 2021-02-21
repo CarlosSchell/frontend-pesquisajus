@@ -7,8 +7,8 @@ import {
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_RESET,
-  USER_LOGIN_FAIL,
-  USER_LOGIN_REQUEST,
+  // USER_LOGIN_FAIL,
+  // USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
   USER_REGISTER_FAIL,
@@ -29,12 +29,16 @@ import {
 
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
-    case USER_LOGIN_REQUEST:
-      return { loading: true }
+    // case USER_LOGIN_REQUEST:
+    //   return { loading: true }
+    // case USER_LOGIN_SUCCESS:
+    //   return { loading: false, userLogin: action.payload }
     case USER_LOGIN_SUCCESS:
-      return { loading: false, userInfo: action.payload }
-    case USER_LOGIN_FAIL:
-      return { loading: false, error: action.payload }
+      // console.log('Dentro do Reducer', action.payload  )
+      // return { userLogin: action.payload }
+      return { ...action.payload }
+    // case USER_LOGIN_FAIL:
+    //   return { loading: false, error: action.payload }
     case USER_LOGOUT:
       return {}
     default:
@@ -47,7 +51,7 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REGISTER_REQUEST:
       return { loading: true }
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload }
+      return { loading: false, userLogin: action.payload }
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload }
     case USER_LOGOUT:
@@ -77,7 +81,7 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_REQUEST:
       return { loading: true }
     case USER_UPDATE_PROFILE_SUCCESS:
-      return { loading: false, success: true, userInfo: action.payload }
+      return { loading: false, success: true, userLogin: action.payload }
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload }
     case USER_UPDATE_PROFILE_RESET:
@@ -124,7 +128,7 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
     case USER_UPDATE_FAIL:
       return { loading: false, error: action.payload }
     case USER_UPDATE_RESET:
-      return { user: {}, }
+      return { user: {} }
     default:
       return state
   }

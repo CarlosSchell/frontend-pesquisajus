@@ -5,22 +5,22 @@ const AddTask = ({ onAdd }) => {
   const [text, setText] = useState('')
   const [day, setDay] = useState('')
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  // const onSubmit = (e) => {
+  //   e.preventDefault()
 
-    if (!text) {
-      alert('Please add a task')
-      return
-    }
+  //   if (!text) {
+  //     alert('Please add a task')
+  //     return
+  //   }
 
-    onAdd({ text, day })
+  //   onAdd({ text, day })
 
-    setText('')
-    setDay('')
-  }
+  //   setText('')
+  //   setDay('')
+  // }
 
   return (
-    <Form style={{minWidth:"250px"}}>
+    <Form style={{ minWidth: '250px' }}>
       <Form.Group controlId="formNroProcesso">
         <Form.Label>Numero do Processo (CNJ)</Form.Label>
         <Form.Control
@@ -43,10 +43,9 @@ const AddTask = ({ onAdd }) => {
         />
       </Form.Group>
 
-        <Button type="submit" Incluir Processo className="lg btn-block">
-          Incluir Processo
-        </Button>
-
+      <Button type="submit" Incluir Processo className="lg btn-block">
+        Incluir Processo
+      </Button>
     </Form>
   )
 }

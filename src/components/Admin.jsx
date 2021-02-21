@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import UsersList from './UsersList'
-import Loader from './Loader'
+import Loader from './Loader.jsx'
 import Message from './Message'
+
+// Atualizar - está beeem desatualizado !!!
 
 const Admin = () => {
   const [users, setUsers] = useState([])
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  // const [userInfo, setUserInfo] = useState({})
+  // const [userLogin, setuserLogin] = useState({})
+
+  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
+  const baseUrl = 'http://localhost:21115/v1'
 
   useEffect(() => {
     const getUsersList = async () => {
@@ -22,48 +28,21 @@ const Admin = () => {
     getUsersList()
   }, [])
 
-  // Lê o Cookie com o jwt token
-  // Grava o cookie com o jwt token
-  // function getCookie(name) {
-  //   // Split cookie string and get all individual name=value pairs in an array
-  //   var cookieArr = document.cookie.split(';')
-
-  //   // Loop through the array elements
-  //   for (var i = 0; i < cookieArr.length; i++) {
-  //     var cookiePair = cookieArr[i].split('=')
-
-  //     /* Removing whitespace at the beginning of the cookie name
-  //       and compare it with the given string */
-  //     if (name === cookiePair[0].trim()) {
-  //       // Decode the cookie value and return
-  //       return decodeURIComponent(cookiePair[1])
-  //     }
-  //   }
-  //   // Return null if not found
-  //   return null
-  // }
-
-  // console.log('Valor do Get Cookie : ', getCookie('jwt'))
-
-  // get.cookie('jwt', token, {
-  //   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN_HOURS * 60 * 60 * 1000),
-  //   httpOnly: true,
-  //   secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-  // })
-
   // Get All Users
   const getAllUsers = async () => {
     try {
       console.log('Entrou no try')
       // setLoading(true)
       const token =
-        'eyJlbWFpbCI6ImNhcmxvcy5zY2hlbGxlbmJlcmdlckBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTYxMjEyNDEzNywiZXhwIjoxNjEyMjEwNTM3fQ.1_N2thTPSQ1u4jURk7aRsC8wFa1UmrB3w-MAG2jV_EA'
+        'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhcmxvcy5zY2hlbGxlbmJlcmdlckBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTYxMzg2NTk2NSwiZXhwIjoxNjEzOTUyMzY1fQ.nsGy5_bIkC-vklKc-M1d4gFfjFoGrUtYk6NniGzvzebspargx228KOTW7N7yAo-AgJ2Pmmg1hLZvzcX11y9ojSOa7dZRj0OkUruD1tqM2Kyv1DKSONHDGD7OEdniXvpYGOrHycScAUgR-Lr5Es2rUlV06OkQTMwkRsQg6IHl07MeqZU7BZ1nnfI7aBFpNQHE9B3VsEg_XCffzKoeTriEocQViDqGl0vQ66cw0f0XDwupwv19KrfCtdBQOg2IOa9HjUBEYGl9KKMRZbzwAjXaWR9e8Od8aSoKBqjPHNATi4N7xZO-uh9IguLJ5-0ZgCJ2VxDcaamvj9aH2iyGdTrgFA'
 
+      const url = baseUrl + '/users/'
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      const res = await axios.get('https://api-pesquisajus.com/api/v1/users/', {}, config)
+
+      const res = await axios.get(url, {}, config)
 
       console.log('Res depois do axios', res.data.users)
-      // setUserInfo({})
+      // setuserLogin({})
       setLoading(false)
       setError(false)
       return res.data.users
@@ -92,15 +71,23 @@ const Admin = () => {
   }
 
   return (
-    <>
-      <div className="about text-center py-3">
-        <h4>Users List 2</h4>
+    <div className="my-4 text-center">
+      <div>
+        <h2>Admin - Users List 2</h2>
       </div>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
 
       {users.length > 0 ? <UsersList users={users} /> : 'Não existem usuários cadastrados'}
-    </>
+
+      <div style={{ color: 'white', marginTop: '10vh' }}>
+        <div className="my-4 text-center btn btn-info">
+          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+            Voltar à página principal
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
 

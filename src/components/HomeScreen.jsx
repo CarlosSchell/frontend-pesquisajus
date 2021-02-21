@@ -2,23 +2,27 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import Pesquisa from './Pesquisa'
 import ListaDePublicacoes from './ListaDePublicacoes'
-import ListaDeProcessos from './components.listadeprocessos/ListaDeProcessos'
+//import ListaDeProcessos from './components.listadeprocessos/ListaDeProcessos'
 
 const HomeScreen = () => {
 
   return (
-    <Container fluid style={{ heigth:'85vh'}}>
+    <Container fluid >
       <Row>
 
-        <Col sm={3} style={ {backgroundColor:"lightblue"} }>
-          <ListaDeProcessos />
+        <Col sm={2} style={ {backgroundColor:"lightblue", height:"82vh"} }> 
+          {/*<ListaDeProcessos />*/}
         </Col>
 
-        <Col sm={9} style={ {backgroundColor:"lightgrey"} }>
+        <Col sm={8} style={ {backgroundColor:"lightgrey", height:"82vh" }}> 
           <Pesquisa />
           <ListaDePublicacoes />
         </Col>
-        
+
+        <Col sm={2} style={ {backgroundColor:"lightcoral", height:"82vh"} }> 
+          {/*<ListaDeProcessos />*/}
+        </Col>
+
       </Row>
     </Container>
   )

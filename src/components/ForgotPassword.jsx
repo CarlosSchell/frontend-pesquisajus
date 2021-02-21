@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
-import Message from '../components/Message'
-import Loader from '../components/Loader.jsx'
+import Message from './Message'
+import Loader from './Loader.jsx'
 
-import { USER_LOGIN_SUCCESS } from '../constants/userConstants'
-
-const LoginScreen = ({ location, history }) => {
-  const dispatch = useDispatch()
-
-  console.log('Passou pelo Login Screen')
+const ForgotPassword = ({ location, history }) => {
+  console.log('Entrou no Forgot Password!')
 
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
@@ -26,9 +19,6 @@ const LoginScreen = ({ location, history }) => {
   const baseUrl = 'http://localhost:21115/v1'
 
   let messageTimer = () => {}
-
-  // console.log("Problema : ", problem)
-  // console.log("Completed : ", completed)
 
   if (completed) {
     messageTimer = setTimeout(() => {
@@ -43,25 +33,18 @@ const LoginScreen = ({ location, history }) => {
   }
 
   useEffect(() => {
-    console.log('UseEffect !')
+    console.log('UseEffect Forgot Password !')
     return () => {
       clearTimeout(messageTimer)
     }
   }, [])
 
-  const loginUserInternal = async (email, password) => {
+  const forgotUserPassword = async (email, password, passwordConfirm, token) => {
     try {
       setLoading(true)
-      const config = { headers: { 'Content-Type': 'application/json' } }
-
-      const url = baseUrl + '/users/login'
-      const res = await axios.post(url, { email, password }, config)
-      let payload = res.data.data
-
-      console.log('Resposta do Axios :', payload)
-
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: payload })
-      localStorage.setItem('userLogin', JSON.stringify(payload))
+      const config = { headers: { 'Content-Type': 'application/json'} }
+      const url = baseUrl + '/users/forgotpassword'
+      const res = await axios.post(url, { email }, config)
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''
@@ -71,7 +54,7 @@ const LoginScreen = ({ location, history }) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log('Resposta : ', error.response)
+      // console.log('Resposta : ', error.response)
 
       const errorStatus = error.response.data.status
       const errorMessage = error.response.data.message
@@ -90,12 +73,16 @@ const LoginScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    loginUserInternal(email, password)
-  }
+    setLoading(true)
+    forgotUserPassword(email)
+    setLoading(false)
 
-  // Page Actions
-  const validateForm = () => {
-    return email.length > 0 && password.length > 0
+    // if (!error) {
+    //   messageTimer = setTimeout(() => {
+    //     history.push('/')
+    //   }, 2500)
+    // }
+    // history.push('/login')
   }
 
   return (
@@ -109,7 +96,7 @@ const LoginScreen = ({ location, history }) => {
       }}
     >
       <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-        Entre na sua conta
+        Digite e seu email
       </h2>
       {completed && <Message>{completed}</Message>}
       {problem && <Message variant="danger">{problem}</Message>}
@@ -130,32 +117,10 @@ const LoginScreen = ({ location, history }) => {
             type="email"
             value={email}
             placeholder="Digite seu endereço de email"
-            maxLength="50"
-            size="50"
+            size="60"
             inputMode="email"
             required
             onChange={(e) => setEmail(e.target.value)}
-          />
-        </InputGroup>
-
-        <InputGroup className="my-4" controlid="password">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Lock />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            autoComplete="off"
-            className="form-control password"
-            id="password"
-            name="password"
-            type="password"
-            value={password}
-            placeholder="Digite sua senha (6 a 20 caracteres)"
-            maxLength="20"
-            minLength="6"
-            required
-            onChange={(e) => setPassword(e.target.value)}
           />
         </InputGroup>
 
@@ -165,45 +130,20 @@ const LoginScreen = ({ location, history }) => {
           variant="primary"
           type="submit"
           value="Entrar"
-          disabled={!validateForm()}
         >
-          Entrar
+          Confirmar
         </Button>
-      </Form>
 
-      <div style={{ fontSize: '1.1rem', marginTop: '15vh' }}>
-        <div className="mt-5">
-          <Link to="/forgotpassword">
-            <strong>Esqueci minha senha</strong>
-          </Link>
-        </div>
-
-        <div className="py-3" style={{ fontSize: '1.1rem' }}>
-          <strong>Não possui uma conta?{'  '}</strong>
-          <Link to="/register">
-            <strong>Crie sua Conta Grátis</strong>
-          </Link>
-        </div>
-
-        <div style={{ color: 'white', marginTop: '10vh' }}>
+        <div style={{ color: 'white', marginTop: '30vh' }}>
           <div className="my-4 text-center btn btn-info">
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               Voltar à página principal
             </Link>
           </div>
         </div>
-
-        <div>
-          <div className="text-center my-2">
-            <Link to="">Termos de Uso</Link>
-          </div>
-          <div className="my-2 text-center">
-            <Link to="">Privacidade dos Dados</Link>
-          </div>
-        </div>
-      </div>
+      </Form>
     </Container>
   )
 }
 
-export default LoginScreen
+export default ForgotPassword
