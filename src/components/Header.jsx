@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import HeaderShowUserImage from './components.header/HeaderShowUserImage'
 import { logout } from '../actions/userActions'
 
+// const buildDate = new Date()
+// const buildNumber = (buildDate.toString()).substr(0,21)
+const buildNumber = 'Versao: Thu Feb 25 2021 20:30'
+
 const Header = () => {
   console.log('Passou pelo Header')
 
@@ -34,19 +38,26 @@ const Header = () => {
         collapseOnSelect
         style={{ minHeight: '100px' }}
       >
-        <Link className="logo-container" to="/">
-          <Logo className="logo" />
-        </Link>
+        <div>
+          <Link className="logo-container" to="/">
+            <Logo className="logo" />
+          </Link>
+          <div style={{ color: 'black' }}>{buildNumber}</div>
+        </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="h4 ml-auto">
-            <Nav.Link href="/contato" style={{ color: 'darkblue' }}>
-              Contato
-            </Nav.Link>
+          
+
+            <LinkContainer to="/contato">
+              <Nav.Link style={{ color: 'darkblue' }}>
+                Contato
+              </Nav.Link>
+            </LinkContainer>
+
             <Nav.Link href="/admin" style={{ color: 'darkblue' }}>
               Admin
             </Nav.Link>
-            <Nav.Link href="/about" style={{ color: 'darkblue' }}>
+            <Nav.Link href="/sobrenos" style={{ color: 'darkblue' }}>
               Sobre nós
             </Nav.Link>
 
@@ -79,7 +90,7 @@ const Header = () => {
                 </LinkContainer>
               </>
             )}
-          </Nav>
+          
         </Navbar.Collapse>
       </Navbar>
     </>
@@ -87,3 +98,7 @@ const Header = () => {
 }
 
 export default Header
+
+
+// <Nav className="h4 ml-auto">
+//</Nav>

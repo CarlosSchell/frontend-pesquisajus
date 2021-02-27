@@ -7,6 +7,7 @@ import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstra
 import * as Icon from 'react-bootstrap-icons'
 import Message from '../components/Message'
 import Loader from '../components/Loader.jsx'
+import ReactConfig from '../utils/ReactConfig.js'
 
 const RegisterScreen = ({ location, history }) => {
 
@@ -20,8 +21,7 @@ const RegisterScreen = ({ location, history }) => {
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
 
-  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
-  const baseUrl = 'http://localhost:21115/v1'
+  const baseUrl = ReactConfig.baseUrl ?? ''
 
   // let messageTimer = () => {}
 
@@ -108,7 +108,7 @@ const RegisterScreen = ({ location, history }) => {
         height: '67vh',
         display: 'block',
         textAlign: 'center',
-        marginTop: '6%',
+        marginTop: '3%',
       }}
     >
       <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
@@ -210,13 +210,19 @@ const RegisterScreen = ({ location, history }) => {
           variant="primary"
           type="submit"
           value="Entrar"
-          disabled={!validateForm()}
+          disabled={!validateForm() || completed}
         >
           Entrar
         </Button>
       </Form>
 
-      <div style={{ color: 'white', marginTop: '15vh' }}>
+      {completed && (
+          <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
+            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+          </div>
+        )}
+
+      <div style={{ color: 'white', marginTop: '3vh' }}>
         <div className="my-4 text-center btn btn-info">
           <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
             Voltar à página principal

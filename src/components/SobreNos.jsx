@@ -6,7 +6,7 @@ const SobreNos = () => {
   return (
     <div className="my-4 text-center">
       <h2>Sobre a pesquisajus</h2>
-      <h4>Version 1.0.0</h4>
+      <h4>Versão 1.0.0</h4>
 
       <div style={{ color: 'white', marginTop: '65vh' }}>
         <div className="my-4 text-center btn btn-info">

@@ -28,20 +28,3 @@ const HomeScreen = () => {
   )
 }
 export default HomeScreen
-
-
-    // <Container>
-    //   <div className="containerarea">
-    //     <div className="mainarea">
-    //       <div className="workingarea">
-    //         <Pesquisa />
-    //         <ListaDePublicacoes />
-    //       </div>
-    //       <div className="sidebararea">
-    //         <h2 className="alignItemsCenter">
-    //           Meus Processos
-    //         </h2>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </Container>

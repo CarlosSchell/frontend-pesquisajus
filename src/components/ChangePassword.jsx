@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
 import Message from './Message'
 import Loader from './Loader.jsx'
+import decodeUserToken from'../utils/decodeUserToken'
+import ReactConfig from '../utils/ReactConfig'
 
-const ChangePassword = ({ location, history }) => {
-  console.log('Entrou no changePassword normal!')
+// Acessado via http://localhost:3000/v1/users/changepassword/eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9...
+
+const ChangePassword = ({ match, location, history }) => {
+  console.log('Entrou no change Password!')
 
   const { userLogin } = useSelector((state) => state)
 
@@ -20,21 +24,26 @@ const ChangePassword = ({ location, history }) => {
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
 
-  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
-  const baseUrl = 'http://localhost:21115/v1'
+  let email = ''
+  let decoded = ''
+  let token = match.params.token // test fi is external (token) 
 
-  const email = userLogin.email ?? 'convidado@exemplo.com.br'
-  const token = userLogin.token ?? ''
+  if (token) {
+    decoded = decodeUserToken(token) //Synchronous
+    email = decoded.email ?? ''
+  } else {
+    email = userLogin.email ?? 'convidado@exemplo.com.br'
+    token = userLogin.token ?? ''
+  }
+
+  const baseUrl = ReactConfig.baseUrl ?? ''
 
   let messageTimer = () => {}
-
-  // console.log("Problema : ", problem)
-  // console.log("Completed : ", completed)
 
   if (completed) {
     messageTimer = setTimeout(() => {
       history.push('/')
-    }, 2500)
+    }, 4000)
   }
 
   if (problem) {
@@ -44,49 +53,47 @@ const ChangePassword = ({ location, history }) => {
   }
 
   useEffect(() => {
-    console.log('UseEffect !')
+    console.log('UseEffect Confirm Password!')
     return () => {
       clearTimeout(messageTimer)
     }
   }, [])
 
-  const changePasswordInternal = async (email, password, passwordConfirm, token) => {
+  const changePasswordExternal = async (email, password, passwordConfirm, token) => {
     try {
       setLoading(true)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/changepassword' //+ token
-      const res = await axios.patch(url, { email, password, passwordConfirm }, config)
+      const res = await axios.post(url, { email, password, passwordConfirm }, config)
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''
-
-      console.log('Retorno do Axios : ', res)
 
       if (completedStatus === 'success') {
         setCompleted(completedMessage)
       }
       setLoading(false)
-  } catch (error) {
-    console.log('Resposta : ', error.response)
+    } catch (error) {
+      // console.log('Resposta : ', error.response)
 
-    const errorStatus = error.response.data.status
-    const errorMessage = error.response.data.message
+      const errorStatus = error.response.data.status
+      const errorMessage = error.response.data.message
 
-    // console.log('Erro.response.status : ', errorStatus)       //401
-    // console.log('Erro.response.message : ', errorMessage)
-    // console.log('Erro.response.data.error : ', error.response.data.error)
+      // console.log('Erro.response.status : ', errorStatus)       //401
+      // console.log('Erro.response.message : ', errorMessage)
+      // console.log('Erro.response.data.error : ', error.response.data.error)
 
-    if (errorStatus !== 'success') {
-      // 'fail'
-      setProblem(errorMessage)
+      if (errorStatus !== 'success') {
+        // 'fail'
+        setProblem(errorMessage)
+      }
+      setLoading(false)
     }
-    setLoading(false)
   }
-}
 
   const submitHandler = (e) => {
     e.preventDefault()
-    changePasswordInternal(email, password, passwordConfirm, token)
+    changePasswordExternal(email, password, passwordConfirm, token)
   }
 
   // Page Actions
@@ -126,7 +133,8 @@ const ChangePassword = ({ location, history }) => {
             type="email"
             value={email}
             placeholder="Digite seu endereço de email"
-            size="60"
+            size="50"
+            maxLength="50"
             inputMode="email"
             required
             disabled
@@ -194,7 +202,7 @@ const ChangePassword = ({ location, history }) => {
           </Link>
         </div>
       </div>
-      
+
     </Container>
   )
 }

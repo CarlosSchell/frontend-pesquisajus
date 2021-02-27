@@ -1,5 +1,4 @@
-// import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { Provider } from 'react-redux'
 import store from './store';
@@ -14,16 +13,14 @@ import LoginScreen from './components/LoginScreen'
 import RegisterScreen from './components/RegisterScreen'
 import ChangePassword from './components/ChangePassword'
 import ForgotPassword from './components/ForgotPassword'
-import ConfirmPassword from './components/ConfirmPassword'
+import ConfirmEmail from './components/ConfirmEmail'
 import UserProfile from './components/UserProfile'
 import { logout } from './actions/userActions'
 import Pesquisa from './components/Pesquisa'
 import Admin from './components/Admin.jsx'
+import PageNotFound from './components/PageNotFound'
 // import Footer from './components/Footer'
 // import { verifyUserJWT } from './jwt/verifyUserJWT'
-
-// Base URL
-// const baseUrl = process.env.HOST_API_URL || "https//:localhost:21115"
 
 export const App = () => {
 
@@ -46,21 +43,24 @@ export const App = () => {
         <Container fluid>
           <Header />
           <main>
-            <Route path="/" component={HomeScreen} exact />
-            <Route path="/about" component={SobreNos} exact />
-            <Route path="/contato" component={Contato} />
-            <Route path="/login" component={LoginScreen} exact />
-            <Route path="/logout" component={logout}  />
-            <Route path="/register" component={RegisterScreen} />
-            <Route path="/profile" component={UserProfile} />
-            <Route path="/pesquisa" component={Pesquisa} />
-            <Route path="/changepassword" component={ChangePassword} exact />
-            <Route path="/forgotpassword" component={ForgotPassword} exact />
-            <Route path="/confirmpassword/:token" component={ConfirmPassword} />
-            ConfirmForgottenPassword
-            <Route path="/admin" component={Admin} />
-            <Route path="/admin/userlist" component={''} />
-            <Route path="/admin/user/:id/edit" component={''} />
+            <Switch>
+              <Route path="/" component={HomeScreen} exact />
+              <Route path="/sobrenos" component={SobreNos} exact />
+              <Route path="/contato" component={Contato} exact/>
+              <Route path="/login" component={LoginScreen} exact />
+              <Route path="/logout" component={logout}  exact/>
+              <Route path="/register" component={RegisterScreen}exact />
+              <Route path="/profile" component={UserProfile} exact/>
+              <Route path="/pesquisa" component={Pesquisa} exact/>
+              <Route path="/changepassword/" component={ChangePassword} exact />
+              <Route path="/changepassword/:token" component={ChangePassword}  />
+              <Route path="/forgotpassword" component={ForgotPassword} exact />
+              <Route path="/confirmemail/:token" component={ConfirmEmail}/>
+              <Route path="/admin" component={Admin} exact />
+              <Route path="/admin/userlist" component={''} />
+              <Route path="/admin/user/:id/edit" component={''} />
+              <Route component={PageNotFound} />
+            </Switch>
           </main>
 
         </Container>

@@ -7,7 +7,8 @@ import { useDispatch } from 'react-redux'
 import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
 import Message from '../components/Message'
-import Loader from '../components/Loader.jsx'
+import Loader from '../components/Loader'
+import ReactConfig from '../utils/ReactConfig'
 
 import { USER_LOGIN_SUCCESS } from '../constants/userConstants'
 
@@ -22,8 +23,7 @@ const LoginScreen = ({ location, history }) => {
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
 
-  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
-  const baseUrl = 'http://localhost:21115/v1'
+  const baseUrl = ReactConfig.baseUrl ?? ''
 
   let messageTimer = () => {}
 

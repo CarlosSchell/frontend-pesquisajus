@@ -6,6 +6,7 @@ import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstra
 import * as Icon from 'react-bootstrap-icons'
 import Message from './Message'
 import Loader from './Loader.jsx'
+import ReactConfig from '../utils/ReactConfig'
 
 const ForgotPassword = ({ location, history }) => {
   console.log('Entrou no Forgot Password!')
@@ -15,16 +16,15 @@ const ForgotPassword = ({ location, history }) => {
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
 
-  // const baseUrl = 'https://www.api-pesquisajus.com.br/v1/'
-  const baseUrl = 'http://localhost:21115/v1'
+  const baseUrl = ReactConfig.baseUrl ?? ''
 
   let messageTimer = () => {}
 
-  if (completed) {
-    messageTimer = setTimeout(() => {
-      history.push('/')
-    }, 2500)
-  }
+  // if (completed) {
+  //   messageTimer = setTimeout(() => {
+  //     history.push('/')
+  //   }, 10000)
+  // }
 
   if (problem) {
     messageTimer = setTimeout(() => {
@@ -42,7 +42,7 @@ const ForgotPassword = ({ location, history }) => {
   const forgotUserPassword = async (email, password, passwordConfirm, token) => {
     try {
       setLoading(true)
-      const config = { headers: { 'Content-Type': 'application/json'} }
+      const config = { headers: { 'Content-Type': 'application/json' } }
       const url = baseUrl + '/users/forgotpassword'
       const res = await axios.post(url, { email }, config)
 
@@ -73,9 +73,7 @@ const ForgotPassword = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    setLoading(true)
     forgotUserPassword(email)
-    setLoading(false)
 
     // if (!error) {
     //   messageTimer = setTimeout(() => {
@@ -96,7 +94,7 @@ const ForgotPassword = ({ location, history }) => {
       }}
     >
       <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-        Digite e seu email
+        Digite e seu email para gerar uma nova senha
       </h2>
       {completed && <Message>{completed}</Message>}
       {problem && <Message variant="danger">{problem}</Message>}
@@ -124,17 +122,17 @@ const ForgotPassword = ({ location, history }) => {
           />
         </InputGroup>
 
-        <Button
-          className="btn btn-block mt-2"
-          name="commit"
-          variant="primary"
-          type="submit"
-          value="Entrar"
-        >
+        <Button className="btn btn-block mt-2" name="commit" variant="primary" type="submit" value="Entrar"   disabled={completed}>
           Confirmar
         </Button>
 
-        <div style={{ color: 'white', marginTop: '30vh' }}>
+        {completed && (
+          <div style={{ fontSize: '2rem', color: 'black' }}>
+            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+          </div>
+        )}
+
+        <div style={{ color: 'white', marginTop: '10vh' }}>
           <div className="my-4 text-center btn btn-info">
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               Voltar à página principal
