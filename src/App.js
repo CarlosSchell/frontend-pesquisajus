@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import store from './store';
 
 // import ProtectedRoute from './routes/ProtectedRoute'
-import { Container } from 'react-bootstrap'
+//import { Container } from 'react-bootstrap'
 import Header from './components/Header.jsx'
 import HomeScreen from './components/HomeScreen.jsx'
 import SobreNos from './components/SobreNos.jsx'
@@ -37,10 +37,12 @@ export const App = () => {
   //   // userLogin(verifyUserJWT())
   // }, [])
 
+  // <Container fluid>
+  // </Container>
   return (
     <Provider store={store}>
       <Router>
-        <Container fluid>
+
           <Header />
           <main>
             <Switch>
@@ -63,7 +65,6 @@ export const App = () => {
             </Switch>
           </main>
 
-        </Container>
       </Router>
     </Provider>
   )

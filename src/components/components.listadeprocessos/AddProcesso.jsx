@@ -1,34 +1,66 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const AddTask = ({ onAdd }) => {
-  const [text, setText] = useState('')
-  const [day, setDay] = useState('')
+const AddProcesso = ({ onAdd }) => {
+  const [nroProcesso, setNroProcesso] = useState('')
+  const [descricaoProcesso, setDescricaoProcesso] = useState('')
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault()
+  console.log('Passou pelo Add Processo')
 
-  //   if (!text) {
-  //     alert('Please add a task')
-  //     return
-  //   }
+  // // Add Task
+  // const addTask = async (task) => {
+  //   const res = await fetch('http://localhost:5000/tasks', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //     },
+  //     body: JSON.stringify(task),
+  //   })
 
-  //   onAdd({ text, day })
+  //   const data = await res.json()
 
-  //   setText('')
-  //   setDay('')
+  //   setTasks([...tasks, data])
+
+  //   // const id = Math.floor(Math.random() * 10000) + 1
+  //   // const newTask = { id, ...task }
+  //   // setTasks([...tasks, newTask])
   // }
 
+  const validateProcesso = (nroProcesso) => {
+
+    console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
+
+    if (!nroProcesso) return false
+    
+    if (nroProcesso.length === 25) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    console.log(nroProcesso, descricaoProcesso)
+
+    onAdd({ processo: nroProcesso, descricao: descricaoProcesso })
+
+    setNroProcesso('')
+    setDescricaoProcesso('')
+  }
+
   return (
-    <Form style={{ minWidth: '250px' }}>
+    <Form style={{ minWidth: '250px', color: 'black', fontWeight: '500' }} onSubmit={onSubmit}>
       <Form.Group controlId="formNroProcesso">
-        <Form.Label>Numero do Processo (CNJ)</Form.Label>
+        <Form.Label >Número do Processo (CNJ)</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Numero CNJ completo: 1234567-00.1234.8.21-1234"
-          value={text}
-          autofocus
-          onChange={(e) => setText(e.target.value)}
+          placeholder="Exemplo: 1234567-00.1234.8.21-1234"
+          value={nroProcesso}
+          autoFocus
+          required
+          onChange={(e) => setNroProcesso(e.target.value)}
         />
       </Form.Group>
 
@@ -38,16 +70,27 @@ const AddTask = ({ onAdd }) => {
           type="text"
           placeholder="Texto curto identificador do processo"
           maxLength="45"
-          value={day}
-          onChange={(e) => setDay(e.target.value)}
+          value={descricaoProcesso}
+          required
+          onChange={(e) => setDescricaoProcesso(e.target.value)}
         />
       </Form.Group>
 
-      <Button type="submit" Incluir Processo className="lg btn-block">
-        Incluir Processo
-      </Button>
+      <Button
+          className="btn btn-block mt-2"
+          name="commit"
+          variant="primary"
+          type="submit"
+          value="Entrar"
+          disabled={!validateProcesso(nroProcesso)}
+        >
+          Incluir Processo
+        </Button>
+
+      <input type='submit' value='Incluir Processo' className='lg btn btn-block mt-2' />
+
     </Form>
   )
 }
 
-export default AddTask
+export default AddProcesso

@@ -24,6 +24,10 @@ import {
   // userUpdateReducer,
 } from './reducers/userReducers'
 
+import {
+  userProcessoReducer,
+} from './reducers/processoReducers'
+
 // import {
 //   orderCreateReducer,
 //   orderDetailsReducer,
@@ -43,6 +47,7 @@ const reducer = combineReducers({
   // productTopRated: productTopRatedReducer,
   // cart: cartReducer,
   userLogin: userLoginReducer,
+  userProcessos: userProcessosReducer,
   // userRegister: userRegisterReducer,
   // userDetails: userDetailsReducer,
   // userUpdateProfile: userUpdateProfileReducer,
@@ -63,11 +68,18 @@ const userLogin = localStorage.getItem('userLogin')
     name: 'Convidado',
     email: 'convidado@pesquisajus.com.br',
     role: 'User',
-    token: ''
+    token: '',
+  }
+
+  const userProcessos = localStorage.getItem('userProcessos')
+  ? JSON.parse(localStorage.getItem('userProcessos'))
+  : {
+    processos: [],
   }
 
 const initialState = {
   userLogin,
+  userProcessos,
 }
 
 const middleware = [thunk]

@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import Pesquisa from './Pesquisa'
 import ListaDePublicacoes from './ListaDePublicacoes'
-//import ListaDeProcessos from './components.listadeprocessos/ListaDeProcessos'
+import ListaDeProcessos from './components.listadeprocessos/ListaDeProcessos'
 
 const HomeScreen = () => {
 
@@ -10,16 +10,16 @@ const HomeScreen = () => {
     <Container fluid >
       <Row>
 
-        <Col sm={2} style={ {backgroundColor:"lightblue", height:"82vh"} }> 
-          {/*<ListaDeProcessos />*/}
+        <Col sm={2} style={ {backgroundColor:"azure", width:"420px", height:"89.7vh"} }> 
+          <ListaDeProcessos />
         </Col>
 
-        <Col sm={8} style={ {backgroundColor:"lightgrey", height:"82vh" }}> 
+        <Col sm={8} style={ {backgroundColor:"lightgray", height:"89.7vh"} }> 
           <Pesquisa />
           <ListaDePublicacoes />
         </Col>
 
-        <Col sm={2} style={ {backgroundColor:"lightcoral", height:"82vh"} }> 
+        <Col sm={2} style={ {backgroundColor:"beige", height:"89.7vh"} }> 
           {/*<ListaDeProcessos />*/}
         </Col>
 
