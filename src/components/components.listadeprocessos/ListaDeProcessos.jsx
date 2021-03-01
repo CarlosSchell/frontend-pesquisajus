@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import axios from 'axios'
 import Processos from './Processos'
 import AddProcesso from './AddProcesso'
+import { PROCESSOS_UPDATE_SUCCESS } from '../constants/uprocessosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
 const ListaDeProcessos = () => {
- 
+
+  const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
+  const userProcessos = useSelector((state) => state.userProcessos)
 
   const email = userLogin.email ?? ''
   const token = userLogin.token ?? ''
@@ -17,7 +20,7 @@ const ListaDeProcessos = () => {
 
   const [showAddProcesso, setShowAddProcesso] = useState(false)
   // const [processos, setProcessos] = useState(processosFromUserLogin)
-  const [processos, setProcessos] = useState([])
+  const [processos, setProcessos] = useState(userProcessos)
 
   useEffect(() => {
     
@@ -44,13 +47,21 @@ const ListaDeProcessos = () => {
   const addProcesso = async (novoprocesso) => {
     try {
       processos.push(novoprocesso)
+
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
       const res = await axios.post(url, { email, processos }, config)
+
+      // dispatch redux atualizar o vetor de processos
+      dispatch({
+        type: PROCESSOS_UPDATE_SUCCESS,
+        payload: processos,
+      })
+      localStorage.setItem('userProcessos', JSON.stringify(processos))
+
       console.log('Depois do axios - res : ', res)
       setProcessos(processos)
       setShowAddProcesso(!showAddProcesso)
-      // dispatch redux atualizar o vetor de processos
 
     } catch {}
   }

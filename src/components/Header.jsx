@@ -22,17 +22,6 @@ const Header = () => {
     dispatch(logout())
   }
 
-  // style={{ background: 'linear-gradient(-90deg, #84cf6a, #16c0b0)', color: 'darkblue' }}>
-  //   <Navbar
-  //   bg="primary"
-  //   variant=""
-  //   className="py-4 align-items-center"
-  //   expand="md"
-  //   collapseOnSelect
-  //   style={{ minHeight: '100px' }}
-  // >
-  // <nav className="py-4 align-items-center navbar navbar-expand-md bg-primary style={{minHeigth: 100px}}">
-
   return (
     <nav className="py-4 align-items-center navbar navbar-expand-md bg-primary" style={{minHeigth: "10vh", backgroundColor:"#00A170"}}>
       <div className="container-fluid">
