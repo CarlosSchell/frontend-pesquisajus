@@ -11,6 +11,7 @@ import Loader from '../components/Loader'
 import ReactConfig from '../utils/ReactConfig'
 
 import { USER_LOGIN_SUCCESS } from '../constants/userConstants'
+import { PROCESSOS_UPDATE_SUCCESS } from '../constants/processosConstants'
 
 const LoginScreen = ({ location, history }) => {
   const dispatch = useDispatch()
@@ -60,8 +61,20 @@ const LoginScreen = ({ location, history }) => {
 
       console.log('Resposta do Axios :', payload)
 
-      dispatch({ type: USER_LOGIN_SUCCESS, payload: payload })
-      localStorage.setItem('userLogin', JSON.stringify(payload))
+      const name = payload.name
+      //const email = payload.email
+      const role = payload.role
+      const token = payload.token
+      const processos = payload.processos
+
+      const userLoginInfo = { name, email, role, token } 
+      const userProcessosInfo = { processos }
+
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: userLoginInfo })
+      localStorage.setItem('userLogin', JSON.stringify(userLoginInfo))
+
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: userProcessosInfo })
+      localStorage.setItem('userProcessos', JSON.stringify(userProcessosInfo))
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''

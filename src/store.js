@@ -7,7 +7,7 @@ import {
 } from './reducers/userReducers'
 
 import {
-  processosUpdateReducer,
+  userProcessosReducer,
 } from './reducers/processosReducers'
 
 // import {
@@ -21,7 +21,7 @@ import {
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
-  processosUpdate: processosUpdateReducer,
+  userProcessos: userProcessosReducer,
 
 })
 
@@ -30,15 +30,17 @@ const userLogin = localStorage.getItem('userLogin')
   : {
     name: 'Convidado',
     email: 'convidado@pesquisajus.com.br',
-    role: 'User',
+    role: 'convidado',
     token: '',
   }
 
-  const userProcessos = localStorage.getItem('userProcessos')
-  ? JSON.parse(localStorage.getItem('userProcessos'))
-  : {
-    processos: [],
-  }
+  const userProcessos = []
+
+  // const userProcessos = localStorage.getItem('userProcessos')
+  // ? JSON.parse(localStorage.getItem('userProcessos'))
+  // : {
+  //   processos: [],
+  // }
 
 const initialState = {
   userLogin,

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const SobreNos = () => {
   console.log('Passou pelo Sobre nós')
-  const buildNumber = 'Versao: Sat Feb 27 2021 12:30am'
+  const buildNumber = 'Versao: Tue Mar 02 2021 10:00h'
 
   return (
     <div className="my-4 text-center">

@@ -4,35 +4,34 @@ import { Button } from 'react-bootstrap'
 import axios from 'axios'
 import Processos from './Processos'
 import AddProcesso from './AddProcesso'
-import { PROCESSOS_UPDATE_SUCCESS } from '../constants/uprocessosConstants'
+import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
 const ListaDeProcessos = () => {
-
   const dispatch = useDispatch()
-  const userLogin = useSelector((state) => state.userLogin)
-  const userProcessos = useSelector((state) => state.userProcessos)
+  const userLoginInfo = useSelector((state) => state.userLogin)
+  // const userProcessosInfo = useSelector((state) => state.userProcessos) ?? []
 
-  const email = userLogin.email ?? ''
-  const token = userLogin.token ?? ''
+  const email = userLoginInfo.email ?? ''
+  const token = userLoginInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
-  // const processosFromUserLogin = userLogin.processos ?? []
 
   const [showAddProcesso, setShowAddProcesso] = useState(false)
-  // const [processos, setProcessos] = useState(processosFromUserLogin)
-  const [processos, setProcessos] = useState(userProcessos)
+  const [processos, setProcessos] = useState([])
+
+  let isNewProcessos = false
 
   useEffect(() => {
-    
     const fetchProcessos = async () => {
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/getprocessos'
       const res = await axios.get(url, config)
-      // const res = await axios.get(url, {}, config)
-      console.log('Data do Axios res : ', res)
-      // const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      let processos = res.data.data.processos ?? []
-      return processos
+
+      let processosFromDatabase = res.data.data.processos ?? []
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
+      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
+
+      return processosFromDatabase
     }
 
     const getProcessos = async () => {
@@ -41,45 +40,53 @@ const ListaDeProcessos = () => {
     }
 
     getProcessos()
-  }, [baseUrl, email, token])
+  }, [baseUrl, email, token, isNewProcessos, dispatch])
 
   // Add Processo
-  const addProcesso = async (novoprocesso) => {
+  const addProcesso = async (newprocesso) => {
     try {
-      processos.push(novoprocesso)
+
+      console.log('Entrou no onAdd - Acima do AddProcesso - newprocesso :', newprocesso)
+      processos.push(newprocesso)
 
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
       const res = await axios.post(url, { email, processos }, config)
 
-      // dispatch redux atualizar o vetor de processos
-      dispatch({
-        type: PROCESSOS_UPDATE_SUCCESS,
-        payload: processos,
-      })
-      localStorage.setItem('userProcessos', JSON.stringify(processos))
+      let processosFromDatabase = res.data.data.processos ?? []
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
+      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
 
-      console.log('Depois do axios - res : ', res)
+      console.log('Saiu do onAdd - Acima do AddProcesso - processosFromDatabase :', processosFromDatabase)
+
       setProcessos(processos)
       setShowAddProcesso(!showAddProcesso)
-
+      isNewProcessos = true
     } catch {}
   }
 
-  // // Delete Processo
-  const deleteProcesso = async (processo, email) => {
-    //   await fetch(`https://api-pesquisajus.comm.br/v1/users/${email}`, {
-    //     method: 'PATCH',
-    //     headers: { 'Content-type': 'application/json' },
-    //     body: JSON.stringify(processo),
-    //   })
-    //   setProcessos(processos.filter((processo) => processo.nroProcesso !== nroProcesso))
+  //
+  const deleteProcesso = async (delprocesso) => {
+    try {
+      const newprocessos = (processos.filter((processo) => (processo.processo !== delprocesso.processo)))
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/users/gravaprocessos'
+      const res = await axios.post(url, { email, processos: newprocessos }, config)
+
+      let processosFromDatabase = res.data.data.processos ?? []
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
+      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
+
+      setProcessos(newprocessos)
+      setShowAddProcesso(!showAddProcesso)
+      isNewProcessos = true
+    } catch {}
   }
 
   return (
     <>
       <div className="header mt-4 d-flex flex-col justify-content-between">
-        <h5 style={{ color: '#9A8B4F', fontSize: '24px', fontWeight: '500' }}>Meus Processos</h5>
+        <div style={{ color: '#9A8B4F', fontSize: '24px', fontWeight: '500' }}>Meus Processos</div>
 
         <Button
           className="sm"
@@ -107,26 +114,26 @@ const ListaDeProcessos = () => {
 
 export default ListaDeProcessos
 
-  // Fetch Processos
-  // const fetchProcessos = async () => {
-  //   const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-  //   const url = baseUrl + '/users/getprocessos'
+// Fetch Processos
+// const fetchProcessos = async () => {
+//   const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+//   const url = baseUrl + '/users/getprocessos'
 
-  //   const res = await axios.get(url, { email }, config)
-  //   console.log('Data do Axios res.user.processos : ', res.user.processos)
-  //   let processos = res.user.processos ?? []
+//   const res = await axios.get(url, { email }, config)
+//   console.log('Data do Axios res.user.processos : ', res.user.processos)
+//   let processos = res.user.processos ?? []
 
-  //   return processos
-  // }
+//   return processos
+// }
 
-  // // Get Processo
-  // const getProcessosFromServer = async (processo, email) => {
-  //   try {
-  //     const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-  //     const url = baseUrl + '/users/getprocessos'
+// // Get Processo
+// const getProcessosFromServer = async (processo, email) => {
+//   try {
+//     const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+//     const url = baseUrl + '/users/getprocessos'
 
-  //     const res = await axios.get(url, { email, listaDeProcessos }, config)
+//     const res = await axios.get(url, { email, listaDeProcessos }, config)
 
-  //     setListaDeProcessos(listadDeProcessos)
-  //   } catch {}
-  // }
+//     setListaDeProcessos(listadDeProcessos)
+//   } catch {}
+// }

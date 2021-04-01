@@ -1,15 +1,24 @@
+import avatarImage from './avatar4944.png'
+
+// const avatarName = './avatar4944.png'
+// const avatarImage = require('./avatar4944.png')
 
 const HeaderShowUserImage = (props) => {
   // const userDisplayName = props.value
-  const randomstring = Math.random().toString(36).slice(-12);
-  const avatarGenCode = `https://robohash.org/${randomstring}?set=set4`
-  const altAvatarImage = "Cat image"
+  //const randomstring = Math.random().toString(36).slice(-12);
+  //const randomstring = '4000'
+  //const avatarGenCode = require('./avatar'+ randomstring +'.png')
+  //const avatarGenCode = require('avatar4944.png')
+  
+  const altAvatarImage = 'User image'
+
+  //<img alt="timer" src={require('./images/timer.png')} />
 
   return (
     <div>
-      <img 
+      <img
         className="ml-4 roundedCircle img-fluid"
-        src={avatarGenCode}
+        src={avatarImage}
         alt={altAvatarImage}
         width="50px"
         height="50px"

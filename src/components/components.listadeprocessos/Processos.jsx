@@ -1,4 +1,5 @@
-import Processo from './Processo'
+
+import Processo from './Processo.jsx'
 
 const Processos = ({ processos, onDelete, onToggle }) => {
   return (
