@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
 import Publicacao from '../components.listadepublicacoes/Publicacao'
+import Loader from '../Loader'
 import ReactConfig from '../../utils/ReactConfig'
 
 const PesquisaPorNome = () => {
@@ -12,7 +13,7 @@ const PesquisaPorNome = () => {
 
   const [nomeBuscaProcesso, setNomeBuscaProcesso] = useState('')
   const [nomeParte, setNomeParte] = useState('')
-  //const [tipoBuscaProcesso, setTipoBuscaProcesso] = useState('exata')
+  const [loading, setLoading] = useState(false)
 
   const [publicacoes, setPublicacoes] = useState([])
 
@@ -43,6 +44,7 @@ const PesquisaPorNome = () => {
     const fetchPublicacoes = async () => {
       const arr_publicacoes = []
       if (true) {
+        setLoading(true)
         // if (nomeParte !== '') {
         console.log('Entrou no Fetch nome do axios')
         const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
@@ -62,6 +64,7 @@ const PesquisaPorNome = () => {
             arr_publicacoes.push(publicacoesFromFetch[i])
           }
         }
+        setLoading(false)
       }
       return arr_publicacoes
     }
@@ -84,6 +87,8 @@ const PesquisaPorNome = () => {
           Pesquisa publicações pelo nome da parte
         </h3>
       </div>
+
+      {loading && <Loader />}
 
       <div className="ml-1 mr-1 mt-1 d-flex flex-column justify-content-center align-items-center" style={{ minWidth: '540px'}}>
         <Form inline
