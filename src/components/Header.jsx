@@ -26,15 +26,18 @@ const Header = () => {
   }
 
   return (
-    <Navbar sticky="top"  variant="dark" className="py-4 align-items-center navbar navbar-expand-md" 
-          style={{minHeigth: "10vh", backgroundColor: '567d46'}}>
+    <Navbar
+      sticky="top"
+      variant="dark"
+      className="py-4 align-items-center navbar navbar-expand-md"
+      style={{ minHeigth: '10vh', backgroundColor: '#78c2ad' }}  // #78c2ad - '#567d46
+    >
       <div className="container-fluid">
         <Link className="logo-container" to="/">
           <Logo className="logo" />
         </Link>
 
-        <Nav >
-
+        <Nav>
           <Nav.Item>
             <NavLink
               exact
@@ -78,14 +81,15 @@ const Header = () => {
               Contato
             </NavLink>
           </Nav.Item>
-          
 
           <HeaderShowUserImage value={userDisplayName} />
 
           {userLogin && userLogin.name !== 'Convidado' ? (
-
-            <NavDropdown title={<span style={{ color: 'darkblue', fontWeight: '450'}}>{userDisplayName}</span>} id="username" className="mx-2">
-
+            <NavDropdown
+              title={<span style={{ color: 'darkblue', fontWeight: '450' }}>{userDisplayName}</span>}
+              id="username"
+              className="mx-2"
+            >
               <LinkContainer to="/profile">
                 <NavDropdown.Item>Perfil Senha</NavDropdown.Item>
               </LinkContainer>
@@ -97,7 +101,6 @@ const Header = () => {
               <LinkContainer to="/">
                 <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
               </LinkContainer>
-
             </NavDropdown>
           ) : (
             <>
