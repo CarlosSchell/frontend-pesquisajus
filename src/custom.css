@@ -2,6 +2,26 @@ body {
   background-color: rgb(241, 235, 235);
 }
 
+/* Modify the background color */
+.navbar-custom {
+  background-color: lightgreen;
+}
+
+.bg-primary {
+  background-color: lightgreen;
+}
+
+
+.color-nav {
+  background-color: lightgreen;
+}
+
+/* Modify brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: white;
+}
+
 .notification {
   background-color: rgb(238, 170, 170);
   color: white;

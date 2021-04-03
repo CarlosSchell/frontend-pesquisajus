@@ -32,6 +32,7 @@ export const App = () => {
           <main>
             <Switch>
               <Route path="/" component={HomeScreen} exact />
+              <Route path="/buscapornome" component={HomeScreen} exact />
               <Route path="/sobrenos" component={SobreNos} exact />
               <Route path="/contato" component={Contato} exact/>
               <Route path="/login" component={LoginScreen} exact />

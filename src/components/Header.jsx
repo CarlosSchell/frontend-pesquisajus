@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
-import { Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { ReactComponent as Logo } from './method-draw-image.svg'
 import { useDispatch, useSelector } from 'react-redux'
@@ -26,13 +26,14 @@ const Header = () => {
   }
 
   return (
-    <nav className="py-4 align-items-center navbar navbar-expand-md bg-primary" style={{minHeigth: "10vh", backgroundColor:"#00A170"}}>
+    <Navbar sticky="top"  variant="dark" className="py-4 align-items-center navbar navbar-expand-md" 
+          style={{minHeigth: "10vh", backgroundColor: '567d46'}}>
       <div className="container-fluid">
         <Link className="logo-container" to="/">
           <Logo className="logo" />
         </Link>
 
-        <Nav>
+        <Nav >
 
           <Nav.Item>
             <NavLink
@@ -109,7 +110,7 @@ const Header = () => {
           )}
         </Nav>
       </div>
-    </nav>
+    </Navbar>
   )
 }
 

@@ -54,34 +54,45 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
 
   return (
     <div>
-      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '30px', color: 'black', textAlign: 'left' }}>
-        <div style={{ display: 'flex', marginBottom: '5px', marginTop: '0px', alignItems: 'center' }}>
-          <div className="notification" style={{ backgroundColor: badge_color }}>
-            <span>{badge_text}</span>
+      
+      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '20px', color: 'black', textAlign: 'left' }}>
+
+        <div className="d-flex flex-row justify-content-between" 
+              style={{ display: 'flex', marginBottom: '05px', marginTop: '0px',    alignItems: 'center' }}>
+
+          <div className="d-flex flex-row justify-content-start">
+            <div className="notification" style={{ backgroundColor: badge_color }}>
+              <span>
+                {badge_text}
+              </span>
+            </div>
+            <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>
+              {'Processo: ' + processo}
+            </span>
           </div>
 
-          <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>{'Processo: ' + processo}</span>
+          <div className="d-flex flex-row justify-content-end">
+            <a
+              href="https://www.tjrs.jus.br/novo/busca/?return=proc&client=wp_index"
+              onClick={(e) => textToClipboard(processo)}
+              target="_blank"
+              rel="noreferrer"
+              style={{}}
+            >
+              <Button variant="outline-info" className="ml-5" style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
+                <div>
+                  Consultar no TJRS
+                  <img className="ml-2 justify-content-end" src={court} alt={court} width="20px" height="22px" />
+                </div>
+              </Button>
+            </a>
 
-          <a
-            href="https://www.tjrs.jus.br/novo/busca/?return=proc&client=wp_index"
-            onClick={(e) => textToClipboard(processo)}
-            target="_blank"
-            rel="noreferrer"
-            style={{}}
-          >
-            <Button variant="outline-info" className="ml-5" style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
-              <div>
-                Consultar TJRS
-                <img className="ml-2" src={court} alt={court} width="20px" height="22px" />
-              </div>
+            <Button variant="outline-info" className="ml-5  justify-content-end" style={{ color: 'black', backgroundColor: 'lightblue' }}>
+              Incluir nos Meus Processos
             </Button>
-          </a>
-
-          <Button variant="outline-info" className="ml-5" style={{ color: 'black', backgroundColor: 'lightblue' }}>
-            + Meus Processos
-          </Button>
-          
+          </div>
         </div>
+
         <div>
           <span style={{ color: 'darkblue', fontSize: '1.2em', fontWeigth: '900' }}>
             {'TJRS ' + dia + '/' + mes + '/' + ano}
@@ -98,7 +109,7 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
           {assunto ? '- ' + assunto : ''}
         </p>
 
-        <p style={{ marginBottom: '5px', marginTop: '5px' }}>
+        <p style={{ marginBottom: '3px', marginTop: '3px' }}>
           <Highlighter
             highlightClassName={'highlight'}
             highlightStyle={{ fontWeight: 'bold', backgroundColor: '#F8DE7E' }}
@@ -109,8 +120,11 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
             textToHighlight={decisao}
           />
         </p>
-        <p>{textToHighlight}</p>
+
+        <hr style={{ marginTop: '20px'}} />
+
       </div>
+
     </div>
   )
 }

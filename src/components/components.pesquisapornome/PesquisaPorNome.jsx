@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
+import { CSVLink, CSVDownload } from 'react-csv'
 import axios from 'axios'
 import Publicacao from '../components.listadepublicacoes/Publicacao'
 import Loader from '../Loader'
@@ -54,7 +55,7 @@ const PesquisaPorNome = () => {
         // console.log('URl : ', url)
         // console.log(res)
         // console.log(res.data.data.publicacoes)
-        const publicacoesFromFetch = res.data.data.publicacoes
+        let publicacoesFromFetch = res.data.data.publicacoes
         if (publicacoesFromFetch.length > 0) {
           //console.log('res.data.data.publicacoes : ', res.data.data.publicacoes[0])
           for (let i = 0; i < publicacoesFromFetch.length; i++) {
@@ -63,6 +64,7 @@ const PesquisaPorNome = () => {
             console.log('nroProcesso : ', nroProcesso, nomePartes)
             arr_publicacoes.push(publicacoesFromFetch[i])
           }
+          publicacoesFromFetch = []
         }
         setLoading(false)
       }
@@ -70,8 +72,10 @@ const PesquisaPorNome = () => {
     }
 
     const getPublicacoes = async () => {
-      const publicacoesFromServer = await fetchPublicacoes()
+      setPublicacoes([])
+      let publicacoesFromServer = await fetchPublicacoes()
       setPublicacoes(publicacoesFromServer)
+      publicacoesFromServer = []
       console.log('publicacoesFromServer : ', publicacoesFromServer)
     }
 
@@ -79,30 +83,30 @@ const PesquisaPorNome = () => {
   }, [nomeParte, baseUrl, token, dispatch])
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center" 
-          style={{ backgroundColor: ' #ffecd9', }}>
-
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ backgroundColor: ' #ffecd9' }}
+    >
       <div className="text-center py-3 mt-3">
-        <h3>
-          Pesquisa publicações pelo nome da parte
-        </h3>
+        <h3>Pesquisa publicações pelo nome da parte</h3>
       </div>
 
       {loading && <Loader />}
 
-      <div className="ml-1 mr-1 mt-1 d-flex flex-column justify-content-center align-items-center" style={{ minWidth: '540px'}}>
-        <Form inline
-          style={{ width: '100%'}}
-          onSubmit={onSubmit}>
+      <div
+        className="ml-1 mr-1 mt-3 d-flex flex-column justify-content-center align-items-center"
+        style={{ minWidth: '540px' }}
+      >
+        <Form inline style={{ width: '100%' }} onSubmit={onSubmit}>
           <Form.Control
-          style={{ width: '80%'}}
+            style={{ width: '80%' }}
             className="mb-2"
             type="text"
             placeholder=""
             value={nomeBuscaProcesso}
             autoFocus
             required
-            width= '80%'
+            width="80%"
             maxLength="60"
             onChange={(e) => setNomeBuscaProcesso(e.target.value)}
           />
@@ -113,24 +117,47 @@ const PesquisaPorNome = () => {
       </div>
 
       <div>
-        {publicacoes.length > 0 ? (
+        {publicacoes.length === 0 && nomeParte !== '' ? (
+          <div className="text-center">Não foram encontradas publicações para este nome</div>
+        ) : (
+          <div></div>
+        )}
+
+        {publicacoes.length > 0 && publicacoes.length <= 999 && nomeParte !== '' ? (
+          <div className="text-center">Foram encontradas {publicacoes.length} publicações para este nome</div>
+        ) : (
+          <div className="text-center">Foram encontradas mais de {publicacoes.length} publicações para este nome</div>
+        )}
+
+        {publicacoes.length >= 1000 ? (
           <div>
-            <div className="text-center">`Foram encontradas {publicacoes.length} publicações para estes processos`</div>
-            <div className="text-center">`O sistema apresenta no máximo 200 publicações`</div>
+            <div className="text-center">O sistema apresenta no máximo 1000 publicações</div>
           </div>
         ) : (
-            <div className="text-center">'Não foram encontradas publicações para estes processos'</div>
+          <div></div>
         )}
 
         {publicacoes.length > 0 ? (
-              publicacoes.map((publicacao, index) => (
-                <Publicacao key={index} publicacao={publicacao} textToHighlight={nomeParte} />
-              ))
+          <div className="text-center">
+            <Button
+              variant="outline-info"
+              style={{ backgroundColor: '#f0f0f0'}}
+            >
+              <CSVLink data={publicacoes} style={{ textDecoration: 'none'}}>Baixar consulta em arquivo CSV</CSVLink>
+            </Button>
+          </div>
         ) : (
-            <div></div>
+          <div></div>
+        )}
+
+        {publicacoes.length > 0 ? (
+          publicacoes.map((publicacao, index) => (
+            <Publicacao key={index} publicacao={publicacao} textToHighlight={nomeParte} />
+          ))
+        ) : (
+          <div></div>
         )}
       </div>
-
     </div>
   )
 }
