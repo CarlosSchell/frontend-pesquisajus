@@ -55,7 +55,7 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
   return (
     <div>
       
-      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '20px', color: 'black', textAlign: 'left' }}>
+      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '30px', color: 'black', textAlign: 'left' }}>
 
         <div className="d-flex flex-row justify-content-between" 
               style={{ display: 'flex', marginBottom: '05px', marginTop: '0px',    alignItems: 'center' }}>
@@ -79,7 +79,7 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
               rel="noreferrer"
               style={{}}
             >
-              <Button variant="outline-info" className="ml-5" style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
+              <Button variant="outline-info" className="ml-5" >
                 <div>
                   Consultar no TJRS
                   <img className="ml-2 justify-content-end" src={court} alt={court} width="20px" height="22px" />
@@ -87,7 +87,7 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
               </Button>
             </a>
 
-            <Button variant="outline-info" className="ml-5  justify-content-end" style={{ color: 'black', backgroundColor: 'lightblue' }}>
+            <Button variant="outline-info" className="ml-5  justify-content-end" >
               Incluir nos Meus Processos
             </Button>
           </div>
@@ -130,3 +130,6 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
 }
 
 export default Publicacao
+
+
+// style={{ color: 'black', backgroundColor: '#f0f0f0' }}>

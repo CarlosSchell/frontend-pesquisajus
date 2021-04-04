@@ -89,7 +89,7 @@ const ListaDeProcessos = () => {
         <div style={{ color: '#9A8B4F', fontSize: '24px', fontWeight: '500' }}>Meus Processos</div>
 
         <Button
-          className="sm"
+          size="md"
           variant={showAddProcesso ? 'primary' : 'info'}
           onClick={() => {
             setShowAddProcesso(!showAddProcesso)

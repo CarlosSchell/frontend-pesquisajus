@@ -36,24 +36,24 @@ const calculateDays = (firstDate, secondDate) => {
     //console.log('badge_text : ',badge_text)
     badge_color = '#FF4242';
   } else if (diffDays <= 20) {
-    badge_text = 'Há ' + diffDays.toString() + ' dias';
+    badge_text = diffDays.toString() + ' dias';
     badge_color = '#FFA07A' ;
   } else if (diffDays <= 31) {
-    badge_text = 'Há ' + diffDays.toString() + ' dias';
+    badge_text = diffDays.toString() + ' dias';
     badge_color = '#808080';
   } else if (diffDays <= 60) {
-    badge_text = 'Há ' + diffMeses.toString()  + ' mes';
+    badge_text = diffMeses.toString()  + ' mes';
     badge_color = '#A9A9A9';
   } else if (diffDays <= 365) {
-    badge_text = 'Há ' + diffMeses.toString() + ' meses';
+    badge_text = diffMeses.toString() + ' meses';
     badge_color = '#A9A9A9';
     //badge_color = 'darkgreen';
   } else if (diffDays <= 730) {
-    badge_text = 'Há ' + diffAnos.toString()  + ' ano   ';
+    badge_text = diffAnos.toString()  + ' ano   ';
     badge_color = 'darkgreen';
     //badge_color = 'darkgreen';
   } else {
-    badge_text = 'Há ' + diffAnos.toString()  + ' anos  ';
+    badge_text = diffAnos.toString()  + ' anos  ';
     badge_color = 'black';
   }
 

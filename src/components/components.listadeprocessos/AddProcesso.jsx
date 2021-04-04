@@ -8,11 +8,8 @@ const AddProcesso = ({ onAdd }) => {
   console.log('Passou pelo Add Processo')
 
   const validateProcesso = (nroProcesso) => {
-
     console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
-
     if (!nroProcesso) return false
-    
     if (nroProcesso.length === 25) {
       return true
     } else {

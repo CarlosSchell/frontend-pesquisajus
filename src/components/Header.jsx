@@ -38,7 +38,7 @@ const Header = () => {
         </Link>
 
         <Nav>
-          <Nav.Item>
+          <Nav.Item className="mr-3">
             <NavLink
               exact
               to="/meusprocessos"
@@ -49,7 +49,7 @@ const Header = () => {
             </NavLink>
           </Nav.Item>
 
-          <Nav.Item>
+          <Nav.Item className="mr-3">
             <NavLink
               exact
               to="/buscapornome"
@@ -60,7 +60,19 @@ const Header = () => {
             </NavLink>
           </Nav.Item>
 
-          <Nav.Item>
+          <Nav.Item className="mr-3">
+            <NavLink
+              exact
+              to="/pesquisapornumero"
+              className="nav-link"
+              style={{ fontSize: '22px', fontWeight: '450', color: 'white', textDecoration: 'none' }}
+            >
+              Busca por Número
+            </NavLink>
+          </Nav.Item>
+
+
+          <Nav.Item className="mr-3">
             <NavLink
               exact
               to="/sobrenos"
@@ -71,7 +83,7 @@ const Header = () => {
             </NavLink>
           </Nav.Item>
 
-          <Nav.Item>
+          <Nav.Item className="mr-1">
             <NavLink
               exact
               to="/contato"

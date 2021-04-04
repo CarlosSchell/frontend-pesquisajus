@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
-import { CSVLink, CSVDownload } from 'react-csv'
+import { CSVLink } from 'react-csv'
 import axios from 'axios'
 import Publicacao from '../components.listadepublicacoes/Publicacao'
 import Loader from '../Loader'
@@ -138,13 +138,14 @@ const PesquisaPorNome = () => {
         )}
 
         {publicacoes.length > 0 ? (
-          <div className="text-center">
-            <Button
-              variant="outline-info"
-              style={{ backgroundColor: '#f0f0f0'}}
-            >
-              <CSVLink data={publicacoes} style={{ textDecoration: 'none'}}>Baixar consulta em arquivo CSV</CSVLink>
-            </Button>
+          <div className="text-center mt-2">
+              <CSVLink data={publicacoes}
+                      filename={"pesquisajus.csv"}
+                      className="btn btn-outline-primary"
+                      variant="outline-info" 
+                      style={{ textDecoration: 'none' }}> 
+                Baixar consulta em arquivo CSV
+              </CSVLink>
           </div>
         ) : (
           <div></div>
@@ -163,3 +164,5 @@ const PesquisaPorNome = () => {
 }
 
 export default PesquisaPorNome
+
+ // '#78c2ad'

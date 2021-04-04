@@ -7,6 +7,7 @@ import store from './store';
 import Header from './components/Header.jsx'
 import HomeScreen from './components/HomeScreen.jsx'
 import MeusProcessos from './components/MeusProcessos.jsx'
+import PesquisaPorNumeroScreen from './components/PesquisaPorNumeroScreen.jsx'
 import SobreNos from './components/SobreNos.jsx'
 import Contato from './components/Contato.jsx'
 import LoginScreen from './components/LoginScreen'
@@ -31,7 +32,7 @@ export const App = () => {
           <Header />
           <main>
             <Switch>
-              <Route path="/" component={HomeScreen} exact />
+              <Route path="/" component={MeusProcessos} exact />
               <Route path="/buscapornome" component={HomeScreen} exact />
               <Route path="/sobrenos" component={SobreNos} exact />
               <Route path="/contato" component={Contato} exact/>
@@ -44,6 +45,7 @@ export const App = () => {
               <Route path="/forgotpassword" component={ForgotPassword} exact />
               <Route path="/confirmemail/:token" component={ConfirmEmail}/>
               <Route path="/meusprocessos" component={MeusProcessos} exact />
+              <Route path="/pesquisapornumero" component={PesquisaPorNumeroScreen} exact />
               <Route path="/admin/userlist" component={''} />
               <Route path="/admin/user/:id/edit" component={''} />
               <Route component={PageNotFound} />
@@ -54,6 +56,3 @@ export const App = () => {
     </Provider>
   )
 }
-
-
-//           <Footer />
