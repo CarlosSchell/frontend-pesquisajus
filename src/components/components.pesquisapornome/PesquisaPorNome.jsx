@@ -88,7 +88,7 @@ const PesquisaPorNome = () => {
       style={{ backgroundColor: ' #ffecd9' }}
     >
       <div className="text-center py-3 mt-3">
-        <h3>Pesquisa publicações pelo nome da parte</h3>
+        <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Pesquisa publicações pelo nome da parte</h3>
       </div>
 
       {loading && <Loader />}

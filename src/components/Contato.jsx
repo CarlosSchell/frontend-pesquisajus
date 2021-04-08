@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
-import * as Icon from 'react-bootstrap-icons'
-import Loader from '../components/Loader.jsx'
+
 import Message from '../components/Message'
+import Loader from '../components/Loader.jsx'
 import ReactConfig from '../utils/ReactConfig.js'
 
 
@@ -14,21 +15,48 @@ const Contato = () => {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [completed, setCompleted] = useState('')
+  const [problem, setProblem] = useState('')
 
-  let completed = false
-  let problem = false
-  let Message = ''
+  const baseUrl = ReactConfig.baseUrl ?? ''
 
   const validateForm = () => {
     return email.length > 0 
   }
   
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault()
     setLoading(true)
     console.log('Enviando mensagem de contato')
     console.log(name, email, message)
-    // sendContatoMessage(name, email, message)
+    try {
+      const config = { headers: { 'Content-Type': 'application/json' } }
+      const url = baseUrl + '/geral/enviaemail'
+      const res = await axios.post(url, { name, email, message }, config)
+      console.log('Depois do axios da mensagem de contato: ', res)
+
+      const completedStatus = res.data.status ?? ''
+      const completedMessage = res.data.message ?? ''
+
+      if (completedStatus === 'success') {
+        setCompleted(completedMessage)
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log('Entrou no catch register error')
+      console.log('Resposta de erro: ', error.response)
+
+      const errorStatus = error.response.data.status
+      const errorMessage = error.response.data.message
+
+      console.log('Erro.response.status : ', errorStatus) //401
+      console.log('Erro.response.message : ', errorMessage)
+      // console.log('Erro.response.data.error : ', error.response.data.error)
+
+      if (errorStatus === 'fail') {
+        setProblem(errorMessage)
+      }
+    }
     setLoading(false)
     return
   }
@@ -36,27 +64,24 @@ const Contato = () => {
   return (
     <Container
       style={{
-        width: '420px',
+        width: '820px',
+        minwidth: '540px',
         height: '67vh',
         display: 'block',
-        textAlign: 'center',
-        marginTop: '3%',
+        textAlign: 'left',
+
       }}
     >
-      <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
+      <h3 className="py-3 mt-3 mb-3 text-center" style={{ textShadow: '1px 1px 1px lightgrey' }}>
         Entre em contato conosco
-      </h2>
-      {/* {completed && <Message>{completed}</Message>}
-      {problem && <Message variant="danger">{problem}</Message>} */}
+      </h3>
+      {completed && <Message>{completed}</Message>}
+      {problem && <Message variant="danger">{problem}</Message>}
       {loading && <Loader />}
 
       <Form onSubmit={submitHandler} className="mb-4 mx-auto">
-        <InputGroup className="my-4" controlid="email">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Person />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
+        <Form.Label>Nome</Form.Label>
+        <InputGroup className="my-1" controlid="name">
           <FormControl
             autoFocus={true}
             className="form-control"
@@ -72,13 +97,8 @@ const Contato = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </InputGroup>
-
-        <InputGroup className="my-4" controlid="email">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Envelope />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
+        <Form.Label>Endereço de email</Form.Label>
+        <InputGroup className="my-1" controlid="email">
           <FormControl
             className="form-control"
             id="email"
@@ -93,16 +113,17 @@ const Contato = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </InputGroup>
-
-        <Form.Group className="my-4"  controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Mensagem</Form.Label>
+        <Form.Group className="my-1"  controlId="exampleForm.ControlTextarea1">    
             <Form.Control 
             as="textarea" 
             id="textarea"
             name="textarea"
             type="textarea"
-            rows={4}
+            rows={5}
             value={message}
             placeholder="Digite sua mensagem"
+            maxlength = '1024'
             required
             onChange={(e) => setMessage(e.target.value)}
             />
@@ -120,14 +141,8 @@ const Contato = () => {
         </Button>
       </Form>
 
-      {completed && (
-          <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
-            <div className="my-4 text-center">Mensagem enviada !</div>
-          </div>
-        )}
-
-      <div style={{ color: 'white', marginTop: '3vh' }}>
-        <div className="my-4 text-center btn btn-info">
+      <div className="text-center" style={{ color: 'white', marginTop: '10vh'}}>
+        <div className="my-4 btn btn-info">
           <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
             Voltar à página principal
           </Link>

@@ -8,78 +8,83 @@ import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
 const ListaDeProcessos = () => {
-  const dispatch = useDispatch()
-  const userLoginInfo = useSelector((state) => state.userLogin)
-  // const userProcessosInfo = useSelector((state) => state.userProcessos) ?? []
+  console.log('Entrou no lista de Processos')
 
-  const email = userLoginInfo.email ?? ''
-  const token = userLoginInfo.token ?? ''
+  const dispatch = useDispatch()
+  const userInfo = useSelector((state) => state.userLogin)
+  // const userProcessos = useSelector((state) => state.userProcessos) ?? []
+  // console.log('Entrou no lista de userProcessos', userProcessos)
+
+  const email = userInfo.email ?? ''
+  const token = userInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
 
   const [showAddProcesso, setShowAddProcesso] = useState(false)
   const [processos, setProcessos] = useState([])
 
-  let isNewProcessos = false
+  const [isModified, setIsModified] = useState(false)
 
   useEffect(() => {
     const fetchProcessos = async () => {
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/getprocessos'
       const res = await axios.get(url, config)
-
       let processosFromDatabase = res.data.data.processos ?? []
       dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
-      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
-
+      setProcessos(processosFromDatabase)
+      // console.log('processos: ', processos)
       return processosFromDatabase
     }
 
-    const getProcessos = async () => {
-      const processosFromServer = await fetchProcessos()
-      setProcessos(processosFromServer)
-    }
+    // const getProcessos = async () => {
+    //   const processosFromServer = await fetchProcessos()
+    //   setProcessos(processosFromServer)
+    // }
 
-    getProcessos()
-  }, [baseUrl, email, token, isNewProcessos, dispatch])
+    fetchProcessos()
+  }, [baseUrl, email, isModified, token, dispatch])
 
   // Add Processo
-  const addProcesso = async (newprocesso) => {
+  const gravaNovoProcesso = async (newprocesso) => {
     try {
-
-      console.log('Entrou no onAdd - Acima do AddProcesso - newprocesso :', newprocesso)
-      processos.push(newprocesso)
-
+      console.log('Entrou no gravaNovoProcesso :', newprocesso)
+      const new_arr_processos = []
+      for (let i = 0; i < processos.length; i++) {
+        new_arr_processos.push(processos[i])
+        // console.log(i, processos[i])
+      }
+      new_arr_processos.push(newprocesso)
+      //console.log('new_arr_processos :', new_arr_processos)
+      setProcessos(new_arr_processos)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
-      const res = await axios.post(url, { email, processos }, config)
+      // const Obj = { email, processos: new_arr_processos }
+      // console.log('Obj: ', Obj)
+      await axios.post(url, { email, processos: new_arr_processos }, config)
 
-      let processosFromDatabase = res.data.data.processos ?? []
-      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
-      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
+      // console.log('Payload: ', { processos: new_arr_processos })
+      // console.log('Alou res: ', res)
+      // console.log('Belou res.data.data.processos: ', res.data.data.processos)
+      // let processosFromDatabase = res.data.data.processos ?? []
 
-      console.log('Saiu do onAdd - Acima do AddProcesso - processosFromDatabase :', processosFromDatabase)
-
-      setProcessos(processos)
-      setShowAddProcesso(!showAddProcesso)
-      isNewProcessos = true
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: new_arr_processos } })
+      setProcessos(new_arr_processos)
+      setIsModified(!isModified)
+      // setShowAddProcesso(!showAddProcesso)
     } catch {}
   }
 
   //
   const deleteProcesso = async (delprocesso) => {
     try {
-      const newprocessos = (processos.filter((processo) => (processo.processo !== delprocesso.processo)))
+      const newprocessos = processos.filter((processo) => processo.processo !== delprocesso.processo)
+      console.log('Entrou no deleteProcesso - newprocesso :', newprocessos)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
-      const res = await axios.post(url, { email, processos: newprocessos }, config)
-
-      let processosFromDatabase = res.data.data.processos ?? []
-      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
-      // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
-
+      await axios.post(url, { email, processos: newprocessos }, config)
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: newprocessos } })
       setProcessos(newprocessos)
-      setShowAddProcesso(!showAddProcesso)
-      isNewProcessos = true
+      setIsModified(!isModified)
     } catch {}
   }
 
@@ -100,12 +105,12 @@ const ListaDeProcessos = () => {
       </div>
 
       <div className="mt-2">
-        {showAddProcesso && <AddProcesso onAdd={addProcesso} />}
+        {showAddProcesso && <AddProcesso gravaNovoProcesso={gravaNovoProcesso} />}
         <hr />
         {processos.length > 0 ? (
           <Processos processos={processos} onDelete={deleteProcesso} />
         ) : (
-          <div className="text-center">'Não existem processos cadastrados'</div>
+          <div className="text-center">Não existem processos cadastrados</div>
         )}
       </div>
     </>
@@ -113,27 +118,3 @@ const ListaDeProcessos = () => {
 }
 
 export default ListaDeProcessos
-
-// Fetch Processos
-// const fetchProcessos = async () => {
-//   const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-//   const url = baseUrl + '/users/getprocessos'
-
-//   const res = await axios.get(url, { email }, config)
-//   console.log('Data do Axios res.user.processos : ', res.user.processos)
-//   let processos = res.user.processos ?? []
-
-//   return processos
-// }
-
-// // Get Processo
-// const getProcessosFromServer = async (processo, email) => {
-//   try {
-//     const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-//     const url = baseUrl + '/users/getprocessos'
-
-//     const res = await axios.get(url, { email, listaDeProcessos }, config)
-
-//     setListaDeProcessos(listadDeProcessos)
-//   } catch {}
-// }

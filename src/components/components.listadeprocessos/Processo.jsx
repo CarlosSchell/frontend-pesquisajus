@@ -3,7 +3,7 @@ import * as Icon from 'react-bootstrap-icons'
 const Processo = ({ processo, onDelete, onToggle }) => {
   return (
     <div>
-      <div style={{ fontSize: '1.1rem', marginLeft: '12px' }}>
+      <div style={{ fontSize: '1.1rem', marginLeft: '12px', marginBottom: '0px' }}>
         <p style={{ marginBottom: '0px', color: 'black' }}>
           <Icon.Trash
             style={{ marginBottom: '0px' }}
@@ -22,6 +22,7 @@ const Processo = ({ processo, onDelete, onToggle }) => {
           <Icon.ArrowUp />
         </p>
       </div>
+      <hr/>
     </div>
   )
 }

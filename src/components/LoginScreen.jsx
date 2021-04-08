@@ -16,7 +16,7 @@ import { PROCESSOS_UPDATE_SUCCESS } from '../constants/processosConstants'
 const LoginScreen = ({ location, history }) => {
   const dispatch = useDispatch()
 
-  console.log('Passou pelo Login Screen')
+  console.log('Passou pelo Login')
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,7 +34,7 @@ const LoginScreen = ({ location, history }) => {
   if (completed) {
     messageTimer = setTimeout(() => {
       history.push('/')
-    }, 2500)
+    }, 2000)
   }
 
   if (problem) {
@@ -59,7 +59,7 @@ const LoginScreen = ({ location, history }) => {
       const res = await axios.post(url, { email, password }, config)
       let payload = res.data.data
 
-      console.log('Resposta do Axios :', payload)
+      // console.log('Resposta do Axios :', payload)
 
       const name = payload.name
       //const email = payload.email

@@ -1,29 +1,32 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import verificaZerosEsquerda from '../../utils/verificaZerosEsquerda'
 
-const AddProcesso = ({ onAdd }) => {
+const AddProcesso = ({ gravaNovoProcesso }) => {
   const [nroProcesso, setNroProcesso] = useState('')
   const [descricaoProcesso, setDescricaoProcesso] = useState('')
+  const [isNroProcessoValido, setIsNroProcessoValido] = useState(false)
 
-  console.log('Passou pelo Add Processo')
+  console.log('Passou pelo AddProcesso - Pega o codigo do novo processo')
 
   const validateProcesso = (nroProcesso) => {
     console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
-    if (!nroProcesso) return false
+    nroProcesso = verificaZerosEsquerda(nroProcesso)
+    setNroProcesso(nroProcesso)
+    let isValid = false
     if (nroProcesso.length === 25) {
-      return true
-    } else {
-      return false
-    }
+      isValid = true
+    } 
+    setIsNroProcessoValido(isValid)
+    return
   }
+
 
   const onSubmit = (e) => {
     e.preventDefault()
-
-    console.log('Add Processo OnSubmit :', nroProcesso, descricaoProcesso)
-
-    onAdd({ processo: nroProcesso, descricao: descricaoProcesso })
-
+    console.log('Pega o codigo do novo processo OnSubmit :', nroProcesso, descricaoProcesso)
+    gravaNovoProcesso({ processo: nroProcesso, descricao: descricaoProcesso })
+    setIsNroProcessoValido(false)
     setNroProcesso('')
     setDescricaoProcesso('')
   }
@@ -34,11 +37,14 @@ const AddProcesso = ({ onAdd }) => {
         <Form.Label >Número do Processo (CNJ)</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Exemplo: 1234567-00.1234.8.21-1234"
+          placeholder=""
           value={nroProcesso}
           autoFocus
           required
-          onChange={(e) => setNroProcesso(e.target.value)}
+          maxLength="25"
+          minLength="25"
+          pattern='[0-9]{1,7}[\-][0-9]{2}[\.][0-9]{4}[\.][0-9][\.][0-9]{2}[\.][0-9]{4}'
+          onChange={(e) => validateProcesso(e.target.value)}
         />
       </Form.Group>
 
@@ -60,12 +66,10 @@ const AddProcesso = ({ onAdd }) => {
           variant="primary"
           type="submit"
           value="Entrar"
-          disabled={!validateProcesso(nroProcesso)}
+          disabled={(!isNroProcessoValido)}
         >
           Incluir Processo
         </Button>
-
-      <input type='submit' value='Incluir Processo' className='lg btn btn-block mt-2' />
 
     </Form>
   )

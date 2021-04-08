@@ -5,6 +5,7 @@ import axios from 'axios'
 import Publicacao from '../components.listadepublicacoes/Publicacao'
 import Loader from '../Loader'
 import ReactConfig from '../../utils/ReactConfig'
+import verificaZerosEsquerda from '../../utils/verificaZerosEsquerda'
 
 
 const PesquisaPorNumero = () => {
@@ -23,13 +24,14 @@ const PesquisaPorNumero = () => {
 
   console.log('Passou pelo PesquisaPorNumero')
 
+
   const validateProcesso = (nroProcesso) => {
     console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
-    
+    nroProcesso = verificaZerosEsquerda(nroProcesso)
+    setNumeroBuscaProcesso(nroProcesso)
     let isValid = false
     if (nroProcesso.length === 25) {
       isValid = true
-      setNumeroBuscaProcesso(nroProcesso)
     } 
     setIsNroProcessoValido(isValid)
     return
@@ -92,7 +94,7 @@ const PesquisaPorNumero = () => {
       style={{ backgroundColor: ' #ffecd9' }}
     >
       <div className="text-center py-3 mt-3">
-        <h3>Pesquisa publicações pelo numero do processo</h3>
+        <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Pesquisa publicações pelo numero do processo</h3>
       </div>
 
       {loading && <Loader />}
@@ -112,11 +114,8 @@ const PesquisaPorNumero = () => {
             width="80%"
             maxLength="25"
             minLength="25"
-            pattern='[0-9]{7,}[-][0-9]{2}[.][0-9]{4}[.][0-9][.][0-9]{2}[.][0-9]{4}'
-            onChange={(e) => validateProcesso(e.target.value)}
-            // placeholder='0000000-00.0000.0.00.0000'
-            // onChange={nroProcessoHandler}
-            // width='25'
+            pattern='[0-9]{1,7}[\-][0-9]{2}[\.][0-9]{4}[\.][0-9][\.][0-9]{2}[\.][0-9]{4}'
+            onChange={(e) => validateProcesso(e.target.value) }
           />
           <Button className="mb-2 ml-0" 
               style={{ fontSize: '22px' }}
@@ -165,3 +164,5 @@ const PesquisaPorNumero = () => {
 }
 
 export default PesquisaPorNumero
+
+//             pattern='/[0-9]{7,1}[-][0-9]{2}[.][0-9]{4}[.][0-9][.][0-9]{2}[.][0-9]{4}/'
