@@ -7,6 +7,7 @@ import AddProcesso from './AddProcesso'
 import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
+
 const ListaDeProcessos = () => {
   console.log('Entrou no lista de Processos')
 

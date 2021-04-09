@@ -2,15 +2,24 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
-import Publicacao from '../components.listadepublicacoes/Publicacao'
+import Publicacao from '../components.pesquisameusprocessos/Publicacao'
 import Loader from '../Loader'
+// import incluiProcessoLista from '../../utils/incluiProcessoLista'
 import ReactConfig from '../../utils/ReactConfig'
+import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import verificaZerosEsquerda from '../../utils/verificaZerosEsquerda'
 
 
 const PesquisaPorNumero = () => {
+
   const dispatch = useDispatch()
-  const userLoginInfo = useSelector((state) => state.userLogin)
+  const userInfo = useSelector((state) => state.userLogin)
+
+  const email = userInfo.email ?? ''
+  const token = userInfo.token ?? ''
+  const baseUrl = ReactConfig.baseUrl ?? ''
+
+  const userProcessos = useSelector((state) => state.userProcessos) ?? []
 
   const [numeroBuscaProcesso, setNumeroBuscaProcesso] = useState('')
   const [strBusca, setStrBusca] = useState('')
@@ -19,11 +28,34 @@ const PesquisaPorNumero = () => {
 
   const [publicacoes, setPublicacoes] = useState([])
 
-  const token = userLoginInfo.token ?? ''
-  const baseUrl = ReactConfig.baseUrl ?? ''
-
   console.log('Passou pelo PesquisaPorNumero')
 
+  const incluiProcessoListaPorNumero= async (newprocesso) => {  
+    try {
+      console.log('Entrou no incluiProcessoListaPorNumero :', newprocesso)
+      const new_arr_processos = []
+      for (let i = 0; i < userProcessos.length; i++) {
+        new_arr_processos.push(userProcessos[i])
+        console.log(i, userProcessos[i])
+      }
+      new_arr_processos.push(newprocesso)
+      //console.log('new_arr_processos :', new_arr_processos)
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/users/gravaprocessos'
+      // const Obj = { email, processos: new_arr_processos }
+
+      // console.log('Obj: ', Obj)
+      // await axios.post(url, { email, processos: new_arr_processos }, config)
+
+      // console.log('Payload: ', { processos: new_arr_processos })
+      // console.log('Alou res: ', res)
+      // console.log('Belou res.data.data.processos: ', res.data.data.processos)
+      // let processosFromDatabase = res.data.data.processos ?? []
+
+      // dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: new_arr_processos } })
+    } catch {}
+    return
+  }
 
   const validateProcesso = (nroProcesso) => {
     console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
@@ -81,8 +113,8 @@ const PesquisaPorNumero = () => {
       setPublicacoes([])
       let publicacoesFromServer = await fetchPublicacoes()
       setPublicacoes(publicacoesFromServer)
-      publicacoesFromServer = []
       console.log('publicacoesFromServer : ', publicacoesFromServer)
+      publicacoesFromServer = []
     }
 
     getPublicacoes()
@@ -153,7 +185,7 @@ const PesquisaPorNumero = () => {
 
         {publicacoes.length > 0 ? (
           publicacoes.map((publicacao, index) => (
-            <Publicacao key={index} publicacao={publicacao} textToHighlight={''} />
+            <Publicacao key={index} publicacao={publicacao} textToHighlight={''} incluiProcessoLista={incluiProcessoListaPorNumero} />
           ))
         ) : (
           <div></div>

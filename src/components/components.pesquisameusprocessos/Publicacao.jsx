@@ -1,11 +1,17 @@
 import Highlighter from 'react-highlight-words'
 import { Button } from 'react-bootstrap'
-//import '../../custom.css'
+// import '../../custom.css'
+// import incluiProcessoLista from '../../utils/incluiProcessoLista.js'
 import calculateDays from '../../utils/calculateDays.js'
 import textToClipboard from '../../utils/textToClipboard'
 import court from '../../utils/court.png'
 
-const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
+//<Publicacao key={index} publicacao={publicacao} textToHighlight={''} incluiProcessoLista ={incluiProcessoLista } />
+
+const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
+
+  // console.log('incluiProcessoLista : ', incluiProcessoLista)
+
   //const uf       =  publicacao.uf
   const cidade = publicacao.cidade
   const grau = publicacao.grau
@@ -48,9 +54,15 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
   const processo = publicacao.processo
   //const outronumero =  publicacao.outronumero
   //const origemg1    = publicacao.origemg1
-  //const partes    = publicacao.partes
-  const assunto = publicacao.assunto ?? ''
+  const partes  = publicacao.partes ?? ''
+  const descricao  = partes.substr(0, 24)
+  const assunto = publicacao.assunto ?? '' 
   const decisao = publicacao.decisao
+
+  const onClickIncluirProcesso = (processo, descricao) => {
+    console.log('onClickIncluirProcesso :', processo, descricao)
+    incluiProcessoLista({ processo, descricao })
+  }
 
   return (
     <div>
@@ -87,9 +99,13 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
               </Button>
             </a>
 
-            <Button variant="outline-info" className="ml-5  justify-content-end" >
+            {(incluiProcessoLista) ?  <Button variant="outline-info" 
+              className="ml-5 justify-content-end" 
+              onClick = {() => {onClickIncluirProcesso(processo, descricao)} }
+              >
               Incluir nos Meus Processos
-            </Button>
+            </Button> : ''}
+
           </div>
         </div>
 
@@ -108,6 +124,8 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
           {desctipo ? '- ' + desctipo : ''}
           {assunto ? '- ' + assunto : ''}
         </p>
+
+        {partes && <p>Partes : '{partes}</p>}
 
         <p style={{ marginBottom: '3px', marginTop: '3px' }}>
           <Highlighter
@@ -131,5 +149,6 @@ const Publicacao = ({ publicacao, textToHighlight, onDelete, onToggle }) => {
 
 export default Publicacao
 
-
+// onClick={ (processo, partes) => {incluiProcessoLista(processo, partes)}}
 // style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
+// onClick={ () => {incluiProcessoLista(processo, partes)} }

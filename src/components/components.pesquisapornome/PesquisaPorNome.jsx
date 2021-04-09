@@ -3,37 +3,57 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import { CSVLink } from 'react-csv'
 import axios from 'axios'
-import Publicacao from '../components.listadepublicacoes/Publicacao'
+import Publicacao from '../components.pesquisameusprocessos/Publicacao'
 import Loader from '../Loader'
+import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
+// import incluiProcessoLista from '../../utils/incluiProcessoLista'
 import ReactConfig from '../../utils/ReactConfig'
 
 const PesquisaPorNome = () => {
+  console.log('Passou pelo PesquisaPorNome')
   const dispatch = useDispatch()
-  const userLoginInfo = useSelector((state) => state.userLogin)
-  //const userProcessosInfo = useSelector((state) => state.userProcessos) ?? []
+  const userInfo = useSelector((state) => state.userLogin)
+
+  const email = userInfo.email ?? ''
+  const token = userInfo.token ?? ''
+  const baseUrl = ReactConfig.baseUrl ?? ''
+
+  const userProcessos = useSelector((state) => state.userProcessos) ?? []
 
   const [nomeBuscaProcesso, setNomeBuscaProcesso] = useState('')
   const [nomeParte, setNomeParte] = useState('')
   const [loading, setLoading] = useState(false)
-
   const [publicacoes, setPublicacoes] = useState([])
 
-  const token = userLoginInfo.token ?? ''
-  const baseUrl = ReactConfig.baseUrl ?? ''
 
-  //const todays_date = new Date()
+  const incluiProcessoListaPorNome= async (newprocesso) => {  
+    try {
+      console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
+      console.log('userProcessos :', userProcessos)
+      const new_arr_processos = []
+      for (let i = 0; i < userProcessos.length; i++) {
+        new_arr_processos.push(userProcessos[i])
+        console.log(i, userProcessos[i])
+      }
+      new_arr_processos.push(newprocesso)
+      console.log('new_arr_processos :', new_arr_processos)
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/users/gravaprocessos'
+      // const Obj = { email, processos: new_arr_processos }
 
-  console.log('Passou pelo PesquisaPorNome')
+      // console.log('Obj: ', Obj)
+      // await axios.post(url, { email, processos: new_arr_processos }, config)
 
-  // const validateNomeBuscaProcesso = (nomeBuscaProcesso) => {
-  //   console.log('Nome de Busca do Processo: ', nomeBuscaProcesso)
-  //   if (!nomeBuscaProcesso) return false
-  //   if (nomeBuscaProcesso.length > 0) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
+      // console.log('Payload: ', { processos: new_arr_processos })
+      // console.log('Alou res: ', res)
+      // console.log('Belou res.data.data.processos: ', res.data.data.processos)
+      // let processosFromDatabase = res.data.data.processos ?? []
+
+      // dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: new_arr_processos } })
+    } catch {}
+    return
+  }
+
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -75,8 +95,8 @@ const PesquisaPorNome = () => {
       setPublicacoes([])
       let publicacoesFromServer = await fetchPublicacoes()
       setPublicacoes(publicacoesFromServer)
-      publicacoesFromServer = []
       console.log('publicacoesFromServer : ', publicacoesFromServer)
+      publicacoesFromServer = []
     }
 
     getPublicacoes()
@@ -153,7 +173,7 @@ const PesquisaPorNome = () => {
 
         {publicacoes.length > 0 ? (
           publicacoes.map((publicacao, index) => (
-            <Publicacao key={index} publicacao={publicacao} textToHighlight={nomeParte} />
+            <Publicacao key={index} publicacao={publicacao} textToHighlight={nomeParte} incluiProcessoLista={incluiProcessoListaPorNome}/>
           ))
         ) : (
           <div></div>
@@ -164,5 +184,3 @@ const PesquisaPorNome = () => {
 }
 
 export default PesquisaPorNome
-
- // '#78c2ad'

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import ListaDePublicacoes from '../components/components.listadepublicacoes/ListaDePublicacoes.jsx'
+import PesquisaMeusProcessos from '../components/components.pesquisameusprocessos/PesquisaMeusProcessos.jsx'
 import ListaDeProcessos from '../components/components.listadeprocessos/ListaDeProcessos.jsx'
 
-const MeusProcessos = () => {
+const PesquisaMeusProcessosScreen = () => {
   return (
     <Container fluid>
       <Row>
@@ -13,13 +13,13 @@ const MeusProcessos = () => {
         </Col>
 
         <Col sm={9} style={{ backgroundColor: '#ffecd9', minHeight: '89.7vh' }}>
-          <ListaDePublicacoes />
+          <PesquisaMeusProcessos />
         </Col>
 
       </Row>
     </Container>
   )
 }
-export default MeusProcessos
+export default PesquisaMeusProcessosScreen
 
 // <Col style={{ backgroundColor: 'beige', height: '89.7vh' }}>{/*<ListaDeProcessos />*/}</Col>

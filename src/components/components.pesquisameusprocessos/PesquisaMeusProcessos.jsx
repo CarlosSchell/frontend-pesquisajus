@@ -2,18 +2,16 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Publicacoes from './Publicacoes'
+//import incluiProcessoLista from '../../utils/incluiProcessoLista'
 import ReactConfig from '../../utils/ReactConfig'
 
 
-const ListaDePublicacoes = () => {
-
+const  PesquisaMeusProcessos = () => {
   console.log('Entrou no lista de Publicacoes')
-
   const userInfo = useSelector((state) => state.userLogin)
   const userProcessos = useSelector((state) => state.userProcessos) ?? []
   const [publicacoes, setPublicacoes] = useState([])
   // const [datasDiario, setDatasDiario] = useState([])
-
   const token = userInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
   const todays_date = new Date()
@@ -28,9 +26,6 @@ const ListaDePublicacoes = () => {
     //   console.log('res diario: ', res)
     //   //if (res.data.data.publicacoes[0]) {
 
-    //   //}
-    // }
-    
     const fetchPublicacoes = async () => {
       const arr_loop = userProcessos.processos ?? []
       const arr_publicacoes = []
@@ -85,10 +80,10 @@ const ListaDePublicacoes = () => {
   return (
     <div className="text-center py-3 mt-3"
         style={{ backgroundColor: ' #ffecd9', }}>
-      <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Publicações do Diário Oficial do TJRS</h3>
+      <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Últimas Publicações dos Meus Processos</h3>
       <p>{'Data atual: '+ todays_date.toString().substring(0,20) + ' -  Base de Dados atualizada até o Diário Nro: 6947 de 25/03/2021'}</p>
       {publicacoes.length > 0 ? (
-        <Publicacoes publicacoes={publicacoes} />
+        <Publicacoes publicacoes={publicacoes} textToHighlight={""} incluiProcessoLista={''}/>
       ) : (
         <div className="text-center">Não foram encontradas publicações para a lista dos Meus Processos</div>
       )}
@@ -101,4 +96,4 @@ const ListaDePublicacoes = () => {
 // baseUrl: 'https://api-pesquisajus.com.br:21290/v1'
 //https://api-pesquisajus.com.br:21290/v1/publicacao/0003366-19.2011.8.21.2001
 
-export default ListaDePublicacoes
+export default PesquisaMeusProcessos

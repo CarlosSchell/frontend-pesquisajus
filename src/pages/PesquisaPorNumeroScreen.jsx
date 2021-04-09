@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-//import Publicacoes from './components.listadepublicacoes/Publicacoes'
 import PesquisaPorNumero from '../components/components.pesquisapornumero/PesquisaPorNumero'
 import ListaDeProcessos from '../components/components.listadeprocessos/ListaDeProcessos'
 

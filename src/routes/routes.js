@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbartest from '../components/Navbartest.jsx'
 // import Header from '../components/Header.jsx'
 import HomeScreen from '../pages/HomeScreen.jsx'
-import MeusProcessos from '../pages/MeusProcessos.jsx'
+import PesquisaMeusProcessosScreen from '../pages/PesquisaMeusProcessosScreen.jsx'
 import PesquisaPorNomeScreen from '../pages/PesquisaPorNomeScreen.jsx'
 import PesquisaPorNumeroScreen from '../pages/PesquisaPorNumeroScreen.jsx'
 import Api from '../pages/Api.jsx'
@@ -31,7 +31,7 @@ const RoutesApp = () => (
     <main>
       <Switch>
         <Route path="/" component={HomeScreen} exact />
-        <Route path="/meusprocessos" component={MeusProcessos} exact />
+        <Route path="/meusprocessos" component={PesquisaMeusProcessosScreen} exact />
         <Route path="/pesquisapornome" component={PesquisaPorNomeScreen} exact />
         <Route path="/pesquisapornumero" component={PesquisaPorNumeroScreen} exact />
         <Route path="/api" component={Api} exact />
