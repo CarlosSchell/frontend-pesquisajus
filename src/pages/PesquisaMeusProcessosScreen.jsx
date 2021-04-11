@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import PesquisaMeusProcessos from '../components/components.pesquisameusprocessos/PesquisaMeusProcessos.jsx'
-import ListaDeProcessos from '../components/components.listadeprocessos/ListaDeProcessos.jsx'
+import ListaDosMeusProcessos from '../components/components.listadeprocessos/ListaDosMeusProcessos.jsx'
 
 const PesquisaMeusProcessosScreen = () => {
   return (
@@ -9,7 +9,7 @@ const PesquisaMeusProcessosScreen = () => {
       <Row>
 
         <Col sm={3} style={{ backgroundColor: '#eaeded', width: '540px', minHeight: '89.7vh' }}>
-          <ListaDeProcessos />
+          <ListaDosMeusProcessos />
         </Col>
 
         <Col sm={9} style={{ backgroundColor: '#ffecd9', minHeight: '89.7vh' }}>
@@ -21,5 +21,3 @@ const PesquisaMeusProcessosScreen = () => {
   )
 }
 export default PesquisaMeusProcessosScreen
-
-// <Col style={{ backgroundColor: 'beige', height: '89.7vh' }}>{/*<ListaDeProcessos />*/}</Col>

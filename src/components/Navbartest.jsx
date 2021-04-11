@@ -25,22 +25,25 @@ const Navbartest = () => {
 
   return (
     <Navbar>
-      <div>
-        <Link className="navbar-brand logo" exact to="/">
-          <Logo className="" />
-        </Link>
-      </div>
+
+      <Link className="" exact to="/">
+        <Logo className="" />
+      </Link>
+
       <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/">
         Home
+      </NavLink>
+      <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/teste">
+        Teste
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/meusprocessos">
         Meus Processos
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/pesquisapornome">
-        Busca por Nome
+        Busca Nome
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/pesquisapornumero">
-        Busca por Número
+        Busca Processo
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/api">
         API
@@ -49,7 +52,7 @@ const Navbartest = () => {
         Downloads
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/sobrenos">
-        Sobre nós
+        Sobre
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/contato">
         Contato

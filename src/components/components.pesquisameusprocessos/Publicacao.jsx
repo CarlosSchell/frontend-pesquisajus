@@ -60,7 +60,7 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
   const decisao = publicacao.decisao
 
   const onClickIncluirProcesso = (processo, descricao) => {
-    console.log('onClickIncluirProcesso :', processo, descricao)
+    // console.log('onClickIncluirProcesso :', processo, descricao)
     incluiProcessoLista({ processo, descricao })
   }
 

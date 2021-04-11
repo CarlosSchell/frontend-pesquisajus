@@ -14,15 +14,19 @@ const PesquisaPorNome = () => {
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.userLogin)
 
+  const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
+  console.log('userProcessos : ', userProcessos)
+  const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
+  console.log('isProcessoModified : ', isProcessoModified)
+
   const email = userInfo.email ?? ''
   const token = userInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
 
-  const userProcessos = useSelector((state) => state.userProcessos) ?? []
-
   const [nomeBuscaProcesso, setNomeBuscaProcesso] = useState('')
   const [nomeParte, setNomeParte] = useState('')
   const [loading, setLoading] = useState(false)
+
   const [publicacoes, setPublicacoes] = useState([])
 
 
@@ -30,26 +34,12 @@ const PesquisaPorNome = () => {
     try {
       console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
       console.log('userProcessos :', userProcessos)
-      const new_arr_processos = []
-      for (let i = 0; i < userProcessos.length; i++) {
-        new_arr_processos.push(userProcessos[i])
-        console.log(i, userProcessos[i])
-      }
-      new_arr_processos.push(newprocesso)
+      const new_arr_processos = [...userProcessos, newprocesso]
       console.log('new_arr_processos :', new_arr_processos)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
-      // const Obj = { email, processos: new_arr_processos }
-
-      // console.log('Obj: ', Obj)
-      // await axios.post(url, { email, processos: new_arr_processos }, config)
-
-      // console.log('Payload: ', { processos: new_arr_processos })
-      // console.log('Alou res: ', res)
-      // console.log('Belou res.data.data.processos: ', res.data.data.processos)
-      // let processosFromDatabase = res.data.data.processos ?? []
-
-      // dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: new_arr_processos } })
+      await axios.post(url, { email, processos: new_arr_processos }, config)
+      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: new_arr_processos, isProcessoModified: !isProcessoModified} })
     } catch {}
     return
   }

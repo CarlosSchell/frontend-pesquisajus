@@ -7,14 +7,15 @@ import AddProcesso from './AddProcesso'
 import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
-
-const ListaDeProcessos = () => {
-  console.log('Entrou no lista de Processos')
-
+const ListaDosMeusProcessos = () => {
+  console.log('Entrou no lista dos meus Processos')
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.userLogin)
-  // const userProcessos = useSelector((state) => state.userProcessos) ?? []
-  // console.log('Entrou no lista de userProcessos', userProcessos)
+
+  const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
+  console.log('userProcessos : ', userProcessos)
+  const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
+  console.log('isProcessoModified : ', isProcessoModified)
 
   const email = userInfo.email ?? ''
   const token = userInfo.token ?? ''
@@ -31,19 +32,17 @@ const ListaDeProcessos = () => {
       const url = baseUrl + '/users/getprocessos'
       const res = await axios.get(url, config)
       let processosFromDatabase = res.data.data.processos ?? []
-      dispatch({ type: PROCESSOS_UPDATE_SUCCESS, payload: { processos: processosFromDatabase } })
+      dispatch({
+        type: PROCESSOS_UPDATE_SUCCESS,
+        payload: { processos: processosFromDatabase, isProcessoModified: true },
+      })
       setProcessos(processosFromDatabase)
       // console.log('processos: ', processos)
       return processosFromDatabase
     }
 
-    // const getProcessos = async () => {
-    //   const processosFromServer = await fetchProcessos()
-    //   setProcessos(processosFromServer)
-    // }
-
     fetchProcessos()
-  }, [baseUrl, email, isModified, token, dispatch])
+  }, [baseUrl, email, isModified, isProcessoModified, token, dispatch])
 
   // Add Processo
   const gravaNovoProcesso = async (newprocesso) => {
@@ -118,4 +117,4 @@ const ListaDeProcessos = () => {
   )
 }
 
-export default ListaDeProcessos
+export default ListaDosMeusProcessos

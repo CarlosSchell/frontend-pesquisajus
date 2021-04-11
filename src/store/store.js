@@ -34,7 +34,7 @@ const userLogin = localStorage.getItem('userLogin')
     token: '',
   }
 
-  const userProcessos = []
+  const userProcessos = {}
 
   // const userProcessos = localStorage.getItem('userProcessos')
   // ? JSON.parse(localStorage.getItem('userProcessos'))
