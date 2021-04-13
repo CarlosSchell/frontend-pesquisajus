@@ -42,7 +42,7 @@ const SobreNos = () => {
       <br></br>
       <br></br>
 
-      <h4 style={{ color: 'black' }}>Última versão do site publicada em: 10 Abril 2021 19:40h</h4>
+      <h4 style={{ color: 'black' }}>Última versão do site publicada em: 12 Abril 2021 18:00h</h4>
 
       <div style={{ color: 'white' }}>
         <div className="mt-5 text-center btn btn-info">

@@ -33,9 +33,7 @@ const Navbartest = () => {
       <NavLink exact activeClassName="navbar__link--active" className="navbar__link" to="/">
         Home
       </NavLink>
-      <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/teste">
-        Teste
-      </NavLink>
+
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/meusprocessos">
         Meus Processos
       </NavLink>

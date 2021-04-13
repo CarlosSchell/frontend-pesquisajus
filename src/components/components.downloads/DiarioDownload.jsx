@@ -1,72 +1,129 @@
-// import { Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import ReactConfig from '../../utils/ReactConfig'
 
 //<DiarioDownload key={index} diario={diario}} />
 
-const DiarioDownload = ({ diario }) => {
+const DiarioDownload = ({ index, diario, token }) => {
 
-  console.log('Passou pelo DiarioDownload : ', diario)
+  const baseUrl = ReactConfig.baseUrl ?? ''
+  // const userInfo = useSelector((state) => state.userLogin)
+  // const token = userInfo.token ?? ''
+  // console.log('token : ', token)
 
-  //const uf     =  diario.uf
-  const cidade = diario.cidade
-  const grau = diario.grau
-
-  let descgrau = ''
-  if (grau === '1') {
-    descgrau = 'Primeiro Grau'
-  } else {
-    descgrau = 'Segundo Grau'
-  }
-
+  const uf     =  diario.uf
+  const nrodiario = diario.diario
+  // console.log('Passou pelo DiarioDownload : ', nrodiario)
+  // const cidade = diario.cidade
+  // const grau = diario.grau
+  const gname = diario.gname
+  // let descgrau = ''
+  // if (grau === '1') {
+  //   descgrau = 'Primeiro Grau'
+  // } else {
+  //   descgrau = 'Segundo Grau'
+  // }
   // const diario = diario.diario
   const dia = diario.dia
   const mes = diario.mes
   const ano = diario.ano
-  //const data_diario = new Date(parseInt(ano), parseInt(mes) - 1, parseInt(dia))
+  const data = dia + '/' + mes + '/' + ano
+  const arquivo = 'tj' + diario.uf.toLowerCase() + '-'+ diario.diario + '-' + diario.gname
+  // console.log('arquivo de cima: ', arquivo)
 
 
-  //const onClickIncluirProcesso = (processo, descricao) => {
-    // console.log('onClickIncluirProcesso :', processo, descricao)
-    //incluiProcessoLista({ processo, descricao })
- // }
+  const getFileFromServer = async (extensao) => {
+
+    // console.log('arquivo: ', arquivo)
+    // console.log('extensao: ', extensao)
+    // console.log('token: ', token)
+
+    let arquivo_download = arquivo
+
+    let MIME_TYPE = ''
+    let config = ''
+
+    if (extensao === 'pdf') {
+      MIME_TYPE = "application/pdf";
+      config = { responseType: 'arraybuffer', headers: { 'Content-Type' : 'application/json', 'Accept': 'application/pdf', Authorization: 'Bearer ' + token } }
+    }
+    if (extensao === 'txt') {
+      MIME_TYPE = "text/plain";
+      config = { headers: { 'Content-Type' : 'application/json', 'Accept': MIME_TYPE, Authorization: 'Bearer ' + token } }
+    }
+    if (extensao === 'csv') {
+      arquivo_download = arquivo + '-'+ ano + mes + dia
+      MIME_TYPE = "text/csv";
+      config = { headers: { 'Content-Type' : 'application/json', 'Accept': MIME_TYPE, Authorization: 'Bearer ' + token } }
+    }
+    if (extensao === 'json') {
+      arquivo_download = arquivo + '-' + ano + mes + dia
+      MIME_TYPE = "application/json";
+      config = { headers: { 'Content-Type' : 'application/json', 'Accept': MIME_TYPE, Authorization: 'Bearer ' + token } }
+    }
+    
+    //console.log('baseUrl: ', baseUrl)
+    const url = baseUrl + '/publicacao/download'
+    const postData = { 'arquivo': arquivo_download, 'extensao': extensao }
+    // console.log('postData', postData)
+
+    try {
+      const res = await axios.post(url, postData, config)
+      let fileBlob = ''
+      if (extensao === 'json') {
+        const data = res.data
+        // console.log('res : ', res)
+        // console.log('res.data : ', res.data)
+        fileBlob = new Blob([JSON.stringify(data), null, 2], { type: MIME_TYPE })
+      } else {
+        const data = res.data
+        // console.log('data : ', data)
+        fileBlob = new Blob([data], { type: MIME_TYPE })
+      }
+      // const fileBlob = new Blob([data])
+      // console.log('fileBlob : ', fileBlob)
+      const element = document.createElement('a')
+      element.href = URL.createObjectURL(fileBlob)
+      element.download = (arquivo + '.' + extensao)
+      document.body.appendChild(element) // Required for this to work in FireFox
+      element.click()
+      document.body.removeChild(element)
+    } catch {
+
+    }
+    
+    return
+  }
 
   return (
+    <div>
+      <div style={{width:'213px', height:'90px', border: '1px solid', borderRadius: '5px', margin: '5px'}}>
 
-      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '30px', color: 'black', textAlign: 'left' }}>
+        <p style={{margin: '4px 0px 0px 4px', padding:'0px', paddingLeft: '5px', }}>
+          <strong>Diário: {nrodiario} - {data}</strong>
+        </p>
 
-        <div className="d-flex flex-row justify-content-between" 
-              style={{ display: 'flex', marginBottom: '05px', marginTop: '0px',    alignItems: 'center' }}>
+        <p style={{margin: '0px 0px 0px 10px', padding:'0px', paddingLeft: '1px'}}>
+          <strong>TJ{uf}-Grau{gname}</strong>
+        </p>
 
-          <div className="d-flex flex-row justify-content-start">
-            <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>
-              {'Diario: ' + diario}
-            </span>
-          </div>
-
-
-          <div>
-            Lista de Edições do Diário Oficial do TJRS
-          </div>
-
-
-          <div>
-            <span style={{ color: 'darkblue', fontSize: '1.2em', fontWeigth: '900' }}>
-              {'TJRS ' + dia + '/' + mes + '/' + ano}
-            </span>
-            <span style={{ color: 'black', fontSize: '1.1em', fontWeigth: '300' }}>
-              {'   -   Diário: ' + diario + '   -   ' + descgrau + '  -  ' + cidade + '   '}
-            </span>
-          </div>
-
-        <hr style={{ marginTop: '20px'}} />
-
+        <Button size="sm" variant="outline-info" className="btn btn-outline-info"style={{margin: '0px 0px 0px 10px', padding:'0px 10px 1px 10px'}} onClick={() => {getFileFromServer('pdf')}}>
+          pdf
+        </Button>
+        <Button size="sm" variant="outline-info" className="btn btn-outline-info" style={{margin: '0px 0px 0px 5px', padding:'0px 10px 1px 10px'}} onClick={() => {getFileFromServer('txt')}}>
+          txt
+        </Button>
+        <Button size="sm" variant="outline-info" className="btn btn-outline-info"style={{margin: '0px 0px 0px 5px', padding:'0px 10px 1px 10px'}} onClick={() => {getFileFromServer('csv')}}>
+          csv
+        </Button>
+        <Button size="sm" variant="outline-info" className="btn btn-outline-info" style={{margin: '0px 0px 0px 5px', padding:'0px 10px 1px 10px'}} onClick={() => {getFileFromServer('json')}}>
+          json
+        </Button>
       </div>
-
     </div>
   )
 }
 
 export default DiarioDownload
 
-// onClick={ (processo, partes) => {incluiProcessoLista(processo, partes)}}
-// style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
-// onClick={ () => {incluiProcessoLista(processo, partes)} }

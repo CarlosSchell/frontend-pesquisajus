@@ -11,8 +11,6 @@ import Downloads from '../pages/Downloads.jsx'
 import SobreNos from '../pages/SobreNos.jsx'
 import Contato from '../components/Contato.jsx'
 
-import FileDownload from '../components/components.downloads/FileDownload.jsx'
-
 import LoginScreen from '../components/LoginScreen'
 import RegisterScreen from '../components/RegisterScreen'
 import ChangePassword from '../components/ChangePassword'
@@ -29,12 +27,9 @@ import PageNotFound from '../components/PageNotFound'
 
 const RoutesApp = () => (
   <Router>
-    <Navbartest />
-    <main>
+      <Navbartest />
       <Switch>
         <Route path="/" component={HomeScreen} exact />
-
-        <Route path="/teste" component={FileDownload} exact />
         
         <Route path="/meusprocessos" component={PesquisaMeusProcessosScreen} exact />
         <Route path="/pesquisapornome" component={PesquisaPorNomeScreen} exact />
@@ -57,7 +52,7 @@ const RoutesApp = () => (
         <Route path="/admin/user/:id/edit" component={''} />
         <Route component={PageNotFound} />
       </Switch>
-    </main>
+
   </Router>
 );
 

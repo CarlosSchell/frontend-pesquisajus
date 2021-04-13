@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 
 
 const HomeScreen = () => {
-
   console.log('Passou pelo Home')
   
   return (

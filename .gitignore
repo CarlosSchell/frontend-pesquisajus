@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /src/avatars
+/avatars
 /.pnp
 .pnp.js
 
