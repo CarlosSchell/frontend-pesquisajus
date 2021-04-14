@@ -1,24 +1,35 @@
-import avatarImage from './avatar4944.png'
 
-// const avatarName = './avatar4944.png'
-// const avatarImage = require('./avatar4944.png')
 
 const HeaderShowUserImage = (props) => {
-  // const userDisplayName = props.value
-  //const randomstring = Math.random().toString(36).slice(-12);
-  //const randomstring = '4000'
-  //const avatarGenCode = require('./avatar'+ randomstring +'.png')
-  //const avatarGenCode = require('avatar4944.png')
-  
-  const altAvatarImage = 'User image'
+  const  randomIntFromInterval = (min, max) => { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
 
-  //<img alt="timer" src={require('./images/timer.png')} />
+  const zerosEsquerda = (numero) => {
+    console.log('numero ', numero)
+    let numeroString = numero.toString()
+    console.log('numerotoString ', numeroString)
+    if (numero === 0) {
+      numeroString = '000'
+    } else if (numero < 10) {
+      numeroString = "00" + numeroString
+    } else if (numero >= 10 & numero < 100) {
+        numeroString = "0" + numeroString
+    } 
+    return numeroString
+  }
+
+  const avatarType = '4'
+  const avatarNumber = randomIntFromInterval(0, 999)
+  const avatarNumberString = zerosEsquerda(avatarNumber)
+  const avatar = '/public/avatar/avatar' + avatarType + avatarNumberString + '.png'
+  const altAvatarImage = 'User image'
 
   return (
     <div>
       <img
         className="ml-4 roundedCircle img-fluid"
-        src={avatarImage}
+        src={avatar}
         alt={altAvatarImage}
         width="50px"
         height="50px"
@@ -28,5 +39,3 @@ const HeaderShowUserImage = (props) => {
 }
 
 export default HeaderShowUserImage
-
-//<img src="https://mdbootstrap.com/img/Others/documentation/1.jpg" className="img-fluid" alt="" />

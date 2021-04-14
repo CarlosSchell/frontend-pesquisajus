@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom'
 // import { CSVLink } from 'react-csv'
 import axios from 'axios'
 import DiarioDownload from '../components/components.downloads/DiarioDownload'
-// import Loader from '../components/Loader'
+// import Loader from '../Loader'//
+import Message from '../components/Message'
+import Loader from '../components/Loader'
 import ReactConfig from '../utils/ReactConfig'
 
 const Downloads = () => {
@@ -18,7 +20,7 @@ const Downloads = () => {
 
   const [diarios, setDiarios] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [problem, setProblem] = useState('')
 
   useEffect(() => {
     const fetchDiarios = async () => {
@@ -37,9 +39,9 @@ const Downloads = () => {
         if (diariosFromFetch.length > 0)  {
           //console.log('res.data.data.publicacoes : ', res.data.data.publicacoes[0])
           for (let i = 0; i < diariosFromFetch.length; i++) {
-            let diarioVetor = diariosFromFetch[i]
-            let nroDiario = diariosFromFetch[i]['diario']
-            let gnameDiario = diariosFromFetch[i]['gname']
+            // let diarioVetor = diariosFromFetch[i]
+            // let nroDiario = diariosFromFetch[i]['diario']
+            // let gnameDiario = diariosFromFetch[i]['gname']
             //console.log('nroDiario : ', nroDiario, gnameDiario)
             //console.log('diarioVetor : ', diarioVetor)
             arr_diarios.push(diariosFromFetch[i])
@@ -48,12 +50,24 @@ const Downloads = () => {
         }
 
         setLoading(false)
-        setError(false)
         //console.log('arr_diarios : ', arr_diarios)
         return arr_diarios
-      } catch (error) {}
+      } catch (error) {
+        console.log('Resposta : ', error.response)
+        const errorStatus = error.response.data.status
+        const errorMessage = error.response.data.message
+        // console.log('Erro.response.status : ', errorStatus)       //401
+        // console.log('Erro.response.message : ', errorMessage)
+        // console.log('Erro.response.data.error : ', error.response.data.error)
+        if (errorStatus !== 'success') {
+          // 'fail'
+          setProblem(errorMessage)
+        }
+        setLoading(false)
+      }
     }
 
+  
     const getDiarios = async () => {
       const diariosFromServer = await fetchDiarios()
       setDiarios(diariosFromServer)
@@ -65,14 +79,17 @@ const Downloads = () => {
   //}, [diarios, baseUrl, token, dispatch])
 
   return (
-    <div>
-      <h3 className="mt-4" style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center'}}>Baixar Edições do Diário Oficial do TJRS</h3>
+    <div style={{ textAlign: 'center'}}>
+
+      <h3 className="mt-4 mb-3" style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center'}}>Baixar Edições do Diário Oficial do TJRS</h3>
+
+      {problem && <Message variant="danger">{problem}</Message>}
+      {loading && <Loader />}
 
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', marginLeft: '3%', marginRight: '3%' }}>
         {diarios.length > 0 ? (
           diarios.map((diario, index) => <DiarioDownload key={index} diario={diario} token={token}/>)
-        ) : (
-          <div className="text-center">Não foram encontrados diarios para download</div>
+        ) : (<div></div>
         )}
       </div>
       
@@ -83,6 +100,7 @@ const Downloads = () => {
           </Link>
         </div>
       </div>
+
     </div>
   )
 }

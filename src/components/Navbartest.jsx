@@ -47,7 +47,7 @@ const Navbartest = () => {
         API
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/downloads">
-        Downloads
+        Arquivos
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/sobrenos">
         Sobre
