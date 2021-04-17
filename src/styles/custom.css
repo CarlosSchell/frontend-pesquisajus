@@ -6,6 +6,17 @@ input:valid {
   border: 1px solid rgb(6, 124, 51);
 }
 
+/* .inputCNJ {
+  font-size: 2em;
+  height: 66.8125px !important;
+  width: 150px;
+} */
+/* 
+.inputCNJ:placeholder-shown {
+  font-size: 50%;
+  color: RED;
+} */
+
 .active{
   background-color: rgb(138, 168, 148);
 }

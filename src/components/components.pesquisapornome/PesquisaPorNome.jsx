@@ -15,9 +15,9 @@ const PesquisaPorNome = () => {
   const userInfo = useSelector((state) => state.userLogin)
 
   const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
-  console.log('userProcessos : ', userProcessos)
+  // console.log('userProcessos : ', userProcessos)
   const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
-  console.log('isProcessoModified : ', isProcessoModified)
+  // console.log('isProcessoModified : ', isProcessoModified)
 
   const email = userInfo.email ?? ''
   const token = userInfo.token ?? ''
@@ -25,17 +25,19 @@ const PesquisaPorNome = () => {
 
   const [nomeBuscaProcesso, setNomeBuscaProcesso] = useState('')
   const [nomeParte, setNomeParte] = useState('')
+  const [triggerUseEffect, setTriggerUseEffect] = useState(true)
   const [loading, setLoading] = useState(false)
 
   const [publicacoes, setPublicacoes] = useState([])
-
+  const [dataInicial, setDataInicial] = useState('')
+  const [dataFinal, setDataFinal] = useState('')
 
   const incluiProcessoListaPorNome= async (newprocesso) => {  
     try {
-      console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
-      console.log('userProcessos :', userProcessos)
+      //console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
+      //console.log('userProcessos :', userProcessos)
       const new_arr_processos = [...userProcessos, newprocesso]
-      console.log('new_arr_processos :', new_arr_processos)
+      // console.log('new_arr_processos :', new_arr_processos)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
       await axios.post(url, { email, processos: new_arr_processos }, config)
@@ -44,39 +46,46 @@ const PesquisaPorNome = () => {
     return
   }
 
-
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('nomepesquisa OnSubmit :', nomeBuscaProcesso.trim())
+    setPublicacoes([])
+    //console.log('nomepesquisa OnSubmit :', nomeBuscaProcesso.trim())
     setNomeParte(nomeBuscaProcesso.trim())
+    setTriggerUseEffect(!triggerUseEffect)
+    
+  }
+
+  const onclickPesquisar = (e) => {
+    setPublicacoes([])
+    setNomeBuscaProcesso(e.target.value)
   }
 
   useEffect(() => {
+
+    const fetchDatasDiarioNome = async () => {
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/publicacao/diarios/primeiroeultimo' 
+      const resDatas = await axios.get(url, config)
+      setDataInicial(resDatas.data.data.dataPrimeiroDiario)
+      setDataFinal(resDatas.data.data.dataUltimoDiario)
+      return 
+    }
+
     const fetchPublicacoes = async () => {
       const arr_publicacoes = []
-      if (true) {
+      if (nomeParte !== '') {
         setLoading(true)
-        // if (nomeParte !== '') {
-        console.log('Entrou no Fetch nome do axios')
         const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
         const url = baseUrl + '/publicacao/texto/' + nomeParte
         const res = await axios.get(url, config)
-        console.log('Saiu do Fetch nome do axios')
-        // console.log('URl : ', url)
-        // console.log(res)
-        // console.log(res.data.data.publicacoes)
         let publicacoesFromFetch = res.data.data.publicacoes
         if (publicacoesFromFetch.length > 0) {
-          //console.log('res.data.data.publicacoes : ', res.data.data.publicacoes[0])
           for (let i = 0; i < publicacoesFromFetch.length; i++) {
-            let nroProcesso = publicacoesFromFetch[i]['processo']
-            let nomePartes = publicacoesFromFetch[i]['partes']
-            console.log('nroProcesso : ', nroProcesso, nomePartes)
             arr_publicacoes.push(publicacoesFromFetch[i])
           }
-          publicacoesFromFetch = []
         }
         setLoading(false)
+        publicacoesFromFetch = []
       }
       return arr_publicacoes
     }
@@ -85,12 +94,12 @@ const PesquisaPorNome = () => {
       setPublicacoes([])
       let publicacoesFromServer = await fetchPublicacoes()
       setPublicacoes(publicacoesFromServer)
-      console.log('publicacoesFromServer : ', publicacoesFromServer)
       publicacoesFromServer = []
     }
 
+    fetchDatasDiarioNome()
     getPublicacoes()
-  }, [nomeParte, baseUrl, token, dispatch])
+  }, [nomeParte, baseUrl, token, triggerUseEffect, dispatch])
 
   return (
     <div
@@ -99,6 +108,7 @@ const PesquisaPorNome = () => {
     >
       <div className="text-center py-3 mt-3">
         <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Pesquisa publicações pelo nome da parte</h3>
+        <p>Período da Base de Dados : {dataInicial} a {dataFinal}</p>
       </div>
 
       {loading && <Loader />}
@@ -118,7 +128,7 @@ const PesquisaPorNome = () => {
             required
             width="80%"
             maxLength="60"
-            onChange={(e) => setNomeBuscaProcesso(e.target.value)}
+            onChange={(e) => {onclickPesquisar(e)}}
           />
           <Button className="mb-2 ml-0" name="commit" variant="primary" type="submit" value="Pesquisar">
             Pesquisar
@@ -133,19 +143,12 @@ const PesquisaPorNome = () => {
           <div></div>
         )}
 
-        {publicacoes.length > 0 && publicacoes.length <= 999 && nomeParte !== '' ? (
-          <div className="text-center">Foram encontradas {publicacoes.length} publicações para este nome</div>
-        ) : (
-          <div className="text-center">Foram encontradas mais de {publicacoes.length} publicações para este nome</div>
-        )}
+        {(publicacoes.length > 0 && publicacoes.length <= 999)  && <div className="text-center">Foram encontradas {publicacoes.length} publicações para este nome</div>}
+        
+        {publicacoes.length === 1000 && 
+          <div className="text-center">Existem mais de {publicacoes.length} publicações para este nome</div>}
 
-        {publicacoes.length >= 1000 ? (
-          <div>
-            <div className="text-center">O sistema apresenta no máximo 1000 publicações</div>
-          </div>
-        ) : (
-          <div></div>
-        )}
+        {publicacoes.length === 1000 && <div className="text-center">O sistema apresenta no máximo 1000 publicações</div>}
 
         {publicacoes.length > 0 ? (
           <div className="text-center mt-2">

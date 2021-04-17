@@ -13,9 +13,9 @@ const ListaDosMeusProcessos = () => {
   const userInfo = useSelector((state) => state.userLogin)
 
   const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
-  console.log('userProcessos : ', userProcessos)
+  //console.log('userProcessos : ', userProcessos)
   const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
-  console.log('isProcessoModified : ', isProcessoModified)
+  //console.log('isProcessoModified : ', isProcessoModified)
 
   const email = userInfo.email ?? ''
   const token = userInfo.token ?? ''
@@ -47,7 +47,7 @@ const ListaDosMeusProcessos = () => {
   // Add Processo
   const gravaNovoProcesso = async (newprocesso) => {
     try {
-      console.log('Entrou no gravaNovoProcesso :', newprocesso)
+      //console.log('Entrou no gravaNovoProcesso :', newprocesso)
       const new_arr_processos = []
       for (let i = 0; i < processos.length; i++) {
         new_arr_processos.push(processos[i])
@@ -78,7 +78,7 @@ const ListaDosMeusProcessos = () => {
   const deleteProcesso = async (delprocesso) => {
     try {
       const newprocessos = processos.filter((processo) => processo.processo !== delprocesso.processo)
-      console.log('Entrou no deleteProcesso - newprocesso :', newprocessos)
+      //console.log('Entrou no deleteProcesso - newprocesso :', newprocessos)
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
       const url = baseUrl + '/users/gravaprocessos'
       await axios.post(url, { email, processos: newprocessos }, config)

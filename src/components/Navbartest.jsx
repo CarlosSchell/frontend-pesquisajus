@@ -41,7 +41,7 @@ const Navbartest = () => {
         Busca Nome
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/pesquisapornumero">
-        Busca Processo
+        Busca Numero
       </NavLink>
       <NavLink activeClassName="navbar__link--active" className="navbar__link" to="/api">
         API
@@ -65,7 +65,7 @@ const Navbartest = () => {
               className="mx-2"
             >
               <LinkContainer to="/profile">
-                <NavDropdown.Item>Perfil Senha</NavDropdown.Item>
+                <NavDropdown.Item>Perfil</NavDropdown.Item>
               </LinkContainer>
 
               <LinkContainer to="/changepassword">

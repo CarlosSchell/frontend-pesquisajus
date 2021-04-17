@@ -6,9 +6,9 @@ const HeaderShowUserImage = (props) => {
   }
 
   const zerosEsquerda = (numero) => {
-    console.log('numero ', numero)
+    //console.log('numero ', numero)
     let numeroString = numero.toString()
-    console.log('numerotoString ', numeroString)
+    //console.log('numerotoString ', numeroString)
     if (numero === 0) {
       numeroString = '000'
     } else if (numero < 10) {

@@ -11,20 +11,23 @@ const  PesquisaMeusProcessos = () => {
   const userInfo = useSelector((state) => state.userLogin)
   const userProcessos = useSelector((state) => state.userProcessos) ?? []
   const [publicacoes, setPublicacoes] = useState([])
-  // const [datasDiario, setDatasDiario] = useState([])
+  const [dataInicial, setDataInicial] = useState('')
+  const [dataFinal, setDataFinal] = useState('')
   const token = userInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
-  const todays_date = new Date()
+
+  // let cabecalhoPagina = 'Data atual: '+ todays_date.toString().substring(0,20) + ' -  Período da Base de Dados : '+ dataInicial + ' a ' + dataFinal
 
   useEffect(() => {
 
-    // const fetchDatasDiario = async () => {
-    //   const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-    //   const url = baseUrl + '/publicacao/primeiroeultimodiario' 
-    //   const res = await axios.get(url, config)
-
-    //   console.log('res diario: ', res)
-    //   //if (res.data.data.publicacoes[0]) {
+    const fetchDatasDiario = async () => {
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/publicacao/diarios/primeiroeultimo' 
+      const resDatas = await axios.get(url, config)
+      setDataInicial(resDatas.data.data.dataPrimeiroDiario)
+      setDataFinal(resDatas.data.data.dataUltimoDiario)
+      return 
+    }
 
     const fetchPublicacoes = async () => {
       const arr_loop = userProcessos.processos ?? []
@@ -71,7 +74,7 @@ const  PesquisaMeusProcessos = () => {
       // localStorage.setItem('userProcessos', JSON.stringify({ processos: processosFromDatabase }))
     }
 
-    //fetchDatasDiario()
+    fetchDatasDiario()
     getPublicacoes()
   }, [baseUrl, userProcessos.processos, token])
 
@@ -81,7 +84,7 @@ const  PesquisaMeusProcessos = () => {
     <div className="text-center py-3 mt-3"
         style={{ backgroundColor: ' #ffecd9', }}>
       <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Últimas Publicações dos Meus Processos</h3>
-      <p>{'Data atual: '+ todays_date.toString().substring(0,20) + ' -  Base de Dados atualizada até o Diário Nro: 6947 de 25/03/2021'}</p>
+      <p>Período da Base de Dados : {dataInicial} a {dataFinal}</p>
       {publicacoes.length > 0 ? (
         <Publicacoes publicacoes={publicacoes} textToHighlight={""} incluiProcessoLista={''}/>
       ) : (

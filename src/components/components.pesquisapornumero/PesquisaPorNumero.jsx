@@ -16,20 +16,23 @@ const PesquisaPorNumero = () => {
   const userInfo = useSelector((state) => state.userLogin)
 
   const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
-  console.log('userProcessos : ', userProcessos)
+  // console.log('userProcessos : ', userProcessos)
   const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
-  console.log('isProcessoModified : ', isProcessoModified)
+  // console.log('isProcessoModified : ', isProcessoModified)
 
   const email = userInfo.email ?? ''
   const token = userInfo.token ?? ''
   const baseUrl = ReactConfig.baseUrl ?? ''
-
   const [numeroBuscaProcesso, setNumeroBuscaProcesso] = useState('')
+
   const [strBusca, setStrBusca] = useState('')
+  const [triggerUseEffect, setTriggerUseEffect] = useState(true)
   const [isNroProcessoValido, setIsNroProcessoValido] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const [publicacoes, setPublicacoes] = useState([])
+  const [dataInicial, setDataInicial] = useState('')
+  const [dataFinal, setDataFinal] = useState('')
 
   const incluiProcessoListaPorNumero= async (newprocesso) => {  
     try {
@@ -46,48 +49,54 @@ const PesquisaPorNumero = () => {
   }
 
   const validateProcesso = (nroProcesso) => {
-    console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
+    // console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
     nroProcesso = verificaZerosEsquerda(nroProcesso)
-    setNumeroBuscaProcesso(nroProcesso)
     let isValid = false
     if (nroProcesso.length === 25) {
       isValid = true
     } 
+    setPublicacoes([])
     setIsNroProcessoValido(isValid)
+    setNumeroBuscaProcesso(nroProcesso)
+    
+    console.log('Numero do Processo: ', nroProcesso, nroProcesso.length, isValid)
     return
   }
-
 
   const onSubmit = (e) => {
     e.preventDefault()
     if (isNroProcessoValido) {
-      console.log('numeropesquisa OnSubmit :', numeroBuscaProcesso.trim())
+      // console.log('numeroBuscaProcesso.trim() :', numeroBuscaProcesso.trim())
       setStrBusca(numeroBuscaProcesso.trim())
+      setTriggerUseEffect(!triggerUseEffect)
+    } else {
+      console.log('numeroBuscaInvalido')
     }
   }
 
-
   useEffect(() => {
     console.log('Entrou no useEffect')
+
+    const fetchDatasDiarioNumero = async () => {
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+      const url = baseUrl + '/publicacao/diarios/primeiroeultimo' 
+      const resDatas = await axios.get(url, config)
+      setDataInicial(resDatas.data.data.dataPrimeiroDiario)
+      setDataFinal(resDatas.data.data.dataUltimoDiario)
+      return 
+    }
+
+
     const fetchPublicacoes = async () => {
       const arr_publicacoes = []
-      if (true) {
+      if (strBusca !== '') {
         setLoading(true)
-        // if (nomeParte !== '') {
-        console.log('Entrou no Fetch numero do axios')
         const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
         const url = baseUrl + '/publicacao/numero/' + strBusca
         const res = await axios.get(url, config)
-        console.log('Saiu do Fetch nome do axios')
-        console.log('URl : ', url)
-        // console.log(res)
-        // console.log(res.data.data.publicacoes)
         let publicacoesFromFetch = res.data.data.publicacoes
         if (publicacoesFromFetch.length > 0) {
-          //console.log('res.data.data.publicacoes : ', res.data.data.publicacoes[0])
           for (let i = 0; i < publicacoesFromFetch.length; i++) {
-            let nroProcesso = publicacoesFromFetch[i]['processo']
-            console.log('nroProcesso : ', nroProcesso, strBusca)
             arr_publicacoes.push(publicacoesFromFetch[i])
           }
           publicacoesFromFetch = []
@@ -101,12 +110,12 @@ const PesquisaPorNumero = () => {
       setPublicacoes([])
       let publicacoesFromServer = await fetchPublicacoes()
       setPublicacoes(publicacoesFromServer)
-      console.log('publicacoesFromServer : ', publicacoesFromServer)
       publicacoesFromServer = []
     }
 
+    fetchDatasDiarioNumero()
     getPublicacoes()
-  }, [strBusca, baseUrl, token, dispatch])
+  }, [strBusca, baseUrl, triggerUseEffect, token, dispatch])
 
   return (
     <div
@@ -115,23 +124,26 @@ const PesquisaPorNumero = () => {
     >
       <div className="text-center py-3 mt-3">
         <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>Pesquisa publicações pelo numero do processo</h3>
+        <p style={{ fontSize: '18px' }}>Período da Base de Dados : {dataInicial} a {dataFinal}</p>
       </div>
 
       {loading && <Loader />}
 
       <div
-        className="ml-1 mr-1 mt-4 d-flex flex-column justify-content-center align-items-center"
+        className="ml-1 mr-1 mt-2 mb-1 d-flex flex-column justify-content-center align-items-center"
       >
-        <Form inline style={{ width: '100%'}} onSubmit={onSubmit}>
+        <p className="text-center" style={{ fontSize: '22px', marginBottom: '2px' }}>Digite o numero completo do processo no padrão CNJ</p>
+        <p className="text-center" style={{ fontSize: '20px', marginBottom: '2px' }}>ex: 1234567-00.2021.8.21.0000 inclua os separadores ( - / . )</p>
+        <Form inline style={{ width: '100%', }} onSubmit={onSubmit}>
           <Form.Control
-            style={{ fontSize: '22px' }}
+            style={{ fontSize: '22px', marginLeft: '8%'}}
             className="mb-2"
             type="text"
             placeholder=""
             value={numeroBuscaProcesso}
             autoFocus
             required
-            width="80%"
+            width="90%"
             maxLength="25"
             minLength="25"
             pattern='[0-9]{1,7}[\-][0-9]{2}[\.][0-9]{4}[\.][0-9][\.][0-9]{2}[\.][0-9]{4}'
@@ -151,19 +163,19 @@ const PesquisaPorNumero = () => {
       </div>
 
       <div>
+
         {publicacoes.length === 0 && strBusca !== '' ? (
           <div className="text-center">Não foram encontradas publicações para este numero de processo</div>
         ) : (
           <div></div>
         )}
 
-        {publicacoes.length > 0 && publicacoes.length <= 49 && strBusca !== '' ? (
-          <div className="text-center">Foram encontradas {publicacoes.length} publicações para este numero de processo</div>
-        ) : (
-          <div className="text-center">Foram encontradas mais de {publicacoes.length} publicações para este numero  de processo</div>
-        )}
+        {(publicacoes.length > 0 && publicacoes.length <= 49)  && <div className="text-center">Foram encontradas {publicacoes.length} publicações para este numero de processo</div>}
+        
+        {publicacoes.length === 50 && 
+          <div className="text-center">Existem mais de {publicacoes.length} publicações para este numero  de processo</div>}
 
-        {publicacoes.length >= 50 ? (
+        {publicacoes.length === 50 ? (
           <div>
             <div className="text-center">O sistema apresenta no máximo 50 publicações</div>
           </div>
@@ -184,5 +196,3 @@ const PesquisaPorNumero = () => {
 }
 
 export default PesquisaPorNumero
-
-//             pattern='/[0-9]{7,1}[-][0-9]{2}[.][0-9]{4}[.][0-9][.][0-9]{2}[.][0-9]{4}/'
