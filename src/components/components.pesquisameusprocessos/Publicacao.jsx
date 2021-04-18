@@ -148,7 +148,3 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 }
 
 export default Publicacao
-
-// onClick={ (processo, partes) => {incluiProcessoLista(processo, partes)}}
-// style={{ color: 'black', backgroundColor: '#f0f0f0' }}>
-// onClick={ () => {incluiProcessoLista(processo, partes)} }

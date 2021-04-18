@@ -1,6 +1,7 @@
 import * as Icon from 'react-bootstrap-icons'
 import ButtonWhatsapp from '../ButtonWhatsapp.jsx'
 
+
 const Processo = ({ processo, onDelete, onToggle }) => {
 
   const cellNumber =  "51991068021"
@@ -18,7 +19,8 @@ const Processo = ({ processo, onDelete, onToggle }) => {
           {'    '}
           {processo.descricao}
           &nbsp;
-          <ButtonWhatsapp cellNumber={cellNumber}/>
+          <ButtonWhatsapp cellNumber={cellNumber} processo={processo}/>
+          
         </p>
 
         <p style={{ marginBottom: '3px' }}>

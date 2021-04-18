@@ -7,6 +7,7 @@ const textToClipboard = nroProcesso => {
   dummy.select()
   document.execCommand('copy')
   document.body.removeChild(dummy)
+  // console.log('passou no textotclipboard: ', nroProcesso)
 }
 
 export default textToClipboard

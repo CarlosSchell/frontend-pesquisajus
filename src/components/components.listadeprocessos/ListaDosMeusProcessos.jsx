@@ -12,7 +12,7 @@ const ListaDosMeusProcessos = () => {
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.userLogin)
 
-  const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
+  // const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
   //console.log('userProcessos : ', userProcessos)
   const isProcessoModified = useSelector((state) => state.userProcessos.isProcessoModified) ?? false
   //console.log('isProcessoModified : ', isProcessoModified)

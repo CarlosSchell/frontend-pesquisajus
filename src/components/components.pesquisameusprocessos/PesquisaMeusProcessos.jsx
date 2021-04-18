@@ -94,9 +94,4 @@ const  PesquisaMeusProcessos = () => {
   )
 }
 
-// <Publicacoes publicacoes={publicacoes} />
-// # let nroProcesso = '9000063-06.2018.8.21.0154'
-// baseUrl: 'https://api-pesquisajus.com.br:21290/v1'
-//https://api-pesquisajus.com.br:21290/v1/publicacao/0003366-19.2011.8.21.2001
-
 export default PesquisaMeusProcessos
