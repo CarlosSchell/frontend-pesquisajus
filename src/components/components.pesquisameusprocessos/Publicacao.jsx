@@ -2,6 +2,7 @@ import Highlighter from 'react-highlight-words'
 import { Button } from 'react-bootstrap'
 // import '../../custom.css'
 // import incluiProcessoLista from '../../utils/incluiProcessoLista.js'
+import ButtonWhatsapp from '../ButtonWhatsapp.jsx'
 import calculateDays from '../../utils/calculateDays.js'
 import textToClipboard from '../../utils/textToClipboard'
 import court from '../../utils/court.png'
@@ -11,6 +12,8 @@ import court from '../../utils/court.png'
 const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 
   // console.log('incluiProcessoLista : ', incluiProcessoLista)
+
+
 
   //const uf       =  publicacao.uf
   const cidade = publicacao.cidade
@@ -59,6 +62,10 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
   const assunto = publicacao.assunto ?? '' 
   const decisao = publicacao.decisao
 
+  // WhatsApp Data
+  const cellNumber = '51991068021' // futuramente colocar o numero do advogado / cliente / indicado
+  const texto = processo.descricao
+
   const onClickIncluirProcesso = (processo, descricao) => {
     // console.log('onClickIncluirProcesso :', processo, descricao)
     incluiProcessoLista({ processo, descricao })
@@ -84,6 +91,10 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
           </div>
 
           <div className="d-flex flex-row justify-content-end">
+
+            <div style={{ paddingTop: '5px'}}>
+                <ButtonWhatsapp cellNumber={cellNumber} texto={texto}  size={23}/>
+            </div>
             <a
               href="https://www.tjrs.jus.br/novo/busca/?return=proc&client=wp_index"
               onClick={(e) => textToClipboard(processo)}

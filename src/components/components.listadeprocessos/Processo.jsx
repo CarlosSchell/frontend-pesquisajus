@@ -1,10 +1,11 @@
 import * as Icon from 'react-bootstrap-icons'
 import ButtonWhatsapp from '../ButtonWhatsapp.jsx'
 
-
 const Processo = ({ processo, onDelete, onToggle }) => {
 
-  const cellNumber =  "51991068021"  // futuramente colocar o numero do advogado / cliente / indicado
+  // WhatsApp Data
+  const cellNumber = '51991068021' // futuramente colocar o numero do advogado / cliente / indicado
+  const texto = processo.descricao
 
   return (
     <div>
@@ -19,7 +20,10 @@ const Processo = ({ processo, onDelete, onToggle }) => {
           {'    '}
           {processo.descricao}
           &nbsp;
-          <ButtonWhatsapp cellNumber={cellNumber} texto={processo} />
+          <span style={{ padding: '10px'}}>
+                <ButtonWhatsapp cellNumber={cellNumber} texto={texto} size={20}/>
+            </span>
+
         </p>
 
         <p style={{ marginBottom: '3px' }}>
@@ -29,7 +33,7 @@ const Processo = ({ processo, onDelete, onToggle }) => {
           <Icon.ArrowUp />
         </p>
       </div>
-      <hr/>
+      <hr />
     </div>
   )
 }
