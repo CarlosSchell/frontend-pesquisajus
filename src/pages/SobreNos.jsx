@@ -10,7 +10,7 @@ const SobreNos = () => {
 
       <div style={{ marginLeft: '20%', width: '60%', fontSize: '24px', textAlign: 'center' }}>
         <div>
-          O pesquisajus é uma startup 100% gaúcha e foi desenvolvido por experientes profissionais em engenharia de
+          O pesquisajus é uma startup 100% gaúcha e foi desenvolvido por profissionais em desenvolvimento de
           software
         </div>
         <br></br>
@@ -42,7 +42,7 @@ const SobreNos = () => {
       <br></br>
       <br></br>
 
-      <h4 style={{ color: 'black' }}>Última versão do site publicada em: 17 Abril 2021 20:00h</h4>
+      <h4 style={{ color: 'black' }}>Última versão do site publicada em: 21 Abril 2021 10:00h</h4>
 
       <div style={{ color: 'white' }}>
         <div className="mt-5 text-center btn btn-info">

@@ -4,7 +4,7 @@ import ButtonWhatsapp from '../ButtonWhatsapp.jsx'
 
 const Processo = ({ processo, onDelete, onToggle }) => {
 
-  const cellNumber =  "51991068021"
+  const cellNumber =  "51991068021"  // futuramente colocar o numero do advogado / cliente / indicado
 
   return (
     <div>
@@ -19,8 +19,7 @@ const Processo = ({ processo, onDelete, onToggle }) => {
           {'    '}
           {processo.descricao}
           &nbsp;
-          <ButtonWhatsapp cellNumber={cellNumber} processo={processo}/>
-          
+          <ButtonWhatsapp cellNumber={cellNumber} texto={processo} />
         </p>
 
         <p style={{ marginBottom: '3px' }}>
