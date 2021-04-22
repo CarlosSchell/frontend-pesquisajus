@@ -10,10 +10,7 @@ import court from '../../utils/court.png'
 //<Publicacao key={index} publicacao={publicacao} textToHighlight={''} incluiProcessoLista ={incluiProcessoLista } />
 
 const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
-
   // console.log('incluiProcessoLista : ', incluiProcessoLista)
-
-
 
   //const uf       =  publicacao.uf
   const cidade = publicacao.cidade
@@ -57,9 +54,9 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
   const processo = publicacao.processo
   //const outronumero =  publicacao.outronumero
   //const origemg1    = publicacao.origemg1
-  const partes  = publicacao.partes ?? ''
-  const descricao  = partes.substr(0, 24)
-  const assunto = publicacao.assunto ?? '' 
+  const partes = publicacao.partes ?? ''
+  const descricao = partes.substr(0, 24)
+  const assunto = publicacao.assunto ?? ''
   const decisao = publicacao.decisao
 
   // WhatsApp Data
@@ -73,27 +70,21 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 
   return (
     <div>
-      
       <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '30px', color: 'black', textAlign: 'left' }}>
-
-        <div className="d-flex flex-row justify-content-between" 
-              style={{ display: 'flex', marginBottom: '05px', marginTop: '0px',    alignItems: 'center' }}>
-
+        <div
+          className="d-flex flex-row justify-content-between"
+          style={{ display: 'flex', marginBottom: '05px', marginTop: '0px', alignItems: 'center' }}
+        >
           <div className="d-flex flex-row justify-content-start">
             <div className="notification" style={{ backgroundColor: badge_color }}>
-              <span>
-                {badge_text}
-              </span>
+              <span>{badge_text}</span>
             </div>
-            <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>
-              {'Processo: ' + processo}
-            </span>
+            <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>{'Processo: ' + processo}</span>
           </div>
 
           <div className="d-flex flex-row justify-content-end">
-
-            <div style={{ paddingTop: '5px'}}>
-                <ButtonWhatsapp cellNumber={cellNumber} texto={texto}  size={23}/>
+            <div style={{ paddingTop: '5px' }}>
+              <ButtonWhatsapp cellNumber={cellNumber} texto={texto} size={23} />
             </div>
             <a
               href="https://www.tjrs.jus.br/novo/busca/?return=proc&client=wp_index"
@@ -102,7 +93,7 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
               rel="noreferrer"
               style={{}}
             >
-              <Button variant="outline-info" className="ml-5" >
+              <Button variant="outline-info" className="ml-4 mr-3">
                 <div>
                   Consultar no TJRS
                   <img className="ml-2 justify-content-end" src={court} alt={court} width="20px" height="22px" />
@@ -110,13 +101,19 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
               </Button>
             </a>
 
-            {(incluiProcessoLista) ?  <Button variant="outline-info" 
-              className="ml-5 justify-content-end" 
-              onClick = {() => {onClickIncluirProcesso(processo, descricao)} }
+            {incluiProcessoLista ? (
+              <Button
+                variant="outline-info"
+                className="ml-5 justify-content-end"
+                onClick={() => {
+                  onClickIncluirProcesso(processo, descricao)
+                }}
               >
-              Incluir nos Meus Processos
-            </Button> : ''}
-
+                Incluir nos Meus Processos
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
         </div>
 
@@ -150,10 +147,8 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
           />
         </p>
 
-        <hr style={{ marginTop: '20px'}} />
-
+        <hr style={{ marginTop: '20px' }} />
       </div>
-
     </div>
   )
 }
