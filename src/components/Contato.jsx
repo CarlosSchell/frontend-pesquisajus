@@ -62,94 +62,101 @@ const Contato = () => {
   }
 
   return (
-    <Container
-      style={{
-        width: '820px',
-        minwidth: '540px',
-        height: '67vh',
-        display: 'block',
-        textAlign: 'left',
-
-      }}
-    >
-      <h3 className="py-3 mt-3 mb-3 text-center" style={{ textShadow: '1px 1px 1px lightgrey' }}>
-        Entre em contato conosco
-      </h3>
-      {completed && <Message>{completed}</Message>}
-      {problem && <Message variant="danger">{problem}</Message>}
-      {loading && <Loader />}
-
-      <Form onSubmit={submitHandler} className="mb-4 mx-auto">
-        <Form.Label>Nome</Form.Label>
-        <InputGroup className="my-1" controlid="name">
-          <FormControl
-            autoFocus={true}
-            className="form-control"
-            id="name"
-            name="name"
-            type="text"
-            value={name}
-            placeholder="Digite seu nome"
-            maxLength="50"
-            size="50"
-            inputMode="text"
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-        </InputGroup>
-        <Form.Label>Endereço de email</Form.Label>
-        <InputGroup className="my-1" controlid="email">
-          <FormControl
-            className="form-control"
-            id="email"
-            name="email"
-            type="email"
-            value={email}
-            placeholder="Digite seu endereço de email"
-            maxLength="60"
-            size="60"
-            inputMode="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </InputGroup>
-        <Form.Label>Mensagem</Form.Label>
-        <Form.Group className="my-1"  controlId="exampleForm.ControlTextarea1">    
-            <Form.Control 
-            as="textarea" 
-            id="textarea"
-            name="textarea"
-            type="textarea"
-            rows={5}
-            value={message}
-            placeholder="Digite sua mensagem"
-            maxlength = '1024'
-            required
-            onChange={(e) => setMessage(e.target.value)}
-            />
-        </Form.Group>
-
-        <Button
-          className="btn btn-block mt-2"
-          name="commit"
-          variant="primary"
-          type="submit"
-          value="Entrar"
-          disabled={!validateForm() || completed}
+    
+    <div style={{ backgroundColor: '#eaeded' }}>
+        <Container fluid 
+        style={{
+            maxWidth: '520px',
+            minWidth: '350px',
+            height: '92vh',
+            display: 'block',
+            textAlign: 'left',
+        }}
         >
-          Enviar mensagem
-        </Button>
-      </Form>
+        <br></br>
 
-      <div className="text-center" style={{ color: 'white', marginTop: '10vh'}}>
-        <div className="my-4 btn btn-info">
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-            Voltar à página principal
-          </Link>
+        <h3 className="py-3 mb-3 text-center" style={{ textShadow: '1px 1px 1px lightgrey' }}>
+            Envie sua mensagem
+        </h3>
+        {completed && <Message>{completed}</Message>}
+        {problem && <Message variant="danger">{problem}</Message>}
+        {loading && <Loader />}
+
+        <Form onSubmit={submitHandler} className="mb-4 mx-auto">
+            <Form.Label>Nome</Form.Label>
+            <InputGroup className="my-1" controlid="name">
+            <FormControl
+                autoFocus={true}
+                className="form-control"
+                id="name"
+                name="name"
+                type="text"
+                value={name}
+                placeholder="Digite seu nome"
+                maxLength="50"
+                size="50"
+                inputMode="text"
+                required
+                onChange={(e) => setName(e.target.value)}
+            />
+            </InputGroup>
+            <Form.Label>Endereço de email</Form.Label>
+            <InputGroup className="my-1" controlid="email">
+            <FormControl
+                className="form-control"
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                placeholder="Digite seu endereço de email"
+                maxLength="60"
+                size="60"
+                inputMode="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            </InputGroup>
+            <Form.Label>Mensagem</Form.Label>
+            <Form.Group className="my-1"  controlId="exampleForm.ControlTextarea1">    
+                <Form.Control 
+                as="textarea" 
+                id="textarea"
+                name="textarea"
+                type="textarea"
+                rows={5}
+                value={message}
+                placeholder="Digite sua mensagem"
+                maxlength = '1024'
+                required
+                onChange={(e) => setMessage(e.target.value)}
+                />
+            </Form.Group>
+
+            <Button
+            className="btn btn-block mt-2"
+            name="commit"
+            variant="primary"
+            type="submit"
+            value="Entrar"
+            disabled={!validateForm() || completed}
+            >
+            Enviar mensagem
+            </Button>
+        </Form>
+
+        <br></br>
+        <br></br>
+
+        <div className="text-center" style={{ color: 'white'}}>
+            <div className="btn btn-info">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                Voltar à página principal
+            </Link>
+            </div>
         </div>
-      </div>
 
-    </Container>
+        </Container>
+    </div>
   )
 }
 

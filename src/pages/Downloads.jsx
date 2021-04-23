@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-// import { Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 // import { CSVLink } from 'react-csv'
 import axios from 'axios'
@@ -79,29 +79,31 @@ const Downloads = () => {
   //}, [diarios, baseUrl, token, dispatch])
 
   return (
-    <div style={{ textAlign: 'center'}}>
+    <div style={{ textAlign: 'center', backgroundColor: '#eaeded'}}>
+    <br></br>
+    <Container fluid>
+        <h3 className="mb-3" style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center'}}>Baixar Edições do Diário Oficial do TJRS</h3>
 
-      <h3 className="mt-4 mb-3" style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center'}}>Baixar Edições do Diário Oficial do TJRS</h3>
+        {problem && <Message variant="danger">{problem}</Message>}
+        {loading && <Loader />}
 
-      {problem && <Message variant="danger">{problem}</Message>}
-      {loading && <Loader />}
-
-      <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', marginLeft: '3%', marginRight: '3%' }}>
-        {diarios.length > 0 ? (
-          diarios.map((diario, index) => <DiarioDownload key={index} diario={diario} token={token}/>)
-        ) : (<div></div>
-        )}
-      </div>
-      
-      <div style={{ color: 'white', textAlign: 'center'}}>
-        <div className="my-5 text-center btn btn-info">
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-            Voltar à página principal
-          </Link>
+        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+            {diarios.length > 0 ? (
+            diarios.map((diario, index) => <DiarioDownload key={index} diario={diario} token={token}/>)
+            ) : (<div></div>
+            )}
         </div>
-      </div>
-
+        
+        <div style={{ color: 'white', textAlign: 'center'}}>
+            <div className="my-5 text-center btn btn-info">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                Voltar à página principal
+            </Link>
+            </div>
+        </div>
+      </Container>
     </div>
+
   )
 }
 

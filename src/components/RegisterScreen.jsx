@@ -102,143 +102,148 @@ const RegisterScreen = ({ location, history }) => {
   }
 
   return (
-    <Container
-      style={{
-        width: '420px',
-        height: '67vh',
-        display: 'block',
-        textAlign: 'center',
-        marginTop: '3%',
-      }}
-    >
-      <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-        Crie sua conta
-      </h2>
-      {completed && <Message>{completed}</Message>}
-      {problem && <Message variant="danger">{problem}</Message>}
-      {loading && <Loader />}
-
-      <Form onSubmit={submitHandler} className="mb-4 mx-auto">
-        <InputGroup className="my-4" controlid="email">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Person />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            autoFocus={true}
-            className="form-control"
-            id="name"
-            name="name"
-            type="text"
-            value={name}
-            placeholder="Digite seu nome de usuário com 20 letras"
-            maxLength="25"
-            size="25"
-            inputMode="text"
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-        </InputGroup>
-
-        <InputGroup className="my-4" controlid="email">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Envelope />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            className="form-control"
-            id="email"
-            name="email"
-            type="email"
-            value={email}
-            placeholder="Digite seu endereço de email"
-            maxLength="60"
-            size="60"
-            inputMode="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </InputGroup>
-
-        <InputGroup className="my-4" controlid="password">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Lock />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            autoComplete="off"
-            className="form-control password"
-            id="password"
-            name="password"
-            type="password"
-            value={password}
-            placeholder="Digite sua senha (6 a 20 caracteres)"
-            maxLength="20"
-            minLength="6"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </InputGroup>
-
-        <InputGroup className="my-4" controlid="passwordConfirm">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Lock />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            autoComplete="off"
-            className="form-control password"
-            id="passwordConfirm"
-            name="passwordConfirm"
-            type="password"
-            value={passwordConfirm}
-            placeholder="Confirme sua senha (6 a 20 caracteres)"
-            maxLength="20"
-            minLength="6"
-            required
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-        </InputGroup>
-
-        <Button
-          className="btn btn-block mt-2"
-          name="commit"
-          variant="primary"
-          type="submit"
-          value="Entrar"
-          disabled={!validateForm() || completed}
+    <div style={{ backgroundColor: ' #eaeded'}}> 
+        <Container
+            style={{
+                maxWidth: '480px',
+                minWidth: '350px',
+                height: '92vh',
+                display: 'block',
+                textAlign: 'center',
+            }}
         >
-          Entrar
-        </Button>
-      </Form>
+        <br></br>
+        <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
+            Crie sua conta
+        </h2>
+        {completed && <Message>{completed}</Message>}
+        {problem && <Message variant="danger">{problem}</Message>}
+        {loading && <Loader />}
 
-      {completed && (
-          <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
-            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
-          </div>
-        )}
+        <Form onSubmit={submitHandler} className="mb-4 mx-auto">
+            <InputGroup className="my-4" controlid="email">
+            <InputGroup.Prepend>
+                <InputGroup.Text>
+                <Icon.Person />
+                </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+                autoFocus={true}
+                className="form-control"
+                id="name"
+                name="name"
+                type="text"
+                value={name}
+                placeholder="Digite seu nome de usuário com 20 letras"
+                maxLength="25"
+                size="25"
+                inputMode="text"
+                required
+                onChange={(e) => setName(e.target.value)}
+            />
+            </InputGroup>
 
-      <div style={{ color: 'white', marginTop: '3vh' }}>
-        <div className="my-4 text-center btn btn-info">
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-            Voltar à página principal
-          </Link>
-        </div>
-      </div>
+            <InputGroup className="my-4" controlid="email">
+            <InputGroup.Prepend>
+                <InputGroup.Text>
+                <Icon.Envelope />
+                </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+                className="form-control"
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                placeholder="Digite seu endereço de email"
+                maxLength="60"
+                size="60"
+                inputMode="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            </InputGroup>
 
-      <div>
-        <div className="text-center my-2">
-          <Link to="">Termos de Uso</Link>
+            <InputGroup className="my-4" controlid="password">
+            <InputGroup.Prepend>
+                <InputGroup.Text>
+                <Icon.Lock />
+                </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+                autoComplete="off"
+                className="form-control password"
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                placeholder="Digite sua senha (6 a 20 caracteres)"
+                maxLength="20"
+                minLength="6"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            </InputGroup>
+
+            <InputGroup className="my-4" controlid="passwordConfirm">
+            <InputGroup.Prepend>
+                <InputGroup.Text>
+                <Icon.Lock />
+                </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+                autoComplete="off"
+                className="form-control password"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                type="password"
+                value={passwordConfirm}
+                placeholder="Confirme sua senha (6 a 20 caracteres)"
+                maxLength="20"
+                minLength="6"
+                required
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+            </InputGroup>
+
+            <Button
+            className="btn btn-block mt-2"
+            name="commit"
+            variant="primary"
+            type="submit"
+            value="Entrar"
+            disabled={!validateForm() || completed}
+            >
+            Entrar
+            </Button>
+        </Form>
+
+        {completed && (
+            <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
+                <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+            </div>
+            )}
+
+        <br></br>   
+        <div style={{ color: 'white' }}>
+            <div className="my-4 text-center btn btn-info">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                Voltar à página principal
+            </Link>
+            </div>
         </div>
-        <div className="my-2 text-center">
-          <Link to="">Privacidade dos Dados</Link>
+        <br></br>
+        <br></br>
+        <div>
+            <div className="text-center my-2">
+            <Link to="">Termos de Uso</Link>
+            </div>
+            <div className="my-2 text-center">
+            <Link to="">Privacidade dos Dados</Link>
+            </div>
         </div>
-      </div>
-    </Container>
+        </Container>
+    </div>
   )
 }
 
