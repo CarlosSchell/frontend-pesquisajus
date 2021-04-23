@@ -36,7 +36,7 @@ const Navbartest = () => {
     <header>
       <Navbar bg="light" expand="md">
         <Container fluid="md" className="p-2">
-          <LinkContainer to="/" style={{ fontSize: '28px' }}>
+          <LinkContainer to="/" style={{ fontSize: '32px' }}>
             <Navbar.Brand>pesquisajus</Navbar.Brand>
           </LinkContainer>
 
@@ -87,7 +87,7 @@ const Navbartest = () => {
               <Nav className="ml-auto" style={{ fontSize: '28px' }}>
                 <HeaderShowUserImage />
                 {userLogin && userLogin.name !== 'Convidado' ? (
-                  <NavDropdown title={userLogin.name} id="basic-nav-dropdown" style={{ fontSize: '18px' }}>
+                  <NavDropdown title={<span style={{ color: '#1520A6', backgroundColor: 'white', fontSize: '16px'}}>{userLogin.name}</span>} id="basic-nav-dropdown" style={{ fontSize: '18px', color:'blue' }}>
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Perfil</NavDropdown.Item>
                     </LinkContainer>
@@ -98,9 +98,9 @@ const Navbartest = () => {
                     <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
                   </NavDropdown>
                 ) : (
-                  <LinkContainer to="/login" style={{ fontSize: '18px' }}>
+                  <LinkContainer to="/login" style={{ fontSize: '18px', paddingTop: '10px', backgroundColor: 'white'}}>
                     <NavDropdown.Item >
-                      <strong>Entrar</strong>
+                      <strong style={{ color: '#1520A6', backgroundColor: 'white'}}>Entrar</strong>
                     </NavDropdown.Item>
                   </LinkContainer>
                 )}

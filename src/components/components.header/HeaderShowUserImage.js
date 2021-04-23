@@ -34,7 +34,7 @@ const HeaderShowUserImage = (props) => {
       src={avatar}
       href={avatar}
       alt={altAvatarImage}
-      width="40px"
+      width="45px"
       height="50px"
     />
   )
