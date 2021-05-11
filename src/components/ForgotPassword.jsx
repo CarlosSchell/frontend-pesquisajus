@@ -86,16 +86,17 @@ const ForgotPassword = ({ location, history }) => {
   return (
     <Container
       style={{
-        width: '420px',
+        width: '25%',
+        minWidth: '340px',
         height: '67vh',
         display: 'block',
         textAlign: 'center',
         marginTop: '6%',
       }}
     >
-      <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-        Digite e seu email para gerar uma nova senha
-      </h2>
+      <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
+        Nova senha
+      </h3>
       {completed && <Message>{completed}</Message>}
       {problem && <Message variant="danger">{problem}</Message>}
       {loading && <Loader />}
@@ -115,7 +116,7 @@ const ForgotPassword = ({ location, history }) => {
             type="email"
             value={email}
             placeholder="Digite seu endereço de email"
-            size="60"
+            size="lg"
             inputMode="email"
             required
             onChange={(e) => setEmail(e.target.value)}
@@ -127,8 +128,8 @@ const ForgotPassword = ({ location, history }) => {
         </Button>
 
         {completed && (
-          <div style={{ fontSize: '2rem', color: 'black' }}>
-            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+          <div style={{ fontSize: '20px', color: 'black' }}>
+            <div className="my-5 text-center">Verifique a sua caixa de email !</div>
           </div>
         )}
 

@@ -7,7 +7,7 @@ import Loader from '../Loader'
 // import incluiProcessoLista from '../../utils/incluiProcessoLista'
 import ReactConfig from '../../utils/ReactConfig'
 import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
-import verificaZerosEsquerda from '../../utils/verificaZerosEsquerda'
+import preencheZerosEsquerda from '../../utils/preencheZerosEsquerda'
 
 
 const PesquisaPorNumero = () => {
@@ -50,7 +50,7 @@ const PesquisaPorNumero = () => {
 
   const validateProcesso = (nroProcesso) => {
     // console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
-    nroProcesso = verificaZerosEsquerda(nroProcesso)
+    nroProcesso = preencheZerosEsquerda(nroProcesso)
     let isValid = false
     if (nroProcesso.length === 25) {
       isValid = true

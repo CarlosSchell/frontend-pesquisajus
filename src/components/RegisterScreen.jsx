@@ -3,14 +3,13 @@ import axios from 'axios'
 
 import { Link } from 'react-router-dom'
 
-import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
+import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
 import Message from '../components/Message'
 import Loader from '../components/Loader.jsx'
 import ReactConfig from '../utils/ReactConfig.js'
 
 const RegisterScreen = ({ location, history }) => {
-
   console.log('Passou pelo Register Screen')
 
   const [name, setName] = useState('')
@@ -102,147 +101,149 @@ const RegisterScreen = ({ location, history }) => {
   }
 
   return (
-    <div style={{ backgroundColor: ' #eaeded'}}> 
-        <Container
-            style={{
-                maxWidth: '480px',
-                minWidth: '350px',
-                height: '92vh',
-                display: 'block',
-                textAlign: 'center',
-            }}
-        >
+    <div style={{ backgroundColor: '#eaeded',  marginRight: '10px' }}>
+      <div style={{ margin: 'auto', width: '25%', minWidth: '340px', minHeight: '70vh', display: 'block', textAlign: 'center' }}>
         <br></br>
-        <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-            Crie sua conta
-        </h2>
+        <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
+          Crie sua conta
+        </h3>
         {completed && <Message>{completed}</Message>}
         {problem && <Message variant="danger">{problem}</Message>}
         {loading && <Loader />}
 
         <Form onSubmit={submitHandler} className="mb-4 mx-auto">
-            <InputGroup className="my-4" controlid="email">
+          <InputGroup className="my-4" controlid="email">
             <InputGroup.Prepend>
-                <InputGroup.Text>
+              <InputGroup.Text>
                 <Icon.Person />
-                </InputGroup.Text>
+              </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-                autoFocus={true}
-                className="form-control"
-                id="name"
-                name="name"
-                type="text"
-                value={name}
-                placeholder="Digite seu nome de usuário com 20 letras"
-                maxLength="25"
-                size="25"
-                inputMode="text"
-                required
-                onChange={(e) => setName(e.target.value)}
+              autoFocus={true}
+              className="form-control"
+              id="name"
+              name="name"
+              type="text"
+              value={name}
+              placeholder="Nome de usuário com 20 letras"
+              maxLength="25"
+              size="lg"
+              inputMode="text"
+              required
+              onChange={(e) => setName(e.target.value)}
             />
-            </InputGroup>
+          </InputGroup>
 
-            <InputGroup className="my-4" controlid="email">
+          <InputGroup className="my-4" controlid="email">
             <InputGroup.Prepend>
-                <InputGroup.Text>
+              <InputGroup.Text>
                 <Icon.Envelope />
-                </InputGroup.Text>
+              </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-                className="form-control"
-                id="email"
-                name="email"
-                type="email"
-                value={email}
-                placeholder="Digite seu endereço de email"
-                maxLength="60"
-                size="60"
-                inputMode="email"
-                required
-                onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              placeholder="Endereço de email"
+              maxLength="60"
+              size="lg"
+              inputMode="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
             />
-            </InputGroup>
+          </InputGroup>
 
-            <InputGroup className="my-4" controlid="password">
+          <InputGroup className="my-4" controlid="password">
             <InputGroup.Prepend>
-                <InputGroup.Text>
+              <InputGroup.Text>
                 <Icon.Lock />
-                </InputGroup.Text>
+              </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-                autoComplete="off"
-                className="form-control password"
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                placeholder="Digite sua senha (6 a 20 caracteres)"
-                maxLength="20"
-                minLength="6"
-                required
-                onChange={(e) => setPassword(e.target.value)}
+              autoComplete="off"
+              className="form-control password"
+              id="password"
+              name="password"
+              type="password"
+              value={password}
+              placeholder="Senha (6 a 20 caracteres)"
+              maxLength="20"
+              minLength="6"
+              size="lg"
+              required
+              onChange={(e) => setPassword(e.target.value)}
             />
-            </InputGroup>
+          </InputGroup>
 
-            <InputGroup className="my-4" controlid="passwordConfirm">
+          <InputGroup className="my-4" controlid="passwordConfirm">
             <InputGroup.Prepend>
-                <InputGroup.Text>
+              <InputGroup.Text>
                 <Icon.Lock />
-                </InputGroup.Text>
+              </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-                autoComplete="off"
-                className="form-control password"
-                id="passwordConfirm"
-                name="passwordConfirm"
-                type="password"
-                value={passwordConfirm}
-                placeholder="Confirme sua senha (6 a 20 caracteres)"
-                maxLength="20"
-                minLength="6"
-                required
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+              autoComplete="off"
+              className="form-control password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              value={passwordConfirm}
+              placeholder="Confirme a senha (6 a 20 caracteres)"
+              maxLength="20"
+              minLength="6"
+              required
+              onChange={(e) => setPasswordConfirm(e.target.value)}
             />
-            </InputGroup>
+          </InputGroup>
 
-            <Button
+          <Button
             className="btn btn-block mt-2"
             name="commit"
             variant="primary"
             type="submit"
             value="Entrar"
             disabled={!validateForm() || completed}
-            >
+          >
             Entrar
-            </Button>
+          </Button>
         </Form>
 
         {completed && (
-            <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
-                <div className="my-4 text-center">Verifique a sua caixa de email !</div>
-            </div>
-            )}
+          <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
+            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+          </div>
+        )}
 
-        <br></br>   
-        <div style={{ color: 'white' }}>
-            <div className="my-4 text-center btn btn-info">
-            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-                Voltar à página principal
-            </Link>
-            </div>
-        </div>
         <br></br>
+        <div style={{ color: 'white' }}>
+          <div className="my-2 text-center btn btn-outline-primary">
+            <Link to="/login" style={{ color: 'darkblue', textDecoration: 'none' }}>
+              Já tenho conta!
+            </Link>
+          </div>
+        </div>
+
+        <br></br>
+        <div style={{ color: 'white' }}>
+          <div className="my-2 text-center btn btn-info">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+              Voltar à página principal
+            </Link>
+          </div>
+        </div>
+
         <br></br>
         <div>
-            <div className="text-center my-2">
+          <div className="text-center">
             <Link to="">Termos de Uso</Link>
-            </div>
-            <div className="my-2 text-center">
+          </div>
+          <div className="mt-2 text-center">
             <Link to="">Privacidade dos Dados</Link>
-            </div>
+          </div>
         </div>
-        </Container>
+      </div>
     </div>
   )
 }

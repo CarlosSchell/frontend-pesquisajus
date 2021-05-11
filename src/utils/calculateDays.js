@@ -20,40 +20,40 @@ const calculateDays = (firstDate, secondDate) => {
   let badge_color = ''
   
   if (diffDays <= 1)  {
-    badge_text = 'Nova ' + diffDays.toString() + ' dia';
+    badge_text = '' + diffDays.toString() + ' d';
     badge_color = '#A52A2A';    // bem vermelho
     //console.log('badge_text : ',badge_text)
   } else if (diffDays <= 2) {
-    badge_text = 'Nova ' + diffDays.toString() + ' dias';
+    badge_text = '' + diffDays.toString() + ' d';
     badge_color = '#DA291C';   // bem vermelho
     //console.log('badge_text : ',badge_text)
   } else if (diffDays <= 4)  {
-    badge_text = 'Nova ' + diffDays.toString() + ' dias';
+    badge_text = '' + diffDays.toString() + ' d';
     //console.log('badge_text : ',badge_text)
     badge_color = '#FF0000';
   } else if (diffDays <= 7)  {
-    badge_text = 'Nova ' + diffDays.toString() + ' dias';
+    badge_text = '' + diffDays.toString() + ' d';
     //console.log('badge_text : ',badge_text)
     badge_color = '#FF4242';
   } else if (diffDays <= 20) {
-    badge_text = diffDays.toString() + ' dias';
+    badge_text = diffDays.toString() + ' d';
     badge_color = '#FFA07A' ;
   } else if (diffDays <= 31) {
-    badge_text = diffDays.toString() + ' dias';
+    badge_text = diffDays.toString() + ' d';
     badge_color = '#808080';
   } else if (diffDays <= 60) {
-    badge_text = diffMeses.toString()  + ' mes';
+    badge_text = diffMeses.toString()  + ' m';
     badge_color = '#A9A9A9';
   } else if (diffDays <= 365) {
-    badge_text = diffMeses.toString() + ' meses';
+    badge_text = diffMeses.toString() + ' m';
     badge_color = '#A9A9A9';
     //badge_color = 'darkgreen';
   } else if (diffDays <= 730) {
-    badge_text = diffAnos.toString()  + ' ano   ';
+    badge_text = diffAnos.toString()  + 'a';
     badge_color = 'darkgreen';
     //badge_color = 'darkgreen';
   } else {
-    badge_text = diffAnos.toString()  + ' anos  ';
+    badge_text = diffAnos.toString()  + ' a';
     badge_color = 'black';
   }
 

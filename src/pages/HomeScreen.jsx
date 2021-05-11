@@ -1,67 +1,75 @@
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Container } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 const HomeScreen = () => {
   console.log('Passou pelo Home')
+  const { userLogin } = useSelector((state) => state)
 
   return (
-    <div style={{ backgroundColor: '#eaeded'}}>
-        <Container style={{   }}>
-            <div style={{  minWidth: '350px', minHeight: '92vh', textAlign: 'center' }}>
-                <br></br>
-                <div className="text-center py-3">
-                    <h1 style={{ textShadow: '1px 1px 1px lightgrey' }}>Bem vindo ao pesquisajus!</h1>
-                </div>
+    <div style={{ backgroundColor: '#eaeded' }}>
+      <div style={{ width: '40%', margin: 'auto', minWidth: '340px', minHeight: '92vh', textAlign: 'center' }}>
+        <div className="text-center mt-2">
+          <h1 style={{ textShadow: '1px 1px 1px lightgrey' }}>pesquisajus</h1>
+        </div>
 
-                <div style={{fontSize: '22px' }}>
+        <div style={{ fontSize: '20px' }}>
+          <div style={{ marginTop: '15px' }}>
+            Bem vindo ao moderno aplicativo que facilita a sua consulta a processos judiciais
+          </div>
 
-                    <div>O pesquisajus é um aplicativo moderno feito para facilitar a consulta de processos judiciais</div>
-                    <br></br>
+          <div style={{ marginTop: '8px' }}>
+            Consulte seu processo pelo nome da parte, número do processo, número da OAB ou acesse o link para o sistema
+            do tribunal
+          </div>
 
-                    <div>
-                    Ele possui uma base de dados própria, que foi construída a partir das decisões judiciais publicadas
-                    diariamente no Diário Oficial do TJRS - Tribunal de Justiça do Rio Grande do Sul
-                    </div>
-                    <br></br>
+          <div style={{ marginTop: '8px' }}>
+            O pesquisajus utiliza os dados do Diário Oficial do <strong>TJRS</strong>
+          </div>
 
-                    <div>Ele permite a consulta às decisões publicadas pelo nome das partes ou pelo número do processo</div>
-                    <br></br>
+          {userLogin && userLogin.name !== 'Convidado' ? (
+            <div>
+              <div >
+                <div style={{ fontSize: '24px', color: 'darkblue', marginTop: '15px' }}>Olá {userLogin.name}!</div>
+              </div>
+              <div style={{ fontSize: '24px', color: 'darkblue', marginTop: '10px', marginBottom: '15px' }}>
+                Bem vindo!
+              </div>
 
-                    <div>
-                    Você também pode criar a sua lista personalizada de acompanhamento de processos de seu interesse, e se
-                    quiser, também acessar diretamente o sistema do tribunal
-                    </div>
-                    <br></br>
-
-                    <div>
-                    O sistema possui também uma API - interface para a consulta automatizada de dados - e também uma área para
-                    baixar arquivos de dados para voce poder fazer as suas próprias pesquisas e análises
-                    </div>
-                    <br></br>
-
-                    <div>
-                        <p>Envie as suas sugestões através aba Contato ou pelo email&nbsp;</p>
-                        <a href="/contato" rel="noreferrer" target="_blank"  style={{ fontSize: '20px'}}>
-                            contato@pesquisajus.com
-                        </a>
-                    </div>
-                    <br></br>
-                    <br></br>
-                    
-                    <Link to="/register" style={{}}>
-                    <Button variant="info" size="lg">
-                        Crie aqui sua conta de usuário!
-                    </Button>
-                    </Link>
-
-                    <br></br>
-                    <br></br>
-
-                    <div style={{ fontSize: '22px', color: 'grey' }}>© 2021 pesquisajus - Todos os direitos reservados.</div>
-                    <br></br>
-                </div>
+              <div style={{ fontSize: '22px', color: 'darkblue', marginTop: '10px', marginBottom: '50px' }}>
+                Clique nos ícones do menu para utilizar os sistema!
+              </div>
             </div>
-        </Container>
+          ) : (
+            <div style={{ marginTop: '15px' }}>
+              <Link to="/login">
+                <div style={{ fontSize: '26px', color: 'darkblue', marginTop: '10px', marginBottom: '15px' }}>
+                  Bem vindo!
+                </div>
+
+                <Button variant="info" size="lg">
+                  Já sou usuário!
+                </Button>
+              </Link>
+
+              <div style={{ fontSize: '24px', color: 'darkblue', marginTop: '5px', marginBottom: '5px' }}>ou</div>
+
+              <Link to="/register">
+                <Button variant="info" size="lg">
+                  Novo usuário!
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {/* <div style={{ marginTop: '15px' }}>
+            O sistema permite a consulta automatizada de dados (API) e baixar arquivos para voce poder fazer as suas
+            próprias pesquisas e análises
+          </div> */}
+
+          <div style={{ fontSize: '18px', color: 'grey', marginTop: '25px' }}>© 2021 pesquisajus - v.10/05/21</div>
+        </div>
+      </div>
     </div>
   )
 }

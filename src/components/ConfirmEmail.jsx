@@ -99,16 +99,17 @@ const ConfirmEmail = ({ match, location, history }) => {
   return (
     <Container
       style={{
-        width: '420px',
+        width: '25%',
+        minWwidth: '340px',
         height: '67vh',
         display: 'block',
         textAlign: 'center',
         marginTop: '6%',
       }}
     >
-      <h2 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
+      <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
         Confime o email 
-      </h2>
+      </h3>
       {completed && <Message>{completed}</Message>}
       {problem && <Message variant="danger">{problem}</Message>}
       {loading && <Loader />}
@@ -128,7 +129,7 @@ const ConfirmEmail = ({ match, location, history }) => {
             type="email"
             value={email}
             placeholder="Digite seu endereço de email"
-            size="50"
+            size="lg"
             maxLength="50"
             inputMode="email"
             required

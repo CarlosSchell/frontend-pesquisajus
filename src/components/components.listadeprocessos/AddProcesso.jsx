@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import verificaZerosEsquerda from '../../utils/verificaZerosEsquerda'
+import preencheZerosEsquerda from '../../utils/preencheZerosEsquerda'
 
 const AddProcesso = ({ gravaNovoProcesso }) => {
   const [nroProcesso, setNroProcesso] = useState('')
@@ -11,7 +11,7 @@ const AddProcesso = ({ gravaNovoProcesso }) => {
 
   const validateProcesso = (nroProcesso) => {
     console.log('Numero do Processo: ', nroProcesso, nroProcesso.length)
-    nroProcesso = verificaZerosEsquerda(nroProcesso)
+    nroProcesso = preencheZerosEsquerda(nroProcesso)
     setNroProcesso(nroProcesso)
     let isValid = false
     if (nroProcesso.length === 25) {

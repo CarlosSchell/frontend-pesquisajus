@@ -34,7 +34,7 @@ const Planos = () => {
           <br></br>
           <br></br>
 
-          <div style={{ minWidth: '360px',  fontSize: '24px', textAlign: 'center' }}>
+          <div style={{ minWidth: '340px',  fontSize: '24px', textAlign: 'center' }}>
             <br></br>
             <div style={{ color: 'white' }}>
               <div className="my-4 text-center btn btn-info">

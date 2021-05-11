@@ -1,7 +1,7 @@
 // 0107812-96.2020.8.21.7000
 
 
-const verificaZerosEsquerda = (nroProcesso) => {
+const preencheZerosEsquerda = (nroProcesso) => {
   let posicaoSeparador = nroProcesso.indexOf("-")
   if (posicaoSeparador <= 8) {
     if (posicaoSeparador === 7) {
@@ -29,4 +29,4 @@ const verificaZerosEsquerda = (nroProcesso) => {
   return nroProcesso
 }
 
-export default verificaZerosEsquerda
+export default preencheZerosEsquerda

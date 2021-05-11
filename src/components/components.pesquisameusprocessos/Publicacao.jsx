@@ -53,11 +53,9 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
   const desctipo = publicacao.desctipo ?? ''
   const processo = publicacao.processo
   //const outronumero =  publicacao.outronumero
-  //const origemg1    = publicacao.origemg1
-  const partes = publicacao.partes ?? ''
-  const descricao = partes.substr(0, 24)
   const assunto = publicacao.assunto ?? ''
   const decisao = publicacao.decisao
+  const descricao = decisao.substr(33, 57)
 
   // WhatsApp Data
   const cellNumber = '51991068021' // futuramente colocar o numero do advogado / cliente / indicado
@@ -70,7 +68,7 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 
   return (
     <div>
-      <div style={{ marginLeft: '30px', marginRight: '30px', marginTop: '30px', color: 'black', textAlign: 'left' }}>
+      <div style={{ marginLeft: '5px', marginRight: '5px', marginTop: '20px', color: 'black', textAlign: 'left' }}>
         <div
           className="d-flex flex-row justify-content-between"
           style={{ display: 'flex', marginBottom: '05px', marginTop: '0px', alignItems: 'center' }}
@@ -79,10 +77,13 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
             <div className="notification" style={{ backgroundColor: badge_color }}>
               <span>{badge_text}</span>
             </div>
-            <span style={{ color: 'blue', fontSize: '1.25em', marginLeft: '20px' }}>{'Processo: ' + processo}</span>
+            <span style={{ color: 'blue', fontSize: '1.20em', marginLeft: '20px' }}>
+                {'Processo: ' + processo}
+            </span>
           </div>
-
-          <div className="d-flex flex-row justify-content-end">
+        </div>
+        <div>
+          <div className="d-flex flex-row justify-content-start">
             <div style={{ paddingTop: '5px' }}>
               <ButtonWhatsapp cellNumber={cellNumber} texto={texto} size={23} />
             </div>
@@ -93,9 +94,9 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
               rel="noreferrer"
               style={{}}
             >
-              <Button variant="outline-info" className="ml-4 mr-3">
+              <Button variant="outline-info" className="ml-3 mr-3">
                 <div>
-                  Consultar no TJRS
+                  TJRS
                   <img className="ml-2 justify-content-end" src={court} alt={court} width="20px" height="22px" />
                 </div>
               </Button>
@@ -104,12 +105,12 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
             {incluiProcessoLista ? (
               <Button
                 variant="outline-info"
-                className="ml-5 justify-content-end"
+                className="ml-0 justify-content-end"
                 onClick={() => {
                   onClickIncluirProcesso(processo, descricao)
                 }}
               >
-                Incluir nos Meus Processos
+                + Meus Processos
               </Button>
             ) : (
               ''
@@ -132,8 +133,6 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
           {desctipo ? '- ' + desctipo : ''}
           {assunto ? '- ' + assunto : ''}
         </p>
-
-        {partes && <p>Partes : '{partes}</p>}
 
         <p style={{ marginBottom: '3px', marginTop: '3px' }}>
           <Highlighter

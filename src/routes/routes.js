@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbartest from '../components/Navbartest.jsx'
 // import Header from '../components/Header.jsx'
 import HomeScreen from '../pages/HomeScreen.jsx'
-import PesquisaMeusProcessosScreen from '../pages/PesquisaMeusProcessosScreen.jsx'
-import PesquisaPorOabScreen from '../pages/PesquisaPorOabScreen.jsx'
 import PesquisaPorNomeScreen from '../pages/PesquisaPorNomeScreen.jsx'
-import PesquisaPorNumeroScreen from '../pages/PesquisaPorNumeroScreen.jsx'
+import PesquisaMeusProcessosScreen from '../pages/PesquisaMeusProcessosScreen.jsx'
+// import PesquisaPorOabScreen from '../pages/PesquisaPorOabScreen.jsx'
+// import PesquisaPorNumeroScreen from '../pages/dep-PesquisaPorNumeroScreen.jsx'
+
 import Api from '../pages/Api.jsx'
 import Downloads from '../pages/Downloads.jsx'
 import Planos from '../pages/Planos.jsx'
@@ -25,7 +26,6 @@ import { userLogout } from '../actions/userActions'
 import PageNotFound from '../components/PageNotFound'
 
 //<Header />
-
 const RoutesApp = () => (
   <Router>
     <Navbartest />
@@ -33,9 +33,7 @@ const RoutesApp = () => (
       <Route path="/" component={HomeScreen} exact />
 
       <Route path="/meusprocessos" component={PesquisaMeusProcessosScreen} exact />
-      <Route path="/pesquisaporoab" component={PesquisaPorOabScreen} exact />
       <Route path="/pesquisapornome" component={PesquisaPorNomeScreen} exact />
-      <Route path="/pesquisapornumero" component={PesquisaPorNumeroScreen} exact />
       <Route path="/api" component={Api} exact />
       <Route path="/downloads" component={Downloads} exact />
       <Route path="/plans" component={Planos} exact />
