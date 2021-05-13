@@ -17,7 +17,7 @@ const decodeUserToken = (token) => {
     '-----END PUBLIC KEY-----'
 
   //console.log('Public Key dentro do authenticate : ', publicKey)
-  let decoded
+  let decoded = ''
   try {
     decoded = jwt.verify(token, publicKey, { algorithm: 'RS512' })
 

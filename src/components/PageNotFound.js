@@ -16,6 +16,8 @@ const PageNotFound = () => {
         <br></br>
         <h3 className="text-center mb-3">Página não encontrada</h3>
         <div style={{ color: 'white', marginTop: '10vh' }}>
+          <br></br>
+          <br></br>
           <div className="my-4 text-center btn btn-info">
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               Voltar à página principal

@@ -2,14 +2,24 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-import * as Icon from 'react-bootstrap-icons'
+// import * as Icon from 'react-bootstrap-icons'
 import { userLogout } from '../actions/userActions'
+
+import SvgHome from './components.header/SvgHome.jsx'
+import SvgPesquisar from './components.header/SvgPesquisar.jsx'
+import SvgProcessos from './components.header/SvgProcessos.jsx'
+import SvgDiversos from './components.header/SvgDiversos.jsx'
+import SvgUsuario from './components.header/SvgUsuario.jsx'
+
+// import './customheader.css' // temporaria retira na verfsao definitiva
 
 const Navbartest = () => {
   console.log('Passou pelo Header')
 
   const dispatch = useDispatch()
   const { userLogin } = useSelector((state) => state)
+  let name = userLogin.name ?? 'Usuario'
+  name = name.substr(0, 12)
   // const { userProcessos } = useSelector((state) => state)
   // userDisplayName = userLogin ? userLogin.name : 'Convidado'
   // let userDisplayName = userLogin.name
@@ -26,48 +36,47 @@ const Navbartest = () => {
   //   const userDisplayName = "Carlos Schellenberger"
 
   return (
-
-    <Navbar bg="light" className="sticky-top" style={{ alignItems: 'center', minWidth: '360px', marginRight: '0px', marginLeft: '0px' }}>
-
-      <Nav className="mr-auto" style={{ alignItems: 'center' }}>
-        <LinkContainer to="/" style={{ marginLeft: '', marginRight: '10px' }}>
+    <Navbar
+      bg="light"
+      className="sticky-top mx-0 my-0 px-0 py-0"
+      style={{ alignItems: 'center', minWidth: '360px', display: 'flex', flexDirection: 'row' }}
+    >
+      <Nav className="mr-auto" style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+        <LinkContainer to="/" style={{ margin: '17px 30px 10px 20px', padding: '0px 0px 0px 0px' }}>
           <Nav.Link>
-            <Icon.HouseDoor style={{ fontSize: '26px' }} />
+            <SvgHome />
           </Nav.Link>
         </LinkContainer>
       </Nav>
 
-      <Nav className="ml-auto" style={{ alignItems: 'center' }}>
-        <LinkContainer to="/pesquisapornome" style={{ fontSize: '20px',  }}>
+      <Nav className="ml-auto" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <LinkContainer to="/pesquisapornome" style={{ margin: '19px 0px 10px 10px', padding: '0px 0px 0px 0px' }}>
           <Nav.Link>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-zoom-in"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-              />
-              <path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
-            </svg>
+            <SvgPesquisar />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to="/meusprocessos" >
+        <LinkContainer to="/meusprocessos" style={{ margin: '18px 4px 10px 10px', padding: '0px 0px 0px 0px' }}>
           <Nav.Link>
-            <Icon.WindowSidebar style={{ fontSize: '24px' }} />
+            <SvgProcessos />
           </Nav.Link>
         </LinkContainer>
 
         <NavDropdown
-          title={<Icon.Wrench style={{ fontSize: '24px' }} />}
           id="basic-nav-dropdown"
-          key="left"
-          style={{ fontSize: '24px' }}
+          title={<SvgDiversos style={{ margin: '0px 0px 10px 0px', padding: '0px 0px 0px 0px' }} />}
+          drop={'down'}
+          style={{
+            fontSize: '24px',
+            marginTop: '1px',
+            marginBottom: '0px',
+            marginLeft: '0px',
+            marginRight: '0px',
+            paddingTop: '0px',
+            paddingBottom: '0px',
+            paddingLeft: '0px',
+            paddingRight: '0px',
+          }}
         >
           <LinkContainer to="/planos">
             <NavDropdown.Item>Assinatura</NavDropdown.Item>
@@ -88,34 +97,51 @@ const Navbartest = () => {
           </LinkContainer>
         </NavDropdown>
 
-        <Nav className="ml-auto" style={{ }}>
-          {userLogin && userLogin.name !== 'Convidado' ? (
-            <NavDropdown
-              title={<Icon.Person style={{ fontSize: '24px' }} />}
-              id="basic-nav-dropdown"
-              key={'down'}
-              style={{ fontSize: '24px', marginRight: '15px' }}
-            >
-              <LinkContainer to="/login">
-                <NavDropdown.Item>Entrar</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/profile">
-                <NavDropdown.Item>Perfil</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/changepassword">
-                <NavDropdown.Item>Senha</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
-            </NavDropdown>
-          ) : (
-            <LinkContainer to="/login" style={{ fontSize: '18px', paddingTop: '', backgroundColor: 'white' }}>
-              <NavDropdown.Item>
-                <strong style={{ color: '#1520A6', backgroundColor: 'white',  }}>Entrar</strong>
-              </NavDropdown.Item>
+        {userLogin && userLogin.name !== 'Convidado' ? (
+          <NavDropdown
+            id="dropdown-menu-align-right"
+            title={<SvgUsuario name={name} style={{ margin: '0px 0px 0px 0px', padding: '0px 0px 0px 0px' }} />}
+            drop="down"
+            style={{
+              fontSize: '24px',
+              marginTop: '0px',
+              marginBottom: '0px',
+              marginLeft: '0px',
+              marginRight: '0px',
+              paddingTop: '0px',
+              paddingBottom: '0px',
+              paddingLeft: '0px',
+              paddingRight: '0px',
+            }}
+          >
+            <LinkContainer to="/login">
+              <NavDropdown.Item>Entrar</NavDropdown.Item>
             </LinkContainer>
-          )}
-        </Nav>
+            <LinkContainer to="/profile">
+              <NavDropdown.Item>Perfil</NavDropdown.Item>
+            </LinkContainer>
+            <LinkContainer to="/changepassword">
+              <NavDropdown.Item>Senha</NavDropdown.Item>
+            </LinkContainer>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={logoutHandler}>Sair</NavDropdown.Item>
+          </NavDropdown>
+        ) : (
+          <LinkContainer to="/login">
+            <Nav.Link>
+              <strong
+                style={{
+                  color: '#1520A6',
+                  backgroundColor: '',
+                  margin: '5px 20px 0px 0px',
+                  padding: '0px 0px 0px 0px',
+                }}
+              >
+                Entrar
+              </strong>
+            </Nav.Link>
+          </LinkContainer>
+        )}
       </Nav>
     </Navbar>
   )

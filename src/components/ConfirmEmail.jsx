@@ -1,76 +1,80 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { Container, Form, FormControl, InputGroup, Button } from 'react-bootstrap'
+import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
 import Message from './Message'
 import Loader from './Loader.jsx'
-import decodeUserToken from'../utils/decodeUserToken'
+import decodeUserToken from '../utils/decodeUserToken'
 import ReactConfig from '../utils/ReactConfig'
-
-// Acessado via http://localhost:3000/confirmemail/eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9...
-
-// http://localhost:21115/v1/users/confirmemail/eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhcmxvcy5zY2hlbGxlbmJlcmdlckBnbWFpbC5jb20iLCJpYXQiOjE2MTM5NDM4NzMsImV4cCI6MTYxNDAzMDI3M30.RuZj_OUtKvrtHJUFqlza6WB7__1I7M5EmbmdoPcO_7NBS7Sbeh_JJYtsaIBGtOgMronyRg91RtlIO2dstaNwj6zyb_6l6NMJ8l7bWRjfRBfyklB9icCsyGKJkG5gb4k9X-UNXy7Du-21KEhFf7Fphfr4PXCEgCuoG_cU0s54KbCRSk5Psquu5i0Jeis03TtPNIDLODLmCpR7Ifjo3PElWdeh1BqDVBg57x8C9vdryaoFw_wSRWyx-KSPVub9IqTgwfuNREK_uJauSrBJt00tV0LvyZ6RV1KFpcE8qoXGOpzT9e14XKtpIO4csiRPiY76RusoHESXKpqGr9Y3h1fFEA
 
 const ConfirmEmail = ({ match, location, history }) => {
   console.log('Entrou no confirm Email - externo!')
 
   const [loading, setLoading] = useState(false)
+  const [isOperationCompleted, setIsOperationCompleted] = useState(false)
   const [completed, setCompleted] = useState('')
   const [problem, setProblem] = useState('')
 
   const baseUrl = ReactConfig.baseUrl ?? ''
 
   const token = match.params.token
-
-  console.log('token do confirm email: ', token)
+  // console.log('token do confirm email: ', token)
 
   const decoded = decodeUserToken(token) //Synchronous
+
+  // If token is valid
+  // if (decoded === '') {
+  //   return 'Token Inválido. Acesso negado'
+  // }
   const email = decoded.email ?? ''
 
-  // let messageTimer = () => {}
+  let messageTimer = () => {}
+  console.log('Problema : ', problem)
+  console.log('Completed : ', completed)
 
-  // if (completed) {
-  //   messageTimer = setTimeout(() => {
-  //     history.push('/login')
-  //   }, 4000)
-  // }
+  if (isOperationCompleted === true) {
+    messageTimer = setTimeout(() => {
+      history.push('/login')
+    }, 1500)
+  }
 
-  // if (problem) {
-  //   messageTimer = setTimeout(() => {
-  //     setProblem('')
-  //   }, 2500)
-  // }
+  if (problem) {
+    messageTimer = setTimeout(() => {
+      setProblem('')
+    }, 2500)
+  }
 
-  // useEffect(() => {
-  //   console.log('UseEffect Confirm Email!')
-  //   return () => {
-  //     clearTimeout(messageTimer)
-  //   }
-  // }, [])
+  useEffect(() => {
+    console.log('UseEffect Confirm Email clear timeout!')
+    return () => {
+      clearTimeout(messageTimer)
+    }
+  }, [])
 
   const ConfirmEmailInternal = async () => {
     try {
       setLoading(true)
-      
+
       // console.log('Token antes do axios : ', token)
       // console.log('Email antes do axios : ', email)
 
       const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      const url = baseUrl + '/users/confirmemail' 
+      const url = baseUrl + '/users/confirmemail'
       const isConfirmed = true
       const res = await axios.post(url, { isConfirmed }, config)
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''
 
-      console.log('axios res : ', res )
-      console.log('completed : ', completedMessage )
-      console.log('status : ', completedStatus )
+      //console.log('axios res : ', res)
+      //console.log('completed : ', completedMessage)
+      //console.log('status : ', completedStatus)
 
       if (completedStatus === 'success') {
         setCompleted(completedMessage)
+        setIsOperationCompleted(true)
       }
       setLoading(false)
     } catch (error) {
@@ -97,74 +101,82 @@ const ConfirmEmail = ({ match, location, history }) => {
   }
 
   return (
-    <Container
-      style={{
-        width: '25%',
-        minWwidth: '340px',
-        height: '67vh',
-        display: 'block',
-        textAlign: 'center',
-        marginTop: '6%',
-      }}
-    >
-      <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
-        Confime o email 
-      </h3>
-      {completed && <Message>{completed}</Message>}
-      {problem && <Message variant="danger">{problem}</Message>}
-      {loading && <Loader />}
+    <div style={{ backgroundColor: '#eaeded', marginRight: '8px' }}>
+      <div
+        style={{
+          margin: 'auto',
+          width: '25%',
+          minWidth: '340px',
+          minHeight: '88vh',
+          display: 'block',
+          textAlign: 'center',
+          backgroundColor: '#eaeded',
+        }}
+      >
+        <br></br>
+        <h3 className="mb-3" style={{ textShadow: '1px 1px 1px lightgrey' }}>
+          Confirme o email
+        </h3>
+        {completed && <Message>{completed}</Message>}
+        {problem && <Message variant="danger">{problem}</Message>}
+        {loading && <Loader />}
 
-      <Form onSubmit={submitHandler} className="mb-4 mx-auto">
-        <InputGroup className="my-4" controlid="email">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <Icon.Envelope />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl
-            autoFocus={true}
-            className="form-control"
-            id="email"
-            name="email"
-            type="email"
-            value={email}
-            placeholder="Digite seu endereço de email"
-            size="lg"
-            maxLength="50"
-            inputMode="email"
-            required
-            disabled
-          />
-        </InputGroup>
+        <Form onSubmit={submitHandler} className="mb-4 mx-auto">
+          <InputGroup className="my-4" controlid="email">
+            <InputGroup.Prepend>
+              <InputGroup.Text>
+                <Icon.Envelope />
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              autoFocus={true}
+              className="form-control"
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              placeholder="Digite seu endereço de email"
+              size="lg"
+              maxLength="50"
+              inputMode="email"
+              required
+              disabled
+            />
+          </InputGroup>
 
-        <Button
-          className="btn btn-block mt-2"
-          name="commit"
-          variant="primary"
-          type="submit"
-          value="Entrar"
-          disabled={completed}
-        >
-          Confirmar
-        </Button>
-      </Form>
+          <Button
+            className="btn btn-block mt-2"
+            name="commit"
+            variant="primary"
+            type="submit"
+            value="Entrar"
+            disabled={completed}
+          >
+            Confirmar
+          </Button>
+        </Form>
 
-      <div style={{ color: 'white', marginTop: '10vh' }}>
-        <div className="my-4 text-center btn btn-info">
-          {!completed ? (
-            <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
-              Voltar à página principal 
-            </Link>
-          ) : (
-            <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
-              Entrar no pesquisajus (Login)
-            </Link>
+        <div style={{ color: 'white', marginTop: '10vh' }}>
+          {completed && (
+            <div style={{ fontSize: '22px', color: 'black', marginTop: '5vh' }}>
+              <div className="my-4 text-center">Aguarde! Acessando o sistema...</div>
+            </div>
           )}
+        </div>
 
+        <div style={{ color: 'white', marginTop: '10vh' }}>
+          <div className="my-4 text-center btn btn-info">
+            {!completed ? (
+              <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                Voltar à página principal
+              </Link>
+            ) : (
+              <div></div>
+            )}
+          </div>
         </div>
       </div>
-
-    </Container>
+    </div>
   )
 }
 

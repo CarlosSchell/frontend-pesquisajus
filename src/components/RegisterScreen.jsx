@@ -46,7 +46,7 @@ const RegisterScreen = ({ location, history }) => {
       const url = baseUrl + '/users/register'
       const res = await axios.post(url, { name, email, password, passwordConfirm }, config)
 
-      console.log('Depois do axios register: ', res)
+      //console.log('Depois do axios register: ', res)
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''
@@ -101,8 +101,17 @@ const RegisterScreen = ({ location, history }) => {
   }
 
   return (
-    <div style={{ backgroundColor: '#eaeded',  marginRight: '10px' }}>
-      <div style={{ margin: 'auto', width: '25%', minWidth: '340px', minHeight: '70vh', display: 'block', textAlign: 'center' }}>
+    <div style={{ backgroundColor: '#eaeded', marginRight: '10px' }}>
+      <div
+        style={{
+          margin: 'auto',
+          width: '25%',
+          minWidth: '340px',
+          minHeight: '87vh',
+          display: 'block',
+          textAlign: 'center',
+        }}
+      >
         <br></br>
         <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
           Crie sua conta
@@ -193,6 +202,7 @@ const RegisterScreen = ({ location, history }) => {
               placeholder="Confirme a senha (6 a 20 caracteres)"
               maxLength="20"
               minLength="6"
+              size="lg"
               required
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
@@ -211,7 +221,7 @@ const RegisterScreen = ({ location, history }) => {
         </Form>
 
         {completed && (
-          <div style={{ fontSize: '2rem', color: 'black', marginTop: '5vh' }}>
+          <div style={{ fontSize: '22px', color: 'black', marginTop: '5vh' }}>
             <div className="my-4 text-center">Verifique a sua caixa de email !</div>
           </div>
         )}

@@ -89,7 +89,7 @@ const Contato = () => {
               type="text"
               value={name}
               placeholder="Digite seu nome"
-              maxLenght="50"
+              maxLength="50"
               size="lg"
               inputMode="text"
               required
@@ -104,7 +104,7 @@ const Contato = () => {
               type="email"
               value={email}
               placeholder="Digite seu endereço de email"
-              maxLenght="60"
+              maxLength="60"
               size="lg"
               inputMode="email"
               required
@@ -120,7 +120,7 @@ const Contato = () => {
               rows={5}
               value={message}
               placeholder="Digite sua mensagem"
-              maxlength="1024"
+              maxLength="1024"
               size="lg"
               required
               onChange={(e) => setMessage(e.target.value)}

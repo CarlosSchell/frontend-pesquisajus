@@ -29,7 +29,7 @@ const HomeScreen = () => {
 
           {userLogin && userLogin.name !== 'Convidado' ? (
             <div>
-              <div >
+              <div>
                 <div style={{ fontSize: '24px', color: 'darkblue', marginTop: '15px' }}>Olá {userLogin.name}!</div>
               </div>
               <div style={{ fontSize: '24px', color: 'darkblue', marginTop: '10px', marginBottom: '15px' }}>
@@ -37,7 +37,7 @@ const HomeScreen = () => {
               </div>
 
               <div style={{ fontSize: '22px', color: 'darkblue', marginTop: '10px', marginBottom: '50px' }}>
-                Clique nos ícones do menu para utilizar os sistema!
+                Clique nos ícones do menu para utilizar o sistema!
               </div>
             </div>
           ) : (
@@ -67,11 +67,12 @@ const HomeScreen = () => {
             próprias pesquisas e análises
           </div> */}
 
-          <div style={{ fontSize: '18px', color: 'grey', marginTop: '25px' }}>© 2021 pesquisajus - v.10/05/21</div>
+          <div style={{ fontSize: '18px', color: 'grey', marginTop: '25px' }}>© 2021 pesquisajus - v.12.05.21.0</div>
         </div>
       </div>
     </div>
   )
+  
 }
 
 export default HomeScreen

@@ -45,8 +45,8 @@ const RoutesApp = () => (
       <Route path="/register" component={RegisterScreen} exact />
       <Route path="/profile" component={UserProfile} exact />
       <Route path="/changepassword/" component={ChangePassword} exact />
-      <Route path="/changepassword/:token" component={ChangePassword} />
       <Route path="/forgotpassword" component={ForgotPassword} exact />
+      <Route path="/changepassword/:token" component={ChangePassword} />
       <Route path="/confirmemail/:token" component={ConfirmEmail} />
 
       <Route path="/admin/userlist" component={''} />
