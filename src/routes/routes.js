@@ -1,37 +1,30 @@
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
-import Navbartest from '../components/Navbartest.jsx'
-// import Header from '../components/Header.jsx'
-import HomeScreen from '../pages/HomeScreen.jsx'
-import PesquisaPorNomeScreen from '../pages/PesquisaPorNomeScreen.jsx'
-import PesquisaMeusProcessosScreen from '../pages/PesquisaMeusProcessosScreen.jsx'
-// import PesquisaPorOabScreen from '../pages/PesquisaPorOabScreen.jsx'
-// import PesquisaPorNumeroScreen from '../pages/dep-PesquisaPorNumeroScreen.jsx'
-
-import Api from '../pages/Api.jsx'
-import Downloads from '../pages/Downloads.jsx'
-import Planos from '../pages/Planos.jsx'
-import SobreNos from '../pages/SobreNos.jsx'
-import Contato from '../components/Contato.jsx'
-
-import LoginScreen from '../components/LoginScreen'
+import Header from '../components/Header'
+import HomeScreen from '../pages/HomeScreen'
+import PesquisaPorNomeScreen from '../pages/PesquisaPorNomeScreen'
+import PesquisaMeusProcessosScreen from '../pages/PesquisaMeusProcessosScreen'
+import Api from '../pages/Api'
+import Downloads from '../pages/Downloads'
+import Planos from '../pages/Planos'
+import SobreNos from '../pages/SobreNos'
+import Contato from '../components/Contato'
+import Login from '../components/components.auth/Login'
 import RegisterScreen from '../components/RegisterScreen'
 import ChangePassword from '../components/ChangePassword'
 import ForgotPassword from '../components/ForgotPassword'
 import ConfirmEmail from '../components/ConfirmEmail'
 import UserProfile from '../components/UserProfile'
-import { userLogout } from '../actions/userActions'
-//import Admin from '../components/Admin.jsx'
+import userLogout from '../actions/userActions'
+// import Admin from '../components/Admin'
 
 import PageNotFound from '../components/PageNotFound'
 
-//<Header />
 const RoutesApp = () => (
   <Router>
-    <Navbartest />
+    <Header />
     <Switch>
       <Route path="/" component={HomeScreen} exact />
-
       <Route path="/meusprocessos" component={PesquisaMeusProcessosScreen} exact />
       <Route path="/pesquisapornome" component={PesquisaPorNomeScreen} exact />
       <Route path="/api" component={Api} exact />
@@ -40,7 +33,7 @@ const RoutesApp = () => (
       <Route path="/about" component={SobreNos} exact />
       <Route path="/contact" component={Contato} exact />
 
-      <Route path="/login" component={LoginScreen} exact />
+      <Route path="/login" component={Login} exact />
       <Route path="/logout" component={userLogout} exact />
       <Route path="/register" component={RegisterScreen} exact />
       <Route path="/profile" component={UserProfile} exact />
@@ -49,8 +42,8 @@ const RoutesApp = () => (
       <Route path="/changepassword/:token" component={ChangePassword} />
       <Route path="/confirmemail/:token" component={ConfirmEmail} />
 
-      <Route path="/admin/userlist" component={''} />
-      <Route path="/admin/user/:id/edit" component={''} />
+      <Route path="/admin/userlist" />
+      <Route path="/admin/user/:id/edit" />
       <Route component={PageNotFound} />
     </Switch>
   </Router>

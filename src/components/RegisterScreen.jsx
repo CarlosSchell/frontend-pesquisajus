@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { Link } from 'react-router-dom'
 
 import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
-import Message from '../components/Message'
-import Loader from '../components/Loader.jsx'
+import Message from './Message'
+import Loader from './Loader'
 import ReactConfig from '../utils/ReactConfig.js'
 
 const RegisterScreen = ({ location, history }) => {
-  console.log('Passou pelo Register Screen')
+  // console.log("Passou pelo Register Screen")
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -32,21 +33,28 @@ const RegisterScreen = ({ location, history }) => {
   // }, [])
 
   // Page Actions
-  const validateForm = () => {
-    return email.length > 0 && password.length > 5 && password.length <= 20 && password === passwordConfirm
-  }
+  const validateForm = () =>
+    email.length > 0
+    && password.length > 5
+    && password.length <= 20
+    && password === passwordConfirm
 
   const registerUserScreen = async (name, email, password, passwordConfirm) => {
     try {
+      // eslint-disable-next-line no-console
       console.log('Entrou no Register user !')
       setLoading(true)
       // const config = { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token } }
       const config = { headers: { 'Content-Type': 'application/json' } }
 
-      const url = baseUrl + '/users/register'
-      const res = await axios.post(url, { name, email, password, passwordConfirm }, config)
+      const url = `${baseUrl}/users/register`
+      const res = await axios.post(
+        url,
+        { name, email, password, passwordConfirm },
+        config
+      )
 
-      //console.log('Depois do axios register: ', res)
+      // console.log('Depois do axios register: ', res)
 
       const completedStatus = res.data.status ?? ''
       const completedMessage = res.data.message ?? ''
@@ -56,16 +64,8 @@ const RegisterScreen = ({ location, history }) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log('Entrou no catch register error')
-
-      console.log('Resposta : ', error.response)
-
       const errorStatus = error.response.data.status
       const errorMessage = error.response.data.message
-
-      console.log('Erro.response.status : ', errorStatus) //401
-      console.log('Erro.response.message : ', errorMessage)
-      // console.log('Erro.response.data.error : ', error.response.data.error)
 
       if (errorStatus === 'fail') {
         setProblem(errorMessage)
@@ -109,10 +109,10 @@ const RegisterScreen = ({ location, history }) => {
           minWidth: '340px',
           minHeight: '87vh',
           display: 'block',
-          textAlign: 'center',
+          textAlign: 'center'
         }}
       >
-        <br></br>
+        <br />
         <h3 className="mb-3" style={{ textShadow: '2px 2px 2px lightgrey' }}>
           Crie sua conta
         </h3>
@@ -128,7 +128,7 @@ const RegisterScreen = ({ location, history }) => {
               </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
-              autoFocus={true}
+              autoFocus
               className="form-control"
               id="name"
               name="name"
@@ -222,20 +222,25 @@ const RegisterScreen = ({ location, history }) => {
 
         {completed && (
           <div style={{ fontSize: '22px', color: 'black', marginTop: '5vh' }}>
-            <div className="my-4 text-center">Verifique a sua caixa de email !</div>
+            <div className="my-4 text-center">
+              Verifique a sua caixa de email !
+            </div>
           </div>
         )}
 
-        <br></br>
+        <br />
         <div style={{ color: 'white' }}>
           <div className="my-2 text-center btn btn-outline-primary">
-            <Link to="/login" style={{ color: 'darkblue', textDecoration: 'none' }}>
+            <Link
+              to="/login"
+              style={{ color: 'darkblue', textDecoration: 'none' }}
+            >
               Já tenho conta!
             </Link>
           </div>
         </div>
 
-        <br></br>
+        <br />
         <div style={{ color: 'white' }}>
           <div className="my-2 text-center btn btn-info">
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
@@ -244,7 +249,7 @@ const RegisterScreen = ({ location, history }) => {
           </div>
         </div>
 
-        <br></br>
+        <br />
         <div>
           <div className="text-center">
             <Link to="">Termos de Uso</Link>

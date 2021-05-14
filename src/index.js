@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import bootstrap from 'bootstrap'
+// import bootstrap from 'bootstrap'
 
-import { App } from './App'
+import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(

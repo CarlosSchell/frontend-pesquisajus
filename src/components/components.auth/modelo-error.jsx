@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 
 import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons'
-import Message from './Message'
-import Loader from './Loader'
-import decodeUserToken from '../utils/decodeUserToken'
-import ReactConfig from '../utils/ReactConfig'
+import Message from '../Message'
+import Loader from '../Loader'
+import decodeUserToken from '../../utils/decodeUserToken'
+import ReactConfig from '../../utils/ReactConfig'
 
 const ConfirmEmail = ({ match, history }) => {
     // eslint-disable-next-line no-console
     console.log('Entrou no confirm Email - externo!')
 
     const [loading, setLoading] = useState(false)
-    const [isOperationCompleted, setIsOperationCompleted] = useState(false)
     const [completed, setCompleted] = useState('')
     const [problem, setProblem] = useState('')
 
     const baseUrl = ReactConfig.baseUrl ?? ''
-
     const { token } = match.params
-    // console.log('token do confirm email: ', token)
-
     const decoded = decodeUserToken(token) // Synchronous
-
     // If token is valid
     // if (decoded === '') {
     //   return 'Token Inválido. Acesso negado'
@@ -33,8 +28,10 @@ const ConfirmEmail = ({ match, history }) => {
     const email = decoded.email ?? ''
 
     let messageTimer = () => {}
+    // console.log('Problema : ', problem)
+    // console.log('Completed : ', completed)
 
-    if (isOperationCompleted === true) {
+    if (completed) {
         messageTimer = setTimeout(() => {
             history.push('/login')
         }, 1500)
@@ -51,10 +48,6 @@ const ConfirmEmail = ({ match, history }) => {
     const ConfirmEmailInternal = async () => {
         try {
             setLoading(true)
-
-            // console.log('Token antes do axios : ', token)
-            // console.log('Email antes do axios : ', email)
-
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,22 +61,19 @@ const ConfirmEmail = ({ match, history }) => {
             const completedStatus = res.data.status ?? ''
             const completedMessage = res.data.message ?? ''
 
-            // console.log('axios res : ', res)
-            // console.log('completed : ', completedMessage)
-            // console.log('status : ', completedStatus)
-
             if (completedStatus === 'success') {
                 setCompleted(completedMessage)
                 setProblem('')
-                setIsOperationCompleted(true)
             }
             setLoading(false)
         } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log('Resposta : ', error.response)
             const errorStatus = error.response.data.status
             const errorMessage = error.response.data.message
-            if (errorStatus !== 'fail') {
-                setProblem(errorMessage)
+            if (errorStatus !== 'success') { 
                 setCompleted('')
+                setProblem(errorMessage)
             }
             setLoading(false)
         }
@@ -104,7 +94,6 @@ const ConfirmEmail = ({ match, history }) => {
                     minHeight: '88vh',
                     display: 'block',
                     textAlign: 'center',
-                    backgroundColor: '#eaeded'
                 }}
             >
                 <br />

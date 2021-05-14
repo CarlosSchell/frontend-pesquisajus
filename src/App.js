@@ -1,17 +1,19 @@
+import React from 'react'
 import { Provider } from 'react-redux'
-import store from './store/store';
+import store from './store/store'
 import RoutesApp from './routes/routes'
+import './styles/bootstrap.min.css'
+import './styles/custom.css'
 
-import './styles/bootstrap.min.css';
-import "./styles/custom.css"
+function App() {
+    // eslint-disable-next-line no-console
+    console.log('Passou pelo App')
 
-
-export const App = () => {
-  console.log('Passou pelo App')
-
-  return (
-    <Provider store={store}>
-      <RoutesApp/>
-    </Provider>
-  )
+    return (
+        <Provider store={store}>
+            <RoutesApp />
+        </Provider>
+    )
 }
+
+export default App

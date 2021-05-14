@@ -1,14 +1,14 @@
-
-const UserDetails = ({ user }) => {
-  return (
+const UserDetails = ({ user }) => (
     <div>
-      <div>
-        {user.email}{'   '}{user.role}{'   '}{user.token}
-      </div>
-      <br></br>
-    </div> 
-
-  )
-}
+        <div>
+            {user.email}
+            {'   '}
+            {user.role}
+            {'   '}
+            {user.token}
+        </div>
+        <br />
+    </div>
+)
 
 export default UserDetails

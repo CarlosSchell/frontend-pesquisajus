@@ -1,16 +1,24 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import Publicacao from './Publicacao'
 
-import Publicacao from './Publicacao.jsx'
-
-//<Publicacoes publicacoes={publicacoes} textToHighlight={""} incluiProcessoLista={incluiProcessoLista}/>
-
-const Publicacoes = ({ publicacoes, textToHighlight, incluiProcessoLista}) => {
-  return (
+const Publicacoes = ({ publicacoes, textToHighlight, incluiProcessoLista }) => (
     <>
-      {publicacoes.map((publicacao, index) => (
-        <Publicacao key={index} publicacao={publicacao} textToHighlight={textToHighlight} incluiProcessoLista={incluiProcessoLista} />
-      ))}
+        {publicacoes.map((publicacao) => (
+            <Publicacao
+                key={publicacao.id}
+                publicacao={publicacao}
+                textToHighlight={textToHighlight}
+                incluiProcessoLista={incluiProcessoLista}
+            />
+        ))}
     </>
-  )
+)
+
+Publicacoes.propTypes = {
+    publicacoes: PropTypes.string.isRequired,
+    textToHighlight: PropTypes.string.isRequired,
+    incluiProcessoLista: PropTypes.func.isRequired
 }
 
 export default Publicacoes

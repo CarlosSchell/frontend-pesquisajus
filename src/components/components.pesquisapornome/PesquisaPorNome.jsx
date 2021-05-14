@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import { CSVLink } from 'react-csv'
@@ -11,6 +11,7 @@ import { PROCESSOS_UPDATE_SUCCESS } from '../../constants/processosConstants'
 import ReactConfig from '../../utils/ReactConfig'
 
 const PesquisaPorNome = () => {
+  // eslint-disable-next-line no-console
   console.log('Passou pelo PesquisaPorNome')
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.userLogin)
@@ -35,25 +36,28 @@ const PesquisaPorNome = () => {
 
   const incluiProcessoListaPorNome = async (newprocesso) => {
     try {
-      //console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
-      //console.log('userProcessos :', userProcessos)
-      const new_arr_processos = [...userProcessos, newprocesso]
+      // console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
+      // console.log('userProcessos :', userProcessos)
+      const newArrProcessos = [...userProcessos, newprocesso]
       // console.log('new_arr_processos :', new_arr_processos)
-      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      const url = baseUrl + '/users/gravaprocessos'
-      await axios.post(url, { email, processos: new_arr_processos }, config)
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
+      const url = `${baseUrl}/users/gravaprocessos`
+      await axios.post(url, { email, processos: newArrProcessos }, config)
       dispatch({
         type: PROCESSOS_UPDATE_SUCCESS,
-        payload: { processos: new_arr_processos, isProcessoModified: !isProcessoModified },
+        payload: { processos: newArrProcessos, isProcessoModified: !isProcessoModified },
       })
-    } catch {}
-    return
+    } catch {
+        const a = 1
+        // eslint-disable-next-line no-console
+        console.log(a)
+    }
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
     setPublicacoes([])
-    //console.log('nomepesquisa OnSubmit :', nomeBuscaProcesso.trim())
+    // console.log('nomepesquisa OnSubmit :', nomeBuscaProcesso.trim())
     setNomeParte(nomeBuscaProcesso.trim())
     setTriggerUseEffect(!triggerUseEffect)
   }
@@ -65,35 +69,34 @@ const PesquisaPorNome = () => {
 
   useEffect(() => {
     const fetchDatasDiarioNome = async () => {
-      const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
-      const url = baseUrl + '/processo/diarios/primeiroeultimo'
+      const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
+      const url = `${baseUrl}/processo/diarios/primeiroeultimo`
       const resDatas = await axios.get(url, config)
       setDataInicial(resDatas.data.data.dataPrimeiroDiario)
       setDataFinal(resDatas.data.data.dataUltimoDiario)
-      return
     }
 
     const fetchPublicacoes = async () => {
-      const arr_publicacoes = []
+      const arrPublicacoes = []
       if (nomeParte !== '') {
         setLoading(true)
 
-        const config = { headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token } }
+        const config = { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
 
-        const url = baseUrl + '/publicacao/texto/'
+        const url = `${baseUrl}/publicacao/texto/`
         const res = await axios.post(url, { texto: nomeParte }, config)
         // console.log(res)
 
         let publicacoesFromFetch = res.data.data.publicacoes
         if (publicacoesFromFetch.length > 0) {
-          for (let i = 0; i < publicacoesFromFetch.length; i++) {
-            arr_publicacoes.push(publicacoesFromFetch[i])
+          for (let i = 0; i < publicacoesFromFetch.length; i += 1) {
+            arrPublicacoes.push(publicacoesFromFetch[i])
           }
         }
         setLoading(false)
         publicacoesFromFetch = []
       }
-      return arr_publicacoes
+      return arrPublicacoes
     }
 
     const getPublicacoes = async () => {
@@ -124,13 +127,31 @@ const PesquisaPorNome = () => {
         </h3>
 
         <div style={{ marginBottom: '10px', fontSize: '12px' }}>
-          Período: {dataInicial} a {dataFinal}
+          Período: 
+{' '}
+{dataInicial}
+{' '}
+a 
+{' '}
+{dataFinal}
         </div>
 
         {loading && <Loader />}
 
         <div className="text-center" style={{ fontSize: '14px' }}>
-          Digite o <strong>nome da parte</strong>, o <strong>código da OAB</strong> do advogado, ou o <strong>numero completo do{' '}</strong>
+          Digite o 
+{' '}
+<strong>nome da parte</strong>
+, o 
+{' '}
+<strong>código da OAB</strong>
+{' '}
+do advogado, ou o 
+{' '}
+<strong>
+numero completo do
+{' '}
+</strong>
           <strong>processo no padrão CNJ</strong>
         </div>
 
@@ -164,15 +185,25 @@ const PesquisaPorNome = () => {
         {publicacoes.length === 0 && nomeParte !== '' ? (
           <div className="text-center my-3">Não foram encontradas publicações</div>
         ) : (
-          <div></div>
+          <div />
         )}
 
         {publicacoes.length > 0 && publicacoes.length <= 999 && (
-          <div className="text-center my-3">Foram encontradas {publicacoes.length} publicações para este nome</div>
+          <div className="text-center my-3">
+Foram encontradas
+{publicacoes.length}
+{' '}
+publicações para este nome
+          </div>
         )}
 
         {publicacoes.length === 1000 && (
-          <div className="text-center my-3">Existem mais de {publicacoes.length} publicações para este nome</div>
+          <div className="text-center my-3">
+Existem mais de
+{publicacoes.length}
+{' '}
+publicações para este nome
+          </div>
         )}
 
         {publicacoes.length === 1000 && (
@@ -183,7 +214,7 @@ const PesquisaPorNome = () => {
           <div className="text-center">
             <CSVLink
               data={publicacoes}
-              filename={'pesquisajus.csv'}
+              filename="pesquisajus.csv"
               className="btn btn-outline-primary"
               variant="outline-info"
               style={{ textDecoration: 'none' }}
@@ -192,22 +223,22 @@ const PesquisaPorNome = () => {
             </CSVLink>
           </div>
         ) : (
-          <div></div>
+          <div />
         )}
 
         {publicacoes.length > 0 ? (
-          publicacoes.map((publicacao, index) => (
+          publicacoes.map((publicacao) => (
             <Publicacao
-              key={index}
+              key={publicacao.id}
               publicacao={publicacao}
               textToHighlight={nomeParte}
               incluiProcessoLista={incluiProcessoListaPorNome}
             />
           ))
         ) : (
-          <div></div>
+          <div />
         )}
-        <br></br>
+        <br />
       </div>
     </div>
   )
