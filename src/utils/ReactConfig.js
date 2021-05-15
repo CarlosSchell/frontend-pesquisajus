@@ -1,5 +1,5 @@
 const ReactConfig = {
-  baseUrl: 'https://api-pesquisajus.com.br:21290/v1',
+  baseUrl: 'https://api-pesquisajus.com.br:21290/v1'
 }
 
 export default ReactConfig

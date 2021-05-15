@@ -1,14 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-
-import {
-  userLoginReducer,
-} from '../reducers/userReducers'
-
-import {
-  userProcessosReducer,
-} from '../reducers/processosReducers'
+import userLoginReducer from '../reducers/userReducers'
+import userProcessosReducer from '../reducers/processosReducers'
 
 // import {
 //   orderCreateReducer,
@@ -21,30 +15,29 @@ import {
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
-  userProcessos: userProcessosReducer,
-
+  userProcessos: userProcessosReducer
 })
 
 const userLogin = localStorage.getItem('userLogin')
   ? JSON.parse(localStorage.getItem('userLogin'))
   : {
-    name: 'Convidado',
-    email: 'convidado@pesquisajus.com.br',
-    role: 'convidado',
-    token: '',
-  }
+      name: 'Convidado',
+      email: 'convidado@pesquisajus.com.br',
+      role: 'convidado',
+      token: ''
+    }
 
-  const userProcessos = {}
+const userProcessos = {}
 
-  // const userProcessos = localStorage.getItem('userProcessos')
-  // ? JSON.parse(localStorage.getItem('userProcessos'))
-  // : {
-  //   processos: [],
-  // }
+// const userProcessos = localStorage.getItem('userProcessos')
+// ? JSON.parse(localStorage.getItem('userProcessos'))
+// : {
+//   processos: [],
+// }
 
 const initialState = {
   userLogin,
-  userProcessos,
+  userProcessos
 }
 
 const middleware = [thunk]

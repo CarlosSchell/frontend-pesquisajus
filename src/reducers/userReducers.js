@@ -1,10 +1,6 @@
-import {
-  USER_LOGIN_SUCCESS,
-  USER_LOGOUT,
-} from '../constants/userConstants'
+import { USER_LOGIN_SUCCESS, USER_LOGOUT } from '../constants/userConstants'
 
-
-export const userLoginReducer = (state = {}, action) => {
+const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     // case USER_LOGIN_REQUEST:
     //   return { loading: true }
@@ -18,3 +14,5 @@ export const userLoginReducer = (state = {}, action) => {
       return state
   }
 }
+
+export default userLoginReducer

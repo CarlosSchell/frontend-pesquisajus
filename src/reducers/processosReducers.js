@@ -9,7 +9,7 @@ import {
 // })
 // localStorage.setItem('userProcessos', JSON.stringify(data))
 
-export const userProcessosReducer = (state = {}, action) => {
+const userProcessosReducer = (state = {}, action) => {
   switch (action.type) {
     case PROCESSOS_UPDATE_SUCCESS:
       return { ...action.payload }
@@ -19,3 +19,5 @@ export const userProcessosReducer = (state = {}, action) => {
       return state
   }
 }
+
+export default userProcessosReducer
