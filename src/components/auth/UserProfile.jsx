@@ -16,8 +16,7 @@ const UserProfile = () => {
           textAlign: 'center'
         }}
       >
-        <br />
-        <h3 className="mb-3" style={{ textShadow: '1px 1px 1px lightgrey' }}>
+        <h3 className="mt-3" style={{ textShadow: '1px 1px 1px lightgrey' }}>
           Perfil do usuário
         </h3>
 
@@ -44,7 +43,7 @@ const UserProfile = () => {
           </div>
 
           <br />
-          <br />
+
 
           <div style={{ color: 'white' }}>
             <div className="my-4 text-center btn btn-info">

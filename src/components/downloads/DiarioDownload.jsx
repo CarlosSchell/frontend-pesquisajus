@@ -164,7 +164,7 @@ const DiarioDownload = ({ diario, token }) => {
         <Button
           size="sm"
           variant="outline-info"
-          className="btn btn-outline-info"
+          className="btn btn-outline-primary"
           style={{
             margin: '0px 0px 0px 10px',
             padding: '0px 10px 1px 10px'
@@ -178,7 +178,7 @@ const DiarioDownload = ({ diario, token }) => {
         <Button
           size="sm"
           variant="outline-info"
-          className="btn btn-outline-info"
+          className="btn btn-outline-primary"
           style={{
             margin: '0px 0px 0px 5px',
             padding: '0px 10px 1px 10px'
@@ -192,7 +192,7 @@ const DiarioDownload = ({ diario, token }) => {
         <Button
           size="sm"
           variant="outline-info"
-          className="btn btn-outline-info"
+          className="btn btn-outline-primary"
           style={{
             margin: '0px 0px 0px 5px',
             padding: '0px 10px 1px 10px'
@@ -206,7 +206,7 @@ const DiarioDownload = ({ diario, token }) => {
         <Button
           size="sm"
           variant="outline-info"
-          className="btn btn-outline-info"
+          className="btn btn-outline-primary"
           style={{
             margin: '0px 0px 0px 5px',
             padding: '0px 10px 1px 10px'

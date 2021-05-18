@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Highlighter from 'react-highlight-words'
 import { Button } from 'react-bootstrap'
-import IconTribunalPublicacao from './IconTribunalPublicacao'
-import IconAddProcessosPublicacao from './IconAddProcessosPublicacao'
-import IconWhatsappPublicacao from './IconWhatsappPublicacao'
 // import '../../custom.css'
 // import incluiProcessoLista from '../../utils/incluiProcessoLista.js'
-// import ButtonWhatsapp from './ButtonWhatsapp'
+import ButtonWhatsapp from './ButtonWhatsapp'
 import calculateDays from '../../utils/calculateDays'
+
+import court from '../../utils/court.png'
 
 const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
     // const uf       =  publicacao.uf
@@ -92,14 +91,22 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
             <div>
                 <div className="d-flex flex-row justify-content-start">
                     <div>
-                        <Button
-                            variant="outline-info"
-                            className="ml-0 justify-content-end"
-                            onClick={() => {
-                                onClickIncluirProcesso(processo, descricao)
-                            }}>
-                            <IconAddProcessosPublicacao />
-                        </Button>
+                        <a
+                            href="https://www.tjrs.jus.br/novo/busca/?return=proc&client=wp_index"
+                            onClick={() => textToClipboard(processo)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{}}>
+                            <Button variant="outline-info" className="ml-3 mr-3">
+                                <img
+                                    className="ml-2 justify-content-end"
+                                    src={court}
+                                    alt={court}
+                                    width="20px"
+                                    height="22px"
+                                />
+                            </Button>
+                        </a>
                     </div>
 
                     <div>
@@ -110,14 +117,28 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
                                 onClick={() => {
                                     onClickIncluirProcesso(processo, descricao)
                                 }}>
-                                <IconTribunalPublicacao processo={processo} court="TJRS" />
+                                <div>
+
+                                    <div className="publicacaoicon">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="26"
+                                            height="26"
+                                            fill="currentColor"
+                                            className="bi bi-layout-text-window-reverse"
+                                            viewBox="0 0 16 16">
+                                            <path d="M13 6.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z" />
+                                            <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zM2 1a1 1 0 0 0-1 1v1h14V2a1 1 0 0 0-1-1H2zM1 4v10a1 1 0 0 0 1 1h2V4H1zm4 0v11h9a1 1 0 0 0 1-1V4H5z" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </Button>
                         )}
                     </div>
 
-                    <div>
-                        <Button variant="outline-info" className="ml-0 justify-content-end">
-                            <IconWhatsappPublicacao cellNumber={cellNumber} texto={texto} />
+                    <div style={{}}>
+                        <Button variant="outline-info">
+                            <ButtonWhatsapp cellNumber={cellNumber} texto={texto} size={21} />
                         </Button>
                     </div>
                 </div>

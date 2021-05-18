@@ -1,9 +1,10 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const PageNotFound = () => {
   return (
-    <div style={{ backgroundColor: '#eaeded' }}>
+    <Container>
       <div
         style={{
           margin: 'auto',
@@ -19,14 +20,14 @@ const PageNotFound = () => {
         <div style={{ color: 'white', marginTop: '10vh' }}>
           <br />
           <br />
-          <div className="my-4 text-center btn btn-info">
+          <div className="my-4 text-center btn btn-secondary">
             <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
               Voltar à página principal
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

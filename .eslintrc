@@ -16,6 +16,7 @@
     "object-curly-newline": 0,
     "react/jsx-indent": 0,
     "react/jsx-indent-props": 0,
-    "arrow-body-style": [0, "as-needed"]
+    "arrow-body-style": [0, "as-needed"],
+    "no-underscore-dangle": ["error", { "allowAfterSuper": true }]
   }
 }

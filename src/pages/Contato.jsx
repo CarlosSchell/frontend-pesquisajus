@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
-import {
-    Container,
-    Form,
-    FormControl,
-    InputGroup,
-    Button
-} from 'react-bootstrap'
+import { Form, FormControl, InputGroup, Button } from 'react-bootstrap'
+import axios from 'axios'
+
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import ReactConfig from '../utils/ReactConfig'
@@ -27,8 +22,6 @@ const Contato = () => {
     const submitHandler = async (event) => {
         event.preventDefault()
         setLoading(true)
-        // eslint-disable-next-line no-console
-        console.log('Enviando mensagem de contato')
         try {
             const config = { headers: { 'Content-Type': 'application/json' } }
             const url = `${baseUrl}/geral/enviaemail`
@@ -54,33 +47,24 @@ const Contato = () => {
     }
 
     return (
-        <div style={{ backgroundColor: '#eaeded' }}>
-            <Container
-                fluid
-                style={{
-                    maxWidth: '40%',
-                    minWidth: '340px',
-                    height: '92vh',
-                    display: 'block',
-                    textAlign: 'left'
-                }}
-            >
-                <h3
-                    className="my-3 text-center"
-                    style={{ textShadow: '1px 1px 1px lightgrey' }}
-                >
+        <div className="body">
+            <div className="innerbody" style={{ textAlign: 'left' }}>
+                <h3 className="my-3 text-center" style={{ textShadow: '1px 1px 1px lightgrey' }}>
                     Envie sua mensagem
                 </h3>
-                {completed && <Message>{completed}</Message>}
+
+                {completed && <Message variant="success">{completed}</Message>}
                 {problem && <Message variant="danger">{problem}</Message>}
-                {loading && <Loader />}
+
+                {loading && <Loader className="text-center" />}
 
                 <Form onSubmit={submitHandler} className="mt-2 mx-auto">
-                    <Form.Label>Nome</Form.Label>
+                    <Form.Label className="my-0">Nome</Form.Label>
                     <InputGroup className="mb-2" controlid="name">
                         <FormControl
                             autoFocus
                             className="form-control"
+                            id="name"
                             name="name"
                             type="text"
                             value={name}
@@ -90,9 +74,10 @@ const Contato = () => {
                             inputMode="text"
                             required
                             onChange={(e) => setName(e.target.value)}
+                            style={{ fontSize: '20px' }}
                         />
                     </InputGroup>
-                    <Form.Label>Endereço de email</Form.Label>
+                    <Form.Label className="my-0">Endereço de email</Form.Label>
                     <InputGroup className="mb-2" controlid="email">
                         <FormControl
                             className="form-control"
@@ -107,7 +92,7 @@ const Contato = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </InputGroup>
-                    <Form.Label>Mensagem</Form.Label>
+                    <Form.Label className="my-0">Mensagem</Form.Label>
                     <Form.Group className="mb-2" controlId="textarea">
                         <Form.Control
                             as="textarea"
@@ -123,32 +108,33 @@ const Contato = () => {
                         />
                     </Form.Group>
 
-                    <Button
-                        className="btn btn-block mt-2"
-                        name="commit"
-                        variant="primary"
-                        type="submit"
-                        value="Entrar"
-                        disabled={!validateForm() || completed}
-                    >
-                        Enviar mensagem
-                    </Button>
-                </Form>
-
-                <br />
-                <br />
-
-                <div className="text-center" style={{ color: 'white' }}>
-                    <div className="btn btn-info">
-                        <Link
-                            to="/"
-                            style={{ color: 'white', textDecoration: 'none' }}
-                        >
-                            Voltar à página principal
-                        </Link>
+                    <div style={{ textAlign: 'center' }}>
+                        <Button
+                            className="mt-2"
+                            name="commit"
+                            variant="primary"
+                            type="submit"
+                            size="lg"
+                            block
+                            value="Enviar mensagem"
+                            disabled={!validateForm() || completed}>
+                            Enviar mensagem
+                        </Button>
                     </div>
+                </Form>
+                <br />
+                <br />
+                <br />
+
+                <div className="text-center" style={{ color: 'black' }}>
+                    <Link to="/" >
+                        <Button variant="secondary">
+                            Voltar à página principal
+                        </Button>
+                    </Link>
                 </div>
-            </Container>
+
+            </div>
         </div>
     )
 }

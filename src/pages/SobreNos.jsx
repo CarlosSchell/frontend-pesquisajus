@@ -7,62 +7,37 @@ const SobreNos = () => {
     console.log('Passou pelo Sobre nós')
 
     return (
-        <div style={{ backgroundColor: '#eaeded' }}>
-            <div
-                style={{
-                    margin: 'auto',
-                    width: '40%',
-                    minWidth: '320px',
-                    minHeight: '90vh',
-                    display: 'block',
-                    textAlign: 'center'
-                }}
-            >
-                <br />
-                <h3 style={{ textShadow: '1px 1px 1px lightgrey' }}>
+        <div className="body">
+            <div className="innerbody" style={{ textAlign: 'left' }}>
+                <h3 className="my-3 text-center" style={{ textShadow: '1px 1px 1px lightgrey' }}>
                     Sobre o pesquisajus
                 </h3>
 
                 <div
                     style={{
-                        fontSize: '22px',
+                        fontSize: '20px',
                         textAlign: 'center',
                         marginTop: '10px'
-                    }}
-                >
+                    }}>
                     <div>
-                        O pesquisajus é uma startup composta por profissionais
-                        em desenvolvimento de software
+                        O pesquisajus oferece acesso simples e rápido às publicacoes de processos judiciais no diário oficial.
                     </div>
 
-                    <div>
-                        Seu propósito é o de democratizar o acesso às
-                        informações judiciais através do uso de um sistema de
-                        consulta simples e leve
-                    </div>
+                    <p className="mt-2">
+                        Em sua construção foram empregadas modernas técnicas de projeto
+                        de sistemas
+                    </p>
 
                     <div>
-                        Em sua construção foram empregadas as mais modernas
-                        técnicas de construção de sistemas
+                        Esperamos que voce aprecie o aplicativo, e contamos com a sua valiosa
+                        opinião sobre a experiência de uso e sugestão de novas features
                     </div>
 
-                    <div>
-                        Esperamos que voce aprecie o aplicativo, e contamos com
-                        a sua valiosa opinião sobre a experiência de uso e
-                        sugestão de novas features
-                    </div>
+                    <br />
 
                     <div style={{ marginTop: '10px' }}>
-                        <p>
-                            Entre em contato conosco através aba Contato ou pelo
-                            email&nbsp;
-                        </p>
                         <Link to="/contact" style={{ fontSize: '20px' }}>
-                            <Button
-                                variant="outline-dark"
-                                size="md"
-                                style={{ color: 'darkblue' }}
-                            >
+                            <Button variant="primary" size="lg">
                                 contato@pesquisajus.com
                             </Button>
                         </Link>
@@ -70,19 +45,17 @@ const SobreNos = () => {
                 </div>
 
                 <br />
+                <br />
+                <br />
 
-                <div style={{ color: 'white' }}>
-                    <div className="mt-5 text-center btn btn-info">
-                        <Link
-                            to="/"
-                            style={{ color: 'white', textDecoration: 'none' }}
-                        >
+
+                <div className="text-center" style={{ color: 'black' }}>
+                    <Link to="/" >
+                        <Button variant="secondary">
                             Voltar à página principal
-                        </Link>
-                    </div>
+                        </Button>
+                    </Link>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     )
