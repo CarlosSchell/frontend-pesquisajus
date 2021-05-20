@@ -55,7 +55,6 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 
     // WhatsApp Data
     const cellNumber = '51991068021' // futuramente colocar o numero do advogado / cliente / indicado
-    const texto = processo.descricao
 
     const onClickIncluirProcesso = () => {
         // console.log('onClickIncluirProcesso :', processo, descricao)
@@ -93,31 +92,31 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
                 <div className="d-flex flex-row justify-content-start">
                     <div>
                         <Button
+                            style={{ marginRight: '10px' }}
                             variant="outline-info"
                             className="ml-0 justify-content-end"
-                            onClick={() => {
-                                onClickIncluirProcesso(processo, descricao)
-                            }}>
-                            <IconAddProcessosPublicacao />
+                            >
+                            <IconTribunalPublicacao processo={processo} court="TJRS" />
                         </Button>
                     </div>
 
                     <div>
                         {incluiProcessoLista && (
                             <Button
+                                style={{ marginRight: '10px' }}
                                 variant="outline-info"
                                 className="ml-0 justify-content-end"
                                 onClick={() => {
                                     onClickIncluirProcesso(processo, descricao)
                                 }}>
-                                <IconTribunalPublicacao processo={processo} court="TJRS" />
+                                <IconAddProcessosPublicacao />
                             </Button>
                         )}
                     </div>
 
                     <div>
                         <Button variant="outline-info" className="ml-0 justify-content-end">
-                            <IconWhatsappPublicacao cellNumber={cellNumber} texto={texto} />
+                            <IconWhatsappPublicacao cellNumber={cellNumber} decisao={decisao} />
                         </Button>
                     </div>
                 </div>
@@ -189,11 +188,9 @@ const Publicacao = ({ publicacao, textToHighlight, incluiProcessoLista }) => {
 }
 
 Publicacao.propTypes = {
-    publicacao: PropTypes.string.isRequired,
+    publicacao: PropTypes.oneOfType([PropTypes.object]).isRequired,
     textToHighlight: PropTypes.string.isRequired,
     incluiProcessoLista: PropTypes.func.isRequired
 }
 
 export default Publicacao
-
-// {/* <span style={{ color: 'black'}}>CNJ:</span>  */}

@@ -11,11 +11,12 @@ const IconTribunalPublicacao = ({ processo, tribunal }) => {
                 onClick={() => textToClipboard(processo)}
                 target="_blank"
                 rel="noreferrer"
-                style={{}}>
+                style={{ marginTop: '-5px'}}
+                >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="20"
+                    height="20"
                     fill="currentColor"
                     className="bi bi-bank"
                     viewBox="0 0 16 16">

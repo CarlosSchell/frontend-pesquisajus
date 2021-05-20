@@ -57,52 +57,42 @@
 }
 
 /* https://coder-coder.com/build-flexbox-website-layout/ */
-/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-/* https://every-layout.dev/layouts/sidebar/ */
-
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
-}
 
 .sidebar {
-    flex-basis: 20rem;
-    flex-grow: 1;
-    /* min-width: 340px;
-    order: 1; */
-    /* border: 1px solid #000000; */
-    background-color: #fcf3cf;
+    flex: 0 1 340px;
+    min-width: 340px;
+    order: 1;
+    border: 1px solid #000000;
+    background-color: red;
     /* background-color: '#fcf3cf'; */
     /* style={{ width: '25%', minWidth: '340px', backgroundColor: 'red' }} */
-}
+  }
 
 .content {
-    flex-basis: 0;
-    flex-grow: 999;
-    /* flex: 3;
-    min-width: 340px;
+    flex: 1;
+    min-width : 340px;
     /* width: 750px; */
-    /* order: 2; */
-    /* border: 1px solid rgb(10, 110, 49); */
-    background-color: #fcf3cf;
+    order: 2;
+    border: 1px solid rgb(10, 110, 49);
+    background-color: blue;
     /* background-color: '#fcf3cf'; */
 }
 
-/* @media screen and (min-width: 680px) {
+@media screen and (min-width: 720px){
     .flex-container {
         display: flex;
     }
 
     .sidebar {
-        max-width: 100%;
+        width: 720px;
         min-width: 340px;
     }
 
     .content {
-        max-width: 100%;
+        width: 720px;
         min-width: 340px;
     }
-} */
+}
 
 .menuicon {
     display: flex;

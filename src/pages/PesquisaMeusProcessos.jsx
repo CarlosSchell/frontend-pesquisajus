@@ -1,20 +1,18 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+// import { Container } from 'react-bootstrap'
 import PesquisaPublicacoesMeusProcessos from '../components/processos/PesquisaPublicacoesMeusProcessos'
 import ListaDosMeusProcessos from '../components/processos/ListaDosMeusProcessos'
 
 const PesquisaMeusProcessos = () => {
     return (
-        <div>
-            <Row>
-                <Col sm={3} style={{ backgroundColor: 'lightblue', minHeight: '89.7vh' }}>
-                    <ListaDosMeusProcessos />
-                </Col>
+        <div className="flex-container">
+            <div className="sidebar">
+                <ListaDosMeusProcessos />
+            </div>
 
-                <Col sm={9} style={{ backgroundColor: 'red', minHeight: '89.7vh' }}>
-                    <PesquisaPublicacoesMeusProcessos />
-                </Col>
-            </Row>
+            <div className="content">
+                <PesquisaPublicacoesMeusProcessos />
+            </div>
         </div>
     )
 }

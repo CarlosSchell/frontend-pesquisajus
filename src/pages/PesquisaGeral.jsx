@@ -16,7 +16,7 @@ const PesquisaPublicacoes = () => {
     const dispatch = useDispatch()
     const userInfo = useSelector((state) => state.userLogin)
 
-    const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
+    // const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
     // console.log('userProcessos : ', userProcessos)
     const isProcessoModified =
         useSelector((state) => state.userProcessos.isProcessoModified) ?? false
@@ -37,23 +37,29 @@ const PesquisaPublicacoes = () => {
 
     const incluiProcessoListaPorNome = async (newprocesso) => {
         try {
-            // console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
-            // console.log('userProcessos :', userProcessos)
-            const newArrProcessos = [...userProcessos, newprocesso]
-            // console.log('new_arr_processos :', new_arr_processos)
+            // eslint-disable-next-line no-console
+            console.log('Entrou no incluiProcessoListaPorNome :', newprocesso)
+
             const config = {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
             }
-            const url = `${baseUrl}/users/gravaprocessos`
-            await axios.post(url, { email, processos: newArrProcessos }, config)
+
+            const urlget = `${baseUrl}/users/getprocessos`
+            const res = await axios.get(urlget, config)
+            const processosFromDatabase = res.data.data.processos ?? []
+
+            const newArrProcessos = [...processosFromDatabase, newprocesso]
+
+            const urlpost = `${baseUrl}/users/gravaprocessos`
+            await axios.post(urlpost, { email, processos: newArrProcessos }, config)
+
             dispatch({
                 type: PROCESSOS_UPDATE_SUCCESS,
                 payload: { processos: newArrProcessos, isProcessoModified: !isProcessoModified }
             })
-        } catch {
-            const a = 1
+        } catch (error) {
             // eslint-disable-next-line no-console
-            console.log(a)
+            console.log(error)
         }
     }
 
@@ -123,7 +129,7 @@ const PesquisaPublicacoes = () => {
     // style={{ backgroundColor: '#ffecd9', minHeight: '89.7vh' }
     // <div className="innerbody" style={{ width: '100%' }}>
 
-    // <div style={{ 
+    // <div style={{
     //     margin: 'auto',
     //     width: '40%',
     //     minWidth: '340px',
@@ -136,12 +142,13 @@ const PesquisaPublicacoes = () => {
 
     return (
         <div className="body">
-            <div style={{ 
-                width: '100%',
-                margin: '0 auto',
-                backgroundColor: '#fcf3cf'
-            }}>
-                <div style={{ minWidth: '340px', maxWidth: '450px', margin: '0 auto', }}>
+            <div
+                style={{
+                    width: '100%',
+                    margin: '0 auto',
+                    backgroundColor: '#fcf3cf'
+                }}>
+                <div style={{ minWidth: '340px', maxWidth: '450px', margin: '0 auto' }}>
                     <h3
                         className="mt-3 text-center"
                         style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center' }}>

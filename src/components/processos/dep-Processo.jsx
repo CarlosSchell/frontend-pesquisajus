@@ -13,9 +13,10 @@ const Processo = ({ processo, onDelete }) => {
             style={{
                 fontSize: '1.1rem',
                 marginLeft: '12px',
-                marginBottom: '0px'
+                marginBottom: '0px',
+                textAlign: 'left'
             }}>
-            <p style={{ marginBottom: '0px', color: 'black' }}>
+            <div style={{ marginBottom: '0px', color: 'black' }}>
                 <Icon.Trash
                     style={{ marginBottom: '0px' }}
                     onClick={() => {
@@ -31,14 +32,14 @@ const Processo = ({ processo, onDelete }) => {
                 <span style={{ padding: '10px' }}>
                     <ButtonWhatsapp cellNumber={cellNumber} texto={texto} size={20} />
                 </span>
-            </p>
+            </div>
 
-            <p style={{ marginBottom: '3px' }}>
+            <div style={{ marginBottom: '3px' }}>
                 {processo.processo}
                 {'    '}
                 <Icon.ArrowDown />
                 <Icon.ArrowUp />
-            </p>
+            </div>
             <hr />
         </div>
     )

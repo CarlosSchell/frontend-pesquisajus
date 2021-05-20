@@ -31,9 +31,10 @@ function App() {
     return (
         <Provider store={store}>
             <Router>
+            
                 <div className="app">
-                    <div className="app-container bg-light-custom">
-                        <Header />
+                <Header />
+                    <div className="app-container bg-light-custom"> 
                         <Switch>
                             <Route path="/" component={HomeScreen} exact />
                             <Route path="/meusprocessos" component={PesquisaMeusProcessos} exact />

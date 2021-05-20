@@ -7,7 +7,7 @@ import ReactConfig from '../../utils/ReactConfig'
 
 const PesquisaPublicacoesMeusProcessos = () => {
     // eslint-disable-next-line no-console
-    console.log('Entrou no lista de Publicacoes')
+    console.log('Entrou no Últimas Publicações dos Meus Processos')
     const userInfo = useSelector((state) => state.userLogin)
     const userProcessos = useSelector((state) => state.userProcessos) ?? []
     const [publicacoes, setPublicacoes] = useState([])
@@ -39,9 +39,9 @@ const PesquisaPublicacoesMeusProcessos = () => {
                     Authorization: `Bearer ${token}`
                 }
             }
-            const url = `${baseUrl}/publicacao/texto/`
+            const url = `${baseUrl}/publicacao/processo/`
             const promises = arrProc.map((proc) =>
-                axios.post(url, { texto: proc.processo }, config)
+                axios.post(url, { processo: proc.processo }, config)
             )
             const response = await Promise.all(promises)
 
@@ -92,41 +92,44 @@ const PesquisaPublicacoesMeusProcessos = () => {
 
     return (
         <div className="body">
-            <div className="innerbody">
-                
-                    <h3
-                        className="mt-3"
-                        style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center' }}>
-                        Últimas Publicações dos Meus Processos
-                    </h3>
-                    <div>
-                        Período: {dataInicial} a {dataFinal}
-                    </div>
-                    <div>
-                        {publicacoes.length > 0 ? (
-                                <div>
-                                {publicacoes.map((publicacao) => (
-                                    <Publicacao
-                                        key={publicacao.id}
-                                        publicacao={publicacao}
-                                        textToHighlight=""
-                                        incluiProcessoLista=""
-                                    />
-                                ))}
-                                <hr />
-                                </div>
-                            // <Publicacoes
-                            //     publicacoes={publicacoes}
-                            //     textToHighlight=""
-                            //     incluiProcessoLista=""
-                            // />
-                        ) : (
-                            <div className="text-center">
-                                Não foram encontradas publicações para a lista dos Meus Processos
-                            </div>
-                        )}
-                    </div>
-                
+            <div
+                style={{
+                    minWidth: '340px',
+                    margin: 'mx-2',
+                    width: '100%',
+                    // margin: '0 auto',
+                    backgroundColor: '#fcf3cf'
+                }}>
+                <h3
+                    className="mt-3"
+                    style={{ textShadow: '1px 1px 1px lightgrey', textAlign: 'center' }}>
+                    Últimas Publicações dos Meus Processos
+                </h3>
+
+                <p style={{ marginBottom: '10px', textAlign: 'center' }}>
+                    Período: {dataInicial} a {dataFinal}
+                </p>
+
+                <div
+                    className="my-2 mx-3"
+                    style={{ marginBottom: '10px', textAlign: 'left', margin: 'mx-2' }}>
+                    {publicacoes.length > 0 ? (
+                        <div>
+                            {publicacoes.map((publicacao) => (
+                                <Publicacao
+                                    key={publicacao.processo}
+                                    publicacao={publicacao}
+                                    textToHighlight=""
+                                    incluiProcessoLista={() => {}}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center">
+                            Não foram encontradas publicações para a lista dos Meus Processos
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

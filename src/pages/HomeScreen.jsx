@@ -10,9 +10,9 @@ const HomeScreen = () => {
     const { userLogin } = useSelector((state) => state)
 
     return (
-        <div >
+        <div>
             <div className="body">
-                <div>
+                <div style={{ minwidth: '340px', maxWidth: '450px' }}>
                     <div className="text-center mt-2">
                         <h1 style={{ textShadow: '1px 1px 1px lightgrey' }}>pesquisajus</h1>
                     </div>

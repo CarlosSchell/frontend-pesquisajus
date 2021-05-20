@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const IconWhatsappPublicacao = ({ cellNumber, texto  }) => {
+const IconWhatsappPublicacao = ({ cellNumber, decisao  }) => {
     const editedNumber = cellNumber
         .replace(/[^\w\s]/gi, '')
         .replace(/ /g, '')
         .replace(/-/g, '')
 
-    const urlWhatsapp = `https://api.whatsapp.com/send?phone=55${editedNumber}&text=${texto}!&app_absent=0`
+    const urlWhatsapp = `https://api.whatsapp.com/send?phone=55${editedNumber}&text=${decisao}!&app_absent=0`
 
     function handleClick(e) {
         e.preventDefault()
@@ -16,11 +16,16 @@ const IconWhatsappPublicacao = ({ cellNumber, texto  }) => {
 
     return (
         <div className="publicacaoicon">
-            <a href="{}" target="_blank" rel="noopener noreferrer" onClick={handleClick}>
+            <a 
+                href="{}" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                onClick={handleClick}
+                style={{ marginTop: '-5px'}}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="20"
+                height="20"
                 fill="currentColor"
                 className="bi bi-whatsapp"
                 viewBox="0 0 16 16">
@@ -33,7 +38,7 @@ const IconWhatsappPublicacao = ({ cellNumber, texto  }) => {
 
 IconWhatsappPublicacao.propTypes = {
     cellNumber: PropTypes.string.isRequired,
-    texto: PropTypes.string.isRequired,
+    decisao: PropTypes.string.isRequired,
 }
 
 export default IconWhatsappPublicacao

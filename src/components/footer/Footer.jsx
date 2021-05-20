@@ -13,7 +13,7 @@ const Footer = () => {
                     textAlign: 'center',
                     margin: 'auto'
                 }}>
-                © 2021 pesquisajus - v.17.05.21
+                © 2021 pesquisajus - v.18.05.21
             </div>
         </Navbar>
     )

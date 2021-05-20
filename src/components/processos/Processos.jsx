@@ -1,12 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Processo from './Processo'
+import * as Icon from 'react-bootstrap-icons'
 
 const Processos = ({ processos, onDelete }) => {
     return (
         <div>
             {processos.map((processo) => (
-                <Processo key={processo.id} processo={processo} onDelete={onDelete} />
+                <div key={processo.processo}
+                    style={{
+                        fontSize: '1.1rem',
+                        marginLeft: '12px',
+                        marginBottom: '0px',
+                        textAlign: 'left'
+                    }}>
+                    <div style={{ marginBottom: '0px', color: 'black' }}>
+                        <Icon.Trash
+                            style={{ marginBottom: '0px' }}
+                            onClick={() => {
+                                onDelete({
+                                    processo: processo.processo,
+                                    descricao: processo.descricao
+                                })
+                            }}
+                        />
+                        {'    '}
+                        {processo.descricao}
+                        &nbsp;
+                    </div>
+
+                    <div style={{ marginBottom: '3px' }}>
+                        {processo.processo}
+                        {'    '}
+                        <Icon.ArrowDown />
+                        <Icon.ArrowUp />
+                    </div>
+                    <hr />
+                </div>
             ))}
         </div>
     )
@@ -18,11 +47,9 @@ Processos.propTypes = {
         PropTypes.shape({
             id: PropTypes.number,
             processo: PropTypes.string,
-            descricao: PropTypes.string,
-            
+            descricao: PropTypes.string
         })
     ).isRequired
 }
-
 
 export default Processos

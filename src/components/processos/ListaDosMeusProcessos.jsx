@@ -9,7 +9,7 @@ import ReactConfig from '../../utils/ReactConfig'
 
 const ListaDosMeusProcessos = () => {
     // eslint-disable-next-line no-console
-    console.log('Entrou no lista dos meus Processos')
+    console.log('Entrou no Lista dos meus Processos')
     const dispatch = useDispatch()
     const userInfo = useSelector((state) => state.userLogin)
     // const userProcessos = useSelector((state) => state.userProcessos.processos) ?? []
@@ -57,6 +57,7 @@ const ListaDosMeusProcessos = () => {
                 newArrProcessos.push(processos[i])
             }
             newArrProcessos.push(newprocesso)
+
             setProcessos(newArrProcessos)
             const config = {
                 headers: {
@@ -65,9 +66,8 @@ const ListaDosMeusProcessos = () => {
                 }
             }
             const url = `${baseUrl}/users/gravaprocessos`
-            // const Obj = { email, processos: newArrProcessos }
-            // console.log('Obj: ', Obj)
             await axios.post(url, { email, processos: newArrProcessos }, config)
+
             dispatch({
                 type: PROCESSOS_UPDATE_SUCCESS,
                 payload: { processos: newArrProcessos }
@@ -75,10 +75,9 @@ const ListaDosMeusProcessos = () => {
             setProcessos(newArrProcessos)
             setIsModified(!isModified)
             // setShowAddProcesso(!showAddProcesso)
-        } catch {
-            const a = 1
+        } catch (error){
             // eslint-disable-next-line no-console
-            console.log(a)
+            console.log(error)
         }
     }
 
@@ -110,36 +109,45 @@ const ListaDosMeusProcessos = () => {
         }
     }
 
+    // color: '#9A8B4F'
+    // backgroundColor: '#fcf3cf'
+
     return (
-        <div>
-            <div className="header mt-4 d-flex flex-col justify-content-between">
-                <div
-                    style={{
-                        color: '#9A8B4F',
-                        fontSize: '24px',
-                        fontWeight: '500'
-                    }}>
-                    Meus Processos
+        <div className="body">
+            <div
+                style={{
+                    minWidth: '340px',
+                    backgroundColor: '#AED6F1'
+                }}>
+                <div className="mt-4 mx-3 d-flex flex-col justify-content-between">
+                    <div
+                        style={{
+                            color: 'black',
+                            fontSize: '24px',
+                            fontWeight: '500',
+                        }}>
+                        Meus Processos
+                    </div>
+
+                    <Button
+                        size="md"
+                        variant={showAddProcesso ? 'danger' : 'primary'}
+                        onClick={() => {
+                            setShowAddProcesso(!showAddProcesso)
+                        }}>
+                        {showAddProcesso ? 'Fechar' : 'Incluir'}
+                    </Button>
                 </div>
 
-                <Button
-                    size="md"
-                    variant={showAddProcesso ? 'primary' : 'info'}
-                    onClick={() => {
-                        setShowAddProcesso(!showAddProcesso)
-                    }}>
-                    {showAddProcesso ? 'Fechar' : 'Incluir'}
-                </Button>
-            </div>
-
-            <div className="mt-2">
-                {showAddProcesso && <AddProcesso gravaNovoProcesso={gravaNovoProcesso} />}
-                <hr />
-                {processos.length > 0 ? (
-                    <Processos processos={processos} onDelete={deleteProcesso} />
-                ) : (
-                    <div className="text-center">Não existem processos cadastrados</div>
-                )}
+                <div className="mt-2 mx-2">
+                    {showAddProcesso && <AddProcesso gravaNovoProcesso={gravaNovoProcesso} />}
+                    <hr />
+                    {processos.length > 0 ? (
+                        <Processos processos={processos} onDelete={deleteProcesso} />
+                    ) : (
+                        <div className="text-center">Não existem processos cadastrados</div>
+                    )}
+                </div>
             </div>
         </div>
     )

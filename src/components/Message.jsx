@@ -9,8 +9,12 @@ const Message = ({ variant, children }) => (
 )
 
 Message.propTypes = {
-    variant: PropTypes.string.isRequired,
+    variant: PropTypes.string,
     children: PropTypes.string.isRequired
 }
+
+Message.defaultProps = {
+    variant: 'primary'
+  };
 
 export default Message
